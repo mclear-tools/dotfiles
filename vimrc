@@ -4,7 +4,6 @@
 set nocompatible
 filetype off
 
-" set rtp +=~/.vim/vundle.git/
 set rtp+=~/.vim/bundle/vundle
 call vundle#rc()
 
@@ -22,20 +21,24 @@ Bundle 'gmarik/vundle'
 " :Bundle "foo" searches for foo.
 " :BundleClean will remove deleted bundles
 
-Bundle 'VOom'
-Bundle 'tpope/vim-fugitive'
+" Outliner
+Bundle 'VOoM' 
+" Awesome git-wrapper
+Bundle 'tpope/vim-fugitive' 
+" bracket matching 
 Bundle 'tpope/vim-surround'    
+" pandoc plug-in
 Bundle 'vim-pandoc/vim-pandoc'  
 " File directory
-Bundle 'scrooloose/nerdtree'
+Bundle 'scrooloose/nerdtree' 
 " auto delimit
-Bundle 'delimitMate.vim'
+Bundle 'delimitMate.vim' 
 " Latex magic
-Bundle 'LaTeX-Box-Team/LaTeX-Box'
-" Tab contextual completion
-Bundle 'SuperTab'
+Bundle 'LaTeX-Box-Team/LaTeX-Box' 
+" Tab completion
+Bundle 'SuperTab' 
 " non github repos
-Bundle 'git://git.wincent.com/command-t.git'
+Bundle 'git://git.wincent.com/command-t.git' 
 " END BUNDLES }}}
 " END VUNDLE }}}
 
