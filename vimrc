@@ -4,8 +4,8 @@
 set nocompatible
 filetype off
 
-" set rtp +=~/.dotfiles/.vim/vundle.git/
-set rtp+=~/.vim/bundle/vundle/
+" set rtp +=~/.vim/vundle.git/
+set rtp+=~/.vim/bundle/vundle
 call vundle#rc()
 
 Bundle 'gmarik/vundle'
@@ -24,45 +24,14 @@ Bundle 'gmarik/vundle'
 
 Bundle 'VOom'
 Bundle 'tpope/vim-fugitive'
-" use <leader> f and r to get footnotes
-" Bundle 'vim-pandoc/vim-markdownfootnotes' 
 Bundle 'tpope/vim-surround'    
-" auto-close html tags
-Bundle 'HTML-AutoCloseTag'
-" Bundle 'Lokaltog/vim-easymotion'
-" Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
-" Bundle 'tpope/vim-rails.git'
 Bundle 'vim-pandoc/vim-pandoc'  
-" Bundle 'altercation/vim-colors-solarized'
-Bundle 'vim-ruby/vim-ruby'
-" syntax check
-Bundle 'Syntastic'
-" javascript syntax checker plugin
-Bundle 'jshint.vim'
-" terminal emulator in vim buffer
-Bundle 'conque-shell' 
-" vim-scripts repos
-Bundle 'L9'
-Bundle 'FuzzyFinder'
 " File directory
 Bundle 'scrooloose/nerdtree'
 " auto delimit
 Bundle 'delimitMate.vim'
-"code snippets
-Bundle "MarcWeber/vim-addon-mw-utils"
-Bundle "tomtom/tlib_vim"
-Bundle "snipmate-snippets"
-Bundle "garbas/vim-snipmate"
-Bundle "vim-scripts/autonumbering-in-vim"
-" Better Vim-markdown syntax reading
-Bundle 'mikewest/vim-markdown'
 " Latex magic
 Bundle 'LaTeX-Box-Team/LaTeX-Box'
-" simplenote web service plugin
-" Bundle 'simplenote.vim'
-" let g:SimplenoteUsername = "mclearc@gmail.com"
-" let g:SimplenotePassword = "noumenal"
-
 " Tab contextual completion
 Bundle 'SuperTab'
 " non github repos
@@ -101,7 +70,7 @@ set ofu=syntaxcomplete#Complete
 set autoread
 set ignorecase                  " searches are case insensitive...
 set smartcase
-" set autoindent
+set autoindent
 set smartindent
 set noswapfile                  " No swap file
 set tabstop=2 shiftwidth=2 expandtab
@@ -132,16 +101,6 @@ nmap <silent> ,ev :e $MYVIMRC<cr>
 " 's'ource 'v'imrc)
 nmap <silent> ,sv :so $MYVIMRC<cr>
 
-" Conque-Terminal
-
-let g:ConqueTerm_Color = 1
-let g:ConqueTerm_InsertOnEnter = 1
-let g:ConqueTerm_CWInsert = 1
-let g:ConqueTerm_ExecFileKey = '<F11>'
-let g:ConqueTerm_SendFileKey = '<F10>'
-let g:ConqueTerm_SendVisKey = '<F9>'
-let g:ConqueTerm_SendFunctionKeys = 1
-
 " PANDOC
 " read all .md files as pandoc files
 au BufNewFile,BufRead *.md set filetype=pandoc
@@ -153,45 +112,12 @@ let g:pandoc_no_folding = 1
 let maplocalleader = ","
 " let mapleader = ""
 let g:pandoc_no_spans = 1
-
-let b:surround_{char2nr("i")} = "*\r*"
-let b:surround_{char2nr("s")} = "**\r**"
-"surround current word with single asterisks
-nmap <leader>i viwsiW
-imap <leader>i <ESC>viwsiWi
-"same thing using command key in macvim
-nmap <D-i> viwsiW
-imap <D-i> <ESC>viwsiWi
-"surround current word with double asterisks
-nmap <leader>b viwssW
-imap <leader>b <ESC>viwssWi
-
-" Converts current line into level 1-6 ATX heading use F1 + number (e.g. 3)
-nnor <F1>1 :s/^#*\s*/# /<CR>
-inor <F1>1 <Esc>:s/^#*\s*/# /<CR>A
-nnor <F1>2 :s/^#*\s*/## /<CR>
-inor <F1>2 <Esc>:s/^#*\s*/## /<CR>A
-nnor <F1>3 :s/^#*\s*/### /<CR>
-inor <F1>3 <Esc>:s/^#*\s*/### /<CR>A
-nnor <F1>4 :s/^#*\s*/#### /<CR>
-inor <F1>4 <Esc>:s/^#*\s*/#### /<CR>A
-nnor <F1>5 :s/^#*\s*/##### /<CR>
-inor <F1>5 <Esc>:s/^#*\s*/##### /<CR>A
-nnor <F1>6 :s/^#*\s*/###### /<CR>
-inor <F1>6 <Esc>:s/^#*\s*/###### /<CR>A
-
-" Convert current line from ATX heading into normal para
-nnor <F1>0 :s/^#*\s*//<CR>
-nnor <F8>0 :s/^#*\s*//<CR>
-
+"
 "Map NERDTree to ,t
 nmap <silent> <localLeader>t :NERDTreeToggle<CR>
 
 " link mvim to marked app
 :nnoremap <leader>m :silent !open -a Marked.app '%:p'<cr>
-
-" auto-source .vimrc on save
-au! BufWritePost .vimrc source %
 
 " Latex-Box to Skim settings
 let g:LatexBox_viewer = 'open -a skim'
