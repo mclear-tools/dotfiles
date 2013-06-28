@@ -1,0 +1,35 @@
+# Set architecture flags
+export ARCHFLAGS="-arch x86_64"
+# Ensure user-installed binaries take precedence
+export PATH=/usr/local/share/python:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+
+# cd to the path of the front Finder window
+cdf() {
+	target=`osascript -e 'tell application "Finder" to get POSIX path of (target of front Finder window as text)'`
+	cd "$target"
+}
+
+# does the reverse of above
+alias f='open -a Finder ./'
+
+# lets bash scripts get run
+source ~/.bashrc
+
+PS1="%t %W %m %~ % : "
+
+# virtualenv should use Distribute instead of legacy setuptools
+export VIRTUALENV_DISTRIBUTE=true
+# Centralized location for new virtual environments
+export PIP_VIRTUALENV_BASE=$HOME/Virtualenvs
+# pip should only run if there is a virtualenv currently activated
+export PIP_REQUIRE_VIRTUALENV=true
+# cache pip-installed packages to avoid re-downloading
+export PIP_DOWNLOAD_CACHE=$HOME/.pip/cache
+
+# If in the future we want to upgrade our global packages, the above function enables us to do so via:
+# syspip install --upgrade pip distribute virtualenv
+syspip(){
+   PIP_REQUIRE_VIRTUALENV="" pip "$@"
+}
+
+ZSH_THEME=steef.zsh-theme

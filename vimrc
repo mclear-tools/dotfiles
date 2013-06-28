@@ -39,6 +39,10 @@ Bundle 'LaTeX-Box-Team/LaTeX-Box'
 Bundle 'SuperTab' 
 " non github repos
 Bundle 'git://git.wincent.com/command-t.git' 
+" GUI Colorschemes for terminal vim!
+Bundle 'vim-scripts/guicolorscheme.vim'
+" Vim-pandoc footnotes
+Bundle 'git://github.com/vim-pandoc/vim-markdownfootnotes.git'
 " END BUNDLES }}}
 " END VUNDLE }}}
 
@@ -69,12 +73,11 @@ set linespace=2
 set number
 set cursorline
 set hlsearch                    " highlight matches
-set ofu=syntaxcomplete#Complete
 set autoread
+set ruler                       " always show info at bottom
 set ignorecase                  " searches are case insensitive...
 set smartcase
 set autoindent
-set smartindent
 set noswapfile                  " No swap file
 set tabstop=2 shiftwidth=2 expandtab
 set formatprg=par
@@ -82,13 +85,20 @@ set spell spelllang=en_us
 set background=dark
 set ts=4
 setlocal textwidth=72
+" |nojoinspaces| allows you to use SHIFT-J in normal mode to join the next line with the current line 
+" without adding unwanted spaces.
+setlocal nojoinspaces
+" tells vim to use HTML style comments in your markdown files. For more, see |comments| and |commentstring|.
+setlocal commentstring=<!--%s-->
+setlocal comments=s:<!--,m:\ \ \ \ ,e:-->
 " setlocal formatoptions+=tcwa
 "colorscheme koehler
 "colorscheme colorer
 "colorscheme desert256
-"colorschme baycomb
-"coloescheme inkpot
+"colorscheme baycomb
+" colorscheme inkpot
 colorscheme dante
+set t_Co=256 " enable 256 colors
 set cursorline
 hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
 
