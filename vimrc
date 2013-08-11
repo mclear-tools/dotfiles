@@ -34,7 +34,7 @@ Bundle 'scrooloose/nerdtree'
 " auto delimit
 Bundle 'delimitMate.vim' 
 " Latex magic
-Bundle 'LaTeX-Box-Team/LaTeX-Box' 
+Bundle 'LaTeX-Box' 
 " Tab completion
 Bundle 'SuperTab' 
 " non github repos
@@ -120,8 +120,8 @@ au BufNewFile,BufRead *.md set filetype=pandoc
 
 let g:pandoc_no_empty_implicits = 1
 let g:pandoc_auto_format = 0
-let g:pandoc_use_hard_wraps = 1
-let g:pandoc_no_folding = 1
+let g:pandoc_use_hard_wraps = 0
+let g:pandoc_no_folding = 0
 let maplocalleader = ","
 " let mapleader = ""
 let g:pandoc_no_spans = 1
@@ -135,6 +135,7 @@ nmap <silent> <localLeader>t :NERDTreeToggle<CR>
 " Latex-Box to Skim settings
 let g:LatexBox_viewer = 'open -a skim'
 let g:LatexBox_latexmk_options = '-pvc'
+
 " SyncTex with Skim
 map <silent> <Leader>ls :silent !/Applications/Skim.app/Contents/SharedSupport/displayline
 		\ <C-R>=line('.')<CR> "<C-R>=LatexBox_GetOutputFile()<CR>" "%:p" <CR>
@@ -145,3 +146,4 @@ let g:SuperTabDefaultCompletionType = "context"
 let g:pandoc_bibfiles = ['/Users/Roambot/Dropbox/PDFLibrary/MasterLib.bib']
 
 let g:Tex_BIBINPUTS= ['/Users/Roambot/Dropbox/PDFLibrary/MasterLib.bib']
+
