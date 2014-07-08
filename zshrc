@@ -1,7 +1,7 @@
 # Set architecture flags
  export ARCHFLAGS="-arch x86_64"
 # Ensure user-installed binaries take precedence
- export PATH=/usr/local/bin:/usr/bin:/usr/texbin:$PATH
+ export PATH=/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/texbin:/Users/Roambot/bin:~/.cabal/bin:$PATH
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 # Extra info at prompt
@@ -34,6 +34,10 @@ plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
+
+# use vi keybindings
+bindkey -v
+
 # cd to the path of the front Finder window
 cdf() {
     target=`osascript -e 'tell application "Finder" to if (count of Finder windows) > 0 then get POSIX path of (target of front Finder window as text)'`
@@ -47,6 +51,8 @@ cdf() {
 # does the reverse of above
   alias f='open -a Finder ./'
 
+# open file with sublime text 2 from terminal
+  alias e='subl . &'
 # lets bash scripts get run
   source ~/dotfiles/bashrc
 
@@ -76,3 +82,12 @@ cdf() {
 #virtualenvwrapper
 export WORKON_HOME=$HOME/Virtualenvs
 source /usr/local/bin/virtualenvwrapper.sh
+
+#pandoc zsh autocomplete
+autoload bashcompinit
+bashcompinit
+source "/Users/Roambot/dotfiles/pandoc-completion.bash"
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+
+source ~/perl5/perlbrew/etc/bashrc

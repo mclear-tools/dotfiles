@@ -39,3 +39,5 @@ pdfhandout $*
 pdfpost $*
 pdfnote $*
 }
+
+[[ -s "/path/to/pandoc-completion.bash" ]] && source "/path/to/pandoc-completion.bash"

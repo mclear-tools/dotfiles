@@ -21,8 +21,13 @@ Bundle 'gmarik/vundle'
 " :Bundle "foo" searches for foo.
 " :BundleClean will remove deleted bundles
 
+" Distraction-free writing
+Bundle 'vimroom.vim'
 " Outliner
 Bundle 'VOoM' 
+" More outline magic
+Bundle 'VimOutliner'
+Bundle 'vimoutliner-colorscheme-fix'
 " Awesome git-wrapper
 Bundle 'tpope/vim-fugitive' 
 " bracket matching 
@@ -55,22 +60,23 @@ set synmaxcol=128
 set ttyfast " u got a fast terminal
 set ttyscroll=3
 set lazyredraw " to avoid scrolling problems
-set guifont=AnonymousPro:h18
+set guifont=Inconsolata:h20
 " set ch=2 " make command line two lines high
 set laststatus=2 "always have status line
 " When the page starts to scroll, keep the cursor 8 lines from
 " the top and 8 lines from the bottom
-set scrolloff=8
+set scrolloff=999
 
 set incsearch
 syntax on
 " auto-change directory to current buffer
 autocmd BufEnter * :cd %:p:h
-set wrap
+" set wrap
 set linebreak
 set nolist
 set linespace=2
 set number
+set columns=92
 set cursorline
 set hlsearch                    " highlight matches
 set autoread
@@ -79,25 +85,25 @@ set ignorecase                  " searches are case insensitive...
 set smartcase
 set autoindent
 set noswapfile                  " No swap file
-set tabstop=2 shiftwidth=2 expandtab
+set tabstop=4 shiftwidth=2 expandtab
 set formatprg=par
 set spell spelllang=en_us
 set background=dark
-set ts=4
 setlocal textwidth=72
 " |nojoinspaces| allows you to use SHIFT-J in normal mode to join the next line with the current line 
 " without adding unwanted spaces.
 setlocal nojoinspaces
 " tells vim to use HTML style comments in your markdown files. For more, see |comments| and |commentstring|.
+setlocal breakat-=*
 setlocal commentstring=<!--%s-->
 setlocal comments=s:<!--,m:\ \ \ \ ,e:-->
 " setlocal formatoptions+=tcwa
 "colorscheme koehler
 "colorscheme colorer
 "colorscheme desert256
-"colorscheme baycomb
+colorscheme baycomb
 " colorscheme inkpot
-colorscheme dante
+" colorscheme dante
 set t_Co=256 " enable 256 colors
 set cursorline
 hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
@@ -120,7 +126,7 @@ au BufNewFile,BufRead *.md set filetype=pandoc
 
 let g:pandoc_no_empty_implicits = 1
 let g:pandoc_auto_format = 0
-let g:pandoc_use_hard_wraps = 0
+let g:pandoc_use_hard_wraps = 1
 let g:pandoc_no_folding = 0
 let maplocalleader = ","
 " let mapleader = ""
@@ -134,6 +140,7 @@ nmap <silent> <localLeader>t :NERDTreeToggle<CR>
 
 " Latex-Box to Skim settings
 let g:LatexBox_viewer = 'open -a skim'
+" let g:LatexBox_viewer = 'open -a preview'
 let g:LatexBox_latexmk_options = '-pvc'
 
 " SyncTex with Skim
@@ -143,7 +150,23 @@ map <silent> <Leader>ls :silent !/Applications/Skim.app/Contents/SharedSupport/d
 " Citation completion
 let g:SuperTabDefaultCompletionType = "context"
 
-let g:pandoc_bibfiles = ['/Users/Roambot/Dropbox/PDFLibrary/MasterLib.bib']
+let g:pandoc_bibfiles = ['/Users/Roambot/Dropbox/PDFLibrary/Master.bib']
 
-let g:Tex_BIBINPUTS= ['/Users/Roambot/Dropbox/PDFLibrary/MasterLib.bib']
+let g:Tex_BIBINPUTS= ['/Users/Roambot/Dropbox/PDFLibrary/Master.bib']
 
+func! OutlinerMode() 
+  setlocal formatoptions=1 
+  setlocal noexpandtab 
+  map j gj 
+  map k gk
+  setlocal spell spelllang=en_us 
+  set complete+=s
+  set formatprg=par
+  setlocal wrap 
+  setlocal linebreak 
+endfu 
+com! OM call OutlinerMode()
+
+" Mapping to toggle fold
+nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
+vnoremap <Space> zf
