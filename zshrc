@@ -45,9 +45,11 @@ source $ZSH/oh-my-zsh.sh
 # use vi keybindings
   bindkey -v
 
+
 # open vim with clientserver
   alias v='vim --servername vim'
-
+  alias vim='vim --servername vim'
+  alias mvim='/usr/local/Cellar/macvim/7.4-73_1/bin/mvim'
 # Alias open audio files with Vox in background
   alias p='open -g -a Vox'
 
@@ -110,3 +112,14 @@ source ~/perl5/perlbrew/etc/bashrc
 
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+
+# Read man pages in vim
+vman() {
+  vim -c "SuperMan $*"
+
+  if [ "$?" != "0" ]; then
+    echo "No manual entry for $*"
+  fi
+}
+
