@@ -1,100 +1,163 @@
 " vim:fdm=marker
 set encoding=utf-8
 scriptencoding utf-8
-" Vundle Setup {{{
-
 set nocompatible
-filetype off
+filetype plugin indent on
+" Plugins {{{
 
-" VUNDLE & FUZZY FINDER
-set rtp+=~/.vim/bundle/Vundle.vim,~/.fzf
+call plug#begin('~/.vim/plugged')
 
-call vundle#begin()
+" Plugin outside ~/.vim/plugged with post-update hook
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 
-" Let vundle manage Vundle
-" Plugins
+" NERD tree will be loaded on the first invocation of NERDTreeToggle command
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' } " file manager
+Plug 'jeetsukumaran/vim-buffergator', { 'on': 'BuffergatorOpen'} "Buffer manager
+Plug 'Z1MM32M4N/vim-superman' " open man pages in vim
+Plug 'git://github.com/cwoac/nvim.git' " nvalt for vim
+Plug 'christoomey/vim-tmux-navigator' " easy navigate tmux and vim panes
+Plug 'wesQ3/vim-windowswap' " Easily swap buffers
+Plug 'bling/vim-bufferline' " plugin for buffer display in lightline/airline
+Plug 'SuperTab' " Tab completion
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax' 
+Plug 'altercation/vim-colors-solarized'
+Plug 'VOoM' " outliner
+Plug 'tpope/vim-commentary' " Comment manager/toggle
+Plug 'tpope/vim-fugitive' " Git management
+Plug 'tpope/vim-surround' "  surround text with whatever
+Plug 'airblade/vim-gitgutter'
+Plug 'itchyny/lightline.vim' " alternate powerline plugin
+Plug 'edkolev/tmuxline.vim' " tmux lightline plugin
+Plug 'scrooloose/nerdtree' 
+Plug 'tpope/vim-obsession' " vim session management
+Plug 'junegunn/goyo.vim' " writeroom style writing
+Plug 'TeX-9' " Latex
+Plug 'gitv' " Git Viewer 
+Plug 'https://github.com/neilagabriel/vim-geeknote'  "Evernote
+Plug 'davidoc/taskpaper.vim' " taskpaper alternative
+Plug 'henrik/vim-open-url' " open any url using ruby and regex
 
-Plugin 'gmarik/Vundle.vim'
-Plugin 'Z1MM32M4N/vim-superman'
-Plugin 'vim-pad'
-Plugin 'christoomey/vim-tmux-navigator' " easy navigate tmux and vim panes
-Plugin 'wesQ3/vim-windowswap' " Easily swap buffers
-Plugin 'Valloric/YouCompleteMe' " Vim auto-complete
-Plugin 'bling/vim-bufferline' " plugin for buffer display in lightline/airline
-"Plugin 'SuperTab'
-Plugin 'vim-pandoc/vim-pandoc'
-Plugin 'vim-pandoc/vim-pandoc-syntax' 
-" Pandoc vim footnotes
-" Plugin 'MarkdownFootnotes'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'VOoM'
-"Plugin 'tpope/vim-sensible'
-"Plugin 'rstacruz/vim-opinion'
-Plugin 'tpope/vim-commentary'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-surround'
-Plugin 'airblade/vim-gitgutter'
-"Plugin 'bling/vim-airline'
-Plugin 'itchyny/lightline.vim' " alternate powerline plugin
-Plugin 'edkolev/tmuxline.vim' " tmux lightline plugin
-Plugin 'terryma/vim-multiple-cursors'
-Plugin 'kien/ctrlp.vim'
-Plugin 'scrooloose/nerdtree'
-Plugin 'Raimondi/delimitMate'
-"Plugin 'reedes/vim-pencil'
-Plugin 'tpope/vim-obsession'
-"Plugin 'dhruvasagar/vim-prosession'
-Plugin 'junegunn/goyo.vim'
-" Plugin 'vim-scripts/EasyMotion'
-"TeX Plugin
-Plugin 'TeX-9'
-" Git Viewer
-Plugin 'gitv'
-" More Git action
-Plugin 'extradite.vim'
-"Evernote
-Plugin 'https://github.com/neilagabriel/vim-geeknote'
-"Change to title case
-" Plugin 'titlecase.vim'
-" Links
-" Plugin 'utl.vim'
+" Not sure about these plugins
+
+" Plug 'extradite.vim'  " More Git action
+" Plug 'utl.vim'   " use Links
+" Plug 'Raimondi/delimitMate' " autopair
+" Plug 'terryma/vim-multiple-cursors'
+" Plug 'MarkdownFootnotes'  " Pandoc vim footnotes
+" Plug 'tpope/vim-sensible'
+" Plug 'rstacruz/vim-opinion'
+" Plug 'bling/vim-airline'
+" Plug 'reedes/vim-pencil'
+" Plug 'kien/ctrlp.vim'
+" Plug 'dhruvasagar/vim-prosession'
+" Plug 'Valloric/YouCompleteMe' " Vim auto-complete
+" Plug 'vim-pad' " note pad
+" Plug 'titlecase.vim'  "Change to title case
+" Plug 'vim-scripts/EasyMotion'
+" TeX Plugin
+" Plug 'SirVer/ultisnips' " snippets via python
+" Plug 'honza/vim-snippets' " snippet bank
+
+call plug#end()
 " End Plugins
 
-call vundle#end()
-filetype plugin indent on
-
-"}}}
-" Tex Setup {{{
-let g:tex_flavor = 'latex'
-let g:tex_nine_config = {'compiler': 'xelatex', 'viewer': {'app':'open', 'target':'pdf'}}
-
-
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
 "}}}
 " Keymappings {{{
+" remap escape
 inoremap jk <Esc>
-nmap <C-N><C-N> :set invnumber<CR>
+"go to beginning of line in insert
+inoremap <S-Left> <Esc>0i
+" go to end of line in insert
+inoremap <S-Right> <Esc>$i
+" make cursor move to next visual line below cursor this is a test 
+noremap Q gwip
+nnoremap <Leader>c :set cursorline! <CR>
+nnoremap <C-N><C-N> :set invnumber<CR>
+" presents spelling options in dropdown and returns to normal mode
+nnoremap \s ea<C-X><C-S>
+" save file
+nnoremap <Leader>w :w<CR> 
+" link vim to marked app
+nnoremap <leader>m :silent !open -a Marked\ 2.app '%:p' <CR>\|:redraw!<CR>
+" Let's make it easy to edit this file (mnemonic for the key sequence is " 'e'dit 'v'imrc)
+nnoremap <silent> ,ev :e $MYVIMRC<cr>
+" And to source this file as well (mnemonic for the key sequence is " 's'ource 'v'imrc)
+nnoremap <silent> ,sv :so $MYVIMRC<cr>
+" Yank text to the OS X clipboard
+"noremap <leader>y "*y
+"noremap <leader>yy "*Y
+" Preserve indentation while pasting text from the OS X clipboard
+"noremap <leader>p :set paste<CR>:put  *<CR>:set nopaste<CR>
+" Mapping to toggle fold
+nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
+vnoremap <Space> zf
+
+let maplocalleader = ","
+" Toggle table of contents
+nnoremap <localLeader>c :TOC<CR>
+" Toggle Goyo on/off
+nnoremap <localLeader>g :Goyo<CR>
+"Map NERDTree to ,t
+nnoremap <silent> <localLeader>t :NERDTreeToggle<CR>
+nnoremap <localLeader>v :Voom markdown<CR>
+
+" Fuzzyfinder for home directory
+noremap <C-T> :FZF ~<CR>
+" Fuzzyfinder for current directory
+noremap <C-F> :FZF<CR>
+noremap <leader>v <Plug>TaskList
+
+" Remap navigation commands to center view on cursor using zz
+" nnoremap <C-U> 11kzz
+" nnoremap <C-D> 11jzz
+" nnoremap j jzz
+" nnoremap k kzz
+" nnoremap # #zz
+" nnoremap * *zz
+" nnoremap n nzz
+" nnoremap N Nzz
+
+"Copy to system clipboard
+nmap <F2> :set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
+imap <F2> <Esc>:set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
+nmap <F1> :.w !pbcopy<CR><CR>
+vmap <F1> :w !pbcopy<CR><CR>
+
+" Grep TODO and NOTE
+noremap <leader>d :copen<CR>:vimgrep /TODO/gj *.md *.taskpaper<CR>
+noremap <leader>n :copen<CR>:vimgrep /NOTE/gj *.md *.taskpaper<CR>
+
 " }}}
 " Settings {{{
 syntax enable
+" buffer settings
+set hidden
+set switchbuf=useopen
 set noshowmode
 set number
-"highlight LineNr ctermfg=yellow ctermbg=black guibg=black guifg=grey
+set numberwidth=5
+highlight LineNr ctermfg=yellow ctermbg=black guibg=black guifg=grey
 hi CursorLineNR cterm=bold
 augroup CLNRSet
       autocmd! ColorScheme * hi CursorLineNR cterm=bold ctermfg=white
     augroup END
 set cursorline
 hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
-:nnoremap <Leader>c :set cursorline! <CR>
 
+" automatically leave insert mode after 'updatetime' milliseconds of inaction
+au CursorHoldI * stopinsert
+
+" change cursor shape depending on mode with different code for tmux configuration
+if exists('$TMUX')
+  let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+  let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+  else
+  let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+  let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+endif
+
+" iterm settings for getting solarized working
 let g:solarized_termcolors= 16
 let g:solarized_termtrans = 1
 let g:solarized_degrade   = 0
@@ -104,19 +167,29 @@ let g:solarized_italic    = 1
 let g:solarized_contrast  = "normal"
 let g:solarized_visibility= "normal"
 
+" colorscheme settings
 set background=dark
 colorscheme solarized
+
+" font settings
+if has("gui_running")
+  if has("gui_gtk2")
+    set guifont=Inconsolata\ for\ Powerline:h16
+  elseif has("gui_macvim")
+    set guifont=Inconsolata\ LGC:h16
+  elseif has("gui_win32")
+    set guifont=Consolas:h11:cANSI
+  endif
+endif
+
 set spell spelllang=en_us
-" presents spelling options in dropdown and returns to normal mode
-":nnoremap \s ea<C-X><C-S>
-inoremap <expr> <CR> pumvisible() ? "\<C-y><Esc>" : "\<CR>" 
 set tabstop=4 shiftwidth=2 expandtab
 set linespace=2
 "set fo+=t
-set scrolloff=99
+set scrolloff=999 " keep cursor in middle of screen
+
 set textwidth=80
 " remap paragraph formatting 
-noremap Q gwip
 set formatprg=par
 set ruler
 set laststatus=2
@@ -137,75 +210,50 @@ setlocal comments=s:<!--,m:\ \ \ \ ,e:-->
 set backspace=indent,eol,start
 " make vim scrollable with mouse
 set mouse=a
-" save file
-nnoremap <Leader>w :w<CR>
 
-let maplocalleader = ","
-" link mvim to marked app
-:nnoremap <leader>m :silent !open -a Marked\ 2.app '%:p' <CR>\|:redraw!<CR>
-"Map NERDTree to ,t
-nmap <silent> <localLeader>t :NERDTreeToggle<CR>
-" Let's make it easy to edit this file (mnemonic for the key sequence is
-" 'e'dit 'v'imrc)
-nmap <silent> ,ev :e $MYVIMRC<cr>
-" And to source this file as well (mnemonic for the key sequence is
-" 's'ource 'v'imrc)
-nmap <silent> ,sv :so $MYVIMRC<cr>
-"Copy to system clipboard
-set clipboard=unnamed
 set go+=a
 
-" Yank text to the OS X clipboard
- noremap <leader>y "*y
- noremap <leader>yy "*Y
-"
-" " Preserve indentation while pasting text from the OS X clipboard
- noremap <leader>p :set paste<CR>:put  *<CR>:set nopaste<CR>
+:botright cwindow " keep quickfix window along bottom
 
-" Mapping to toggle fold
-nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
-vnoremap <Space> zf
 
-" change cursor in insert mode
-" change color
-if &term =~ "xterm\\|rxvt"
-    " use an orange cursor in insert mode
-      let &t_SI = "\<Esc>]12;orange\x7"
-        " use a red cursor otherwise
-          let &t_EI = "\<Esc>]12;red\x7"
-            silent !echo -ne "\033]12;red\007"
-              " reset cursor when vim exits
-                autocmd VimLeave * silent !echo -ne "\033]112\007"
-                  " use \003]12;gray\007 for gnome-terminal
-                endif
-" change shape
-if &term =~ '^xterm'
-    " solid underscore
-      let &t_SI .= "\<Esc>[4 q"
-        " solid block
-          let &t_EI .= "\<Esc>[2 q"
-            " 1 or 0 -> blinking block
-              " 3 -> blinking underscore
-                " Recent versions of xterm (282 or above) also support
-                  " 5 -> blinking vertical bar
-                    " 6 -> solid vertical bar
-                  endif
+
 " }}}
-" CtrlP Settings {{{
-let g:ctrlp_by_filename = 1
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/.git/*,*/.hg/*,*/.svn/* 
-nnoremap <leader>b :CtrlPBuffer<CR>
-"let g:ctrlp_working_path_mode = ''
+" Backup and Swap Settings {{{
+set backupdir=~/.vim/backup//
+set directory=~/.vim/swap//
+set undodir=~/.vim/undo//
+"set noswapfile
+" }}}
+" Tex Setup {{{
+let g:tex_flavor = 'latex'
+let g:tex_nine_config = {'compiler': 'xelatex', 'viewer': {'app':'open', 'target':'pdf'}}
+
+
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
 "}}}
+" Snippets {{{
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+ let g:UltiSnipsExpandTrigger=";;"
+ let g:UltiSnipsJumpForwardTrigger="<c-b>"
+ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+"
+" If you want :UltiSnipsEdit to split your window.
+" let g:UltiSnipsEditSplit="vertical"
+" }}}
 " vim-pandoc settings {{{
 "
 let g:pandoc#biblio#sources = ["g"]
 let g:pandoc#biblio#bibs = ["/Users/Roambot/Dropbox/Work/Master.bib"]
 let g:pandoc#formatting#textwidth = 80
-let g:pandoc#formatting#mode = 'ha'
+let g:pandoc#formatting#mode = 'h'
 let g:pandoc#formatting#extra_equalprg = "--atx-headers"
-" Toggle table of contents
-nnoremap <leader>C :TOC<CR>
 """""""""""""""""""""""""
 " }}}
 " Live Word Count {{{
@@ -238,31 +286,17 @@ nnoremap <leader>C :TOC<CR>
  "   set statusline+=\ %{WordCount()}\ words,
  "   set statusline+=\ %l/%L\ lines,\ %P    " percentage through the file
 " }}}
-" Backup and Swap Settings {{{
-set backupdir=~/.vim/backup//
-set directory=~/.vim/swap//
-set undodir=~/.vim/undo//
-"set noswapfile
-" }}}
 " Delimitmate Settings {{{
 
 "Delimitmate Auto-pairings
 let delimitMate_matchpairs = "(:),[:],{:},<:>"
 " }}}
-" vim-pad settings {{{
-let g:pad#default_format = "pandoc"
-let g:pad#dir = "~/notes/"
-" }}}
 " Lightline Settings {{{
-
-if has('gui_running')
-  set guifont=Inconsolata-dz\ for\ Powerline:h14
-endif
 
 let g:lightline = {
       \ 'colorscheme': 'solarized',
       \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ], ['ctrlpmark', 'bufferline'] ],
+      \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ], ['ctrlpmark'] ],
       \   'right': [ [ 'syntastic', 'lineinfo' ], ['wordcount', 'percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
       \ },
       \ 'component_function': {
@@ -305,7 +339,7 @@ let g:lightline = {
     endif
 endfunction
 
-let g:bufferline_echo = 0 " turn off bufferline in command bar
+let g:bufferline_echo = 1 " turn off bufferline in command bar
 let g:bufferline_active_buffer_right = ' '
 let g:bufferline_active_buffer_left = '⮁ '
 
@@ -514,6 +548,69 @@ let g:vimshell_force_overwrite_statusline = 0
 let g:tmuxline_preset = 'full'
 
 " }}}
+" NerdTree {{{ 
+"Open automatically when file isn't specified
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+"
+"NERDTree Window Position
+let NERDTreeWinPos = 'right'
+
+"Close NerdTree when it's the last buffer open
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+" }}}
+" Goyo {{{ 
+"
+" Set width
+let g:goyo_width = 85
+" silent! call lightline#enable() " show lightline in Goyo mode
+
+function! s:goyo_enter()
+  let b:quitting = 0
+  let b:quitting_bang = 0
+  autocmd QuitPre <buffer> let b:quitting = 1
+  cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!
+endfunction
+
+" ensure quit all windows
+function! s:goyo_leave()
+  " Quit Vim if this is the only remaining buffer
+  if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
+    if b:quitting_bang
+      qa!
+    else
+      qa
+    endif
+  endif
+endfunction
+
+autocmd User GoyoEnter call <SID>goyo_enter()
+autocmd User GoyoLeave call <SID>goyo_leave()
+
+" }}}
+" Extras and Unused {{{
+"Filenames in tabs in iTerm
+"set t_ts=^[]1;
+"set t_fs=^G
+"set guitablabel=%t
+
+" Switch tabs with numbers
+"if has("gui_macvim")
+""  map <D-1> :tabfirst<Cr>
+""  map <D-2> :tabfirst<Cr>gt
+""  map <D-3> :tabfirst<Cr>3gt
+""  map <D-4> :tabfirst<Cr>4gt
+""  map <D-5> :tabfirst<Cr>5gt
+""  map <D-6> :tabfirst<Cr>6gt
+""  map <D-7> :tabfirst<Cr>7gt
+""  map <D-8> :tabfirst<Cr>8gt
+""  map <D-9> :tabfirst<Cr>9gt
+"endif
+
+" open all buffers in tabs (gui)
+"map <silent> <leader>tb :tab :ball<cr>
+
+"}}}
 " AIRLINE SETTINGS {{{
 " let g:airline_theme = 'solarized'
 
@@ -643,46 +740,9 @@ let g:tmuxline_preset = 'full'
 
 """"""""""""""""""""""""""""""""""""
 " }}}
-
-" NerdTree {{{ 
-"Open automatically when file isn't specified
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-"
-"NERDTree Window Position
-let NERDTreeWinPos = 'right'
-
-"Close NerdTree when it's the last buffer open
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-" }}}
-
-" Goyo {{{ 
-"
-" Toggle on/off
-nnoremap <Leader>G :Goyo<CR>
-" Set width
-let g:goyo_width = 85
-"}}}
-" Extras and Unused {{{
-"Filenames in tabs in iTerm
-"set t_ts=^[]1;
-"set t_fs=^G
-"set guitablabel=%t
-
-" Switch tabs with numbers
-"if has("gui_macvim")
-""  map <D-1> :tabfirst<Cr>
-""  map <D-2> :tabfirst<Cr>gt
-""  map <D-3> :tabfirst<Cr>3gt
-""  map <D-4> :tabfirst<Cr>4gt
-""  map <D-5> :tabfirst<Cr>5gt
-""  map <D-6> :tabfirst<Cr>6gt
-""  map <D-7> :tabfirst<Cr>7gt
-""  map <D-8> :tabfirst<Cr>8gt
-""  map <D-9> :tabfirst<Cr>9gt
-"endif
-
-" open all buffers in tabs (gui)
-"map <silent> <leader>tb :tab :ball<cr>
-
+" CtrlP Settings {{{
+"let g:ctrlp_by_filename = 1
+" nnoremap <leader>b :CtrlPBuffer<CR>
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/.git/*,*/.hg/*,*/.svn/* 
+"let g:ctrlp_working_path_mode = ''
 "}}}

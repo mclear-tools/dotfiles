@@ -16,7 +16,6 @@ ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="ys"
 
 # Terminal for 256 colors
-#export TERM=xterm-256color-italic
 export TERM=xterm-256color-italic
 
  #Set to this to use case-sensitive completion
@@ -47,12 +46,10 @@ source $ZSH/oh-my-zsh.sh
 
 
 # open vim with clientserver
-  alias v='vim --servername vim'
-  alias vim='vim --servername vim'
+  alias v='vim --servername VIM'
   alias mvim='/usr/local/Cellar/macvim/7.4-73_1/bin/mvim'
 # Alias open audio files with Vox in background
   alias p='open -g -a Vox'
-
 # Alias open file with application
   alias o='open -a'
 
@@ -72,7 +69,7 @@ cdf() {
 # open file with sublime text 2 from terminal
   alias e='subl . &'
 # lets bash scripts get run
-  source ~/dotfiles/bashrc
+  source ~/.bashrc 
 
 # list directory contents with every directory change
 
@@ -102,17 +99,14 @@ export WORKON_HOME=$HOME/Virtualenvs
 source /usr/local/bin/virtualenvwrapper.sh
 
 #pandoc zsh autocomplete
-#autoload bashcompinit
-#bashcompinit
-#source "/Users/Roambot/dotfiles/pandoc-completion.bash"
+
+autoload bashcompinit
+bashcompinit
+source "/Users/Roambot/dotfiles/pandoc-completion/pandoc-completion.bash"
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
 source ~/perl5/perlbrew/etc/bashrc
-
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 
 # Read man pages in vim
 vman() {
@@ -123,3 +117,5 @@ vman() {
   fi
 }
 
+# fuzzy completion in zsh
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
