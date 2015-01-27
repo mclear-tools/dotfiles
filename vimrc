@@ -3,6 +3,7 @@ set encoding=utf-8
 scriptencoding utf-8
 set nocompatible
 filetype plugin indent on
+
 " Plugins {{{
 
 call plug#begin('~/.vim/plugged')
@@ -10,17 +11,19 @@ call plug#begin('~/.vim/plugged')
 " Plugin outside ~/.vim/plugged with post-update hook
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 
+Plug 'git://github.com/sjl/gundo.vim' " graphical tree undo
 " NERD tree will be loaded on the first invocation of NERDTreeToggle command
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' } " file manager
-Plug 'jeetsukumaran/vim-buffergator', { 'on': 'BuffergatorOpen'} "Buffer manager
+Plug 'jeetsukumaran/vim-buffergator' "Buffer manager
 Plug 'Z1MM32M4N/vim-superman' " open man pages in vim
 Plug 'git://github.com/cwoac/nvim.git' " nvalt for vim
 Plug 'christoomey/vim-tmux-navigator' " easy navigate tmux and vim panes
 Plug 'wesQ3/vim-windowswap' " Easily swap buffers
 Plug 'bling/vim-bufferline' " plugin for buffer display in lightline/airline
-Plug 'SuperTab' " Tab completion
+Plug 'supertab' " Tab completion
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax' 
+Plug 'vim-pandoc/vim-pandoc-after' " plugin for vim-pandoc and other plugins
 Plug 'altercation/vim-colors-solarized'
 Plug 'VOoM' " outliner
 Plug 'tpope/vim-commentary' " Comment manager/toggle
@@ -37,9 +40,11 @@ Plug 'gitv' " Git Viewer
 Plug 'https://github.com/neilagabriel/vim-geeknote'  "Evernote
 Plug 'davidoc/taskpaper.vim' " taskpaper alternative
 Plug 'henrik/vim-open-url' " open any url using ruby and regex
+Plug 'vim-pad'  " note plugin
 
 " Not sure about these plugins
 
+" Plug 'svintus/vim-editexisting' " focus file if open rather than swap warning
 " Plug 'extradite.vim'  " More Git action
 " Plug 'utl.vim'   " use Links
 " Plug 'Raimondi/delimitMate' " autopair
@@ -63,21 +68,30 @@ call plug#end()
 " End Plugins
 
 "}}}
-" Keymappings {{{
+" General Keymappings {{{
+
+" Grep TODO and NOTE
+noremap <leader>d :copen<CR>:vimgrep /TODO/gj *.md *.taskpaper<CR>
+noremap <leader>n :copen<CR>:vimgrep /NOTE/gj *.md *.taskpaper<CR>
+" clean up paragraph according to pandoc specs
+nnoremap <leader>= vip=
+" previous and next buffer 
+nnoremap <leader>[ :bp<CR>
+nnoremap <leader>] :bn<CR>
 " remap escape
 inoremap jk <Esc>
-"go to beginning of line in insert
+" go to beginning of line in insert -- these don't work in tmux
 inoremap <S-Left> <Esc>0i
-" go to end of line in insert
+" go to end of line in insert --  these don't work in tmux
 inoremap <S-Right> <Esc>$i
 " make cursor move to next visual line below cursor this is a test 
 noremap Q gwip
-nnoremap <Leader>c :set cursorline! <CR>
+nnoremap <leader>c :set cursorline! <CR>
 nnoremap <C-N><C-N> :set invnumber<CR>
 " presents spelling options in dropdown and returns to normal mode
 nnoremap \s ea<C-X><C-S>
 " save file
-nnoremap <Leader>w :w<CR> 
+nnoremap <leader>w :w<CR> 
 " link vim to marked app
 nnoremap <leader>m :silent !open -a Marked\ 2.app '%:p' <CR>\|:redraw!<CR>
 " Let's make it easy to edit this file (mnemonic for the key sequence is " 'e'dit 'v'imrc)
@@ -101,12 +115,13 @@ nnoremap <localLeader>g :Goyo<CR>
 "Map NERDTree to ,t
 nnoremap <silent> <localLeader>t :NERDTreeToggle<CR>
 nnoremap <localLeader>v :Voom markdown<CR>
+" Gundo toggle
+nnoremap <localleader>G :GundoToggle<CR>
 
 " Fuzzyfinder for home directory
-noremap <C-T> :FZF ~<CR>
+noremap <C-t> :FZF ~<CR>
 " Fuzzyfinder for current directory
-noremap <C-F> :FZF<CR>
-noremap <leader>v <Plug>TaskList
+noremap <C-f> :FZF<CR>
 
 " Remap navigation commands to center view on cursor using zz
 " nnoremap <C-U> 11kzz
@@ -124,10 +139,6 @@ imap <F2> <Esc>:set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
 nmap <F1> :.w !pbcopy<CR><CR>
 vmap <F1> :w !pbcopy<CR><CR>
 
-" Grep TODO and NOTE
-noremap <leader>d :copen<CR>:vimgrep /TODO/gj *.md *.taskpaper<CR>
-noremap <leader>n :copen<CR>:vimgrep /NOTE/gj *.md *.taskpaper<CR>
-
 " }}}
 " Settings {{{
 syntax enable
@@ -136,7 +147,7 @@ set hidden
 set switchbuf=useopen
 set noshowmode
 set number
-set numberwidth=5
+set numberwidth=3
 highlight LineNr ctermfg=yellow ctermbg=black guibg=black guifg=grey
 hi CursorLineNR cterm=bold
 augroup CLNRSet
@@ -159,13 +170,13 @@ endif
 
 " iterm settings for getting solarized working
 let g:solarized_termcolors= 16
-let g:solarized_termtrans = 1
-let g:solarized_degrade   = 0
-let g:solarized_bold      = 1
-let g:solarized_underline = 1
-let g:solarized_italic    = 1
-let g:solarized_contrast  = "normal"
-let g:solarized_visibility= "normal"
+" let g:solarized_termtrans = 1
+" let g:solarized_degrade   = 0
+" let g:solarized_bold      = 1
+" let g:solarized_underline = 1
+" let g:solarized_italic    = 1
+" let g:solarized_contrast  = "normal"
+" let g:solarized_visibility= "normal"
 
 " colorscheme settings
 set background=dark
@@ -176,7 +187,9 @@ if has("gui_running")
   if has("gui_gtk2")
     set guifont=Inconsolata\ for\ Powerline:h16
   elseif has("gui_macvim")
-    set guifont=Inconsolata\ LGC:h16
+    set guifont=Anonymous\ Pro\ for\ Powerline:h16
+  elseif has("gui_vimR")
+    set guifont=Anonymous\ Pro\ for\ Powerline:h16
   elseif has("gui_win32")
     set guifont=Consolas:h11:cANSI
   endif
@@ -213,9 +226,18 @@ set mouse=a
 
 set go+=a
 
-:botright cwindow " keep quickfix window along bottom
 
+" The Silver Searcher
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+endif
 
+" bind K to grep word under cursor
+nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+" Ag exec command
+"command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+nnoremap A :Ag<Space>
 
 " }}}
 " Backup and Swap Settings {{{
@@ -223,6 +245,37 @@ set backupdir=~/.vim/backup//
 set directory=~/.vim/swap//
 set undodir=~/.vim/undo//
 "set noswapfile
+" }}}
+" Functions {{{
+"Reveal file in finder using :Reveal
+function! s:RevealInFinder()
+  if filereadable(expand("%"))
+    let l:command = "open -R %"
+  elseif getftype(expand("%:p:h")) == "dir"
+    let l:command = "open %:p:h"
+  else
+    let l:command = "open ."
+  endif
+  execute ":silent! !" . l:command
+  redraw!
+endfunction
+command! Reveal call <SID>RevealInFinder()
+
+" }}}
+" Vim-Pad {{{
+
+let g:pad#dir = "~/Dropbox/Notes/"
+let g:pad#set_mappings = 0
+let g:pad#default_format = "pandoc"
+let g:pad#default_file_extension = ".md"
+let g:pad#window_height = 10
+let g:pad#search_backend = "ag"
+
+nnoremap <localleader>p :Pad ls<CR>
+nnoremap <localleader>n :Pad new<CR>
+nnoremap <localleader>sp :Pad ls<Space>
+
+
 " }}}
 " Tex Setup {{{
 let g:tex_flavor = 'latex'
@@ -254,6 +307,7 @@ let g:pandoc#biblio#bibs = ["/Users/Roambot/Dropbox/Work/Master.bib"]
 let g:pandoc#formatting#textwidth = 80
 let g:pandoc#formatting#mode = 'h'
 let g:pandoc#formatting#extra_equalprg = "--atx-headers"
+" let g:pandoc#after#modules#enabled = ["supertab", "goyo"]
 """""""""""""""""""""""""
 " }}}
 " Live Word Count {{{

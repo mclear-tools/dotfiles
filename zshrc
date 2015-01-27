@@ -104,7 +104,7 @@ autoload bashcompinit
 bashcompinit
 source "/Users/Roambot/dotfiles/pandoc-completion/pandoc-completion.bash"
 
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+#PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
 source ~/perl5/perlbrew/etc/bashrc
 
@@ -119,3 +119,7 @@ vman() {
 
 # fuzzy completion in zsh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# autojump
+[[ -s $(brew --prefix)/etc/autojump.sh ]] && . $(brew --prefix)/etc/autojump.sh
+
