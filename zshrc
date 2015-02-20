@@ -1,6 +1,9 @@
 # antigen source
 source $HOME/dotfiles/antigen/antigen.zsh
 
+# Load the oh-my-zsh's library.
+antigen use oh-my-zsh
+
 # Bundles from the default repo (robbyrussell's oh-my-zsh).
 antigen bundle git
 antigen bundle pip
@@ -16,10 +19,14 @@ if [ "$OSTYPE"="darwin11.0" ]; then
   antigen bundle osx
 fi
 
-# Non-default bundles
+
+# Fish style syntax highlighting
+# Load *before* history substring search
 antigen bundle zsh-users/zsh-syntax-highlighting
+
+# Non-default bundles
 antigen bundle zsh-users/zsh-history-substring-search
-antigen bundle srijanshetty/pandoc-completion
+#antigen bundle srijanshetty/pandoc-completion
 antigen bundle secrettriangle/smart-cd
 antigen bundle voronkovich/gitignore.plugin.zsh
 antigen bundle unixorn/autoupdate-antigen.zshplugin
@@ -28,19 +35,32 @@ antigen bundle djui/alias-tips
 # Load the theme.
 antigen theme ys
 
-
 # Tell antigen that you're done.
 antigen apply
+
+# Bindings for history substring search
+# bind UP and DOWN arrow keys
+  zmodload zsh/terminfo
+  bindkey "$terminfo[kcuu1]" history-substring-search-up
+  bindkey "$terminfo[kcud1]" history-substring-search-down
+ 
+  # bind P and N for EMACS mode
+  bindkey -M emacs '^P' history-substring-search-up
+  bindkey -M emacs '^N' history-substring-search-down
+ 
+  # bind k and j for VI mode
+  bindkey -M vicmd 'k' history-substring-search-up
+  bindkey -M vicmd 'j' history-substring-search-down
 
 # help info
 #unalias run-help
 #autoload run-help
 #HELPDIR=/usr/local/share/zsh/help
 # Set architecture flags
- export ARCHFLAGS="-arch x86_64"
+export ARCHFLAGS="-arch x86_64"
 # Ensure user-installed binaries take precedence
- export PATH=/usr/local/bin:$PATH
-# Path to Beets
+export PATH=/usr/local/bin:$PATH
+# # Path to Beets
 # export BEETSDIR=~/Dropbox/Apps/Beets/
 # Path to your oh-my-zsh configuration.
 #ZSH=$HOME/.oh-my-zsh
@@ -109,7 +129,7 @@ cdf() {
 # open file with sublime text 2 from terminal
   alias e='subl . &'
 # lets bash scripts get run
-  source ~/.bashrc 
+source ~/.bashrc 
 
 # list directory contents with every directory change
   # function chpwd() {
@@ -148,13 +168,13 @@ cdf() {
 #source ~/perl5/perlbrew/etc/bashrc
 
 # Read man pages in vim
-vman() {
-  vim -c "SuperMan $*"
+ vman() {
+   vim -c "SuperMan $*"
 
-  if [ "$?" != "0" ]; then
-    echo "No manual entry for $*"
-  fi
-}
+   if [ "$?" != "0" ]; then
+     echo "No manual entry for $*"
+   fi
+ }
 
 # fuzzy completion in zsh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
