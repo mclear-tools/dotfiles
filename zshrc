@@ -1,22 +1,62 @@
+# antigen source
+source $HOME/dotfiles/antigen/antigen.zsh
+
+# Bundles from the default repo (robbyrussell's oh-my-zsh).
+antigen bundle git
+antigen bundle pip
+antigen bundle command-not-found
+antigen bundle brew
+antigen bundle brew-cask
+antigen bundle marked2
+antigen bundle tmux
+antigen bundle vi-mode
+
+# OSX bundle if working on mac
+if [ "$OSTYPE"="darwin11.0" ]; then
+  antigen bundle osx
+fi
+
+# Non-default bundles
+antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle zsh-users/zsh-history-substring-search
+antigen bundle srijanshetty/pandoc-completion
+antigen bundle secrettriangle/smart-cd
+antigen bundle voronkovich/gitignore.plugin.zsh
+antigen bundle unixorn/autoupdate-antigen.zshplugin
+antigen bundle djui/alias-tips
+
+# Load the theme.
+antigen theme ys
+
+
+# Tell antigen that you're done.
+antigen apply
+
+# help info
+#unalias run-help
+#autoload run-help
+#HELPDIR=/usr/local/share/zsh/help
 # Set architecture flags
  export ARCHFLAGS="-arch x86_64"
 # Ensure user-installed binaries take precedence
- export PATH=/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/texbin:/Users/Roambot/bin:~/.cabal/bin:$PATH
+ export PATH=/usr/local/bin:$PATH
 # Path to Beets
- export BEETSDIR=~/Dropbox/Apps/Beets/
+# export BEETSDIR=~/Dropbox/Apps/Beets/
 # Path to your oh-my-zsh configuration.
-ZSH=$HOME/.oh-my-zsh
+#ZSH=$HOME/.oh-my-zsh
 # Extra info at prompt
-#PS1="%t %W %m %~ % : "
+# PS1="%t %W %m %~ % : "
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 #ZSH_THEME="rkj-repos"
-ZSH_THEME="ys"
+# ZSH_THEME="ys"
+#ZSH_THEME="random"
 
 # Terminal for 256 colors
 export TERM=xterm-256color-italic
+#export TERM=xterm-256color
 
  #Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
@@ -35,14 +75,14 @@ COMPLETION_WAITING_DOTS="true"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git)
+#plugins=(git osx brew python tmux)
 
-source $ZSH/oh-my-zsh.sh
+#source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
 
 # use vi keybindings
-  bindkey -v
+#  bindkey -v
 
 
 # open vim with clientserver
@@ -72,11 +112,10 @@ cdf() {
   source ~/.bashrc 
 
 # list directory contents with every directory change
-
-  function chpwd() {
-    emulate -L zsh
-    ls -a
-}
+  # function chpwd() {
+  #   emulate -L zsh
+  #   ls -a
+# }
 
 # virtualenv should use Distribute instead of legacy setuptools
 # export VIRTUALENV_DISTRIBUTE=true
@@ -95,18 +134,18 @@ cdf() {
 # syspip install --upgrade pip distribute virtualenv
 
 #virtualenvwrapper
-export WORKON_HOME=$HOME/Virtualenvs
-source /usr/local/bin/virtualenvwrapper.sh
+#export WORKON_HOME=$HOME/Virtualenvs
+#source /usr/local/bin/virtualenvwrapper.sh
 
 #pandoc zsh autocomplete
 
-autoload bashcompinit
-bashcompinit
-source "/Users/Roambot/dotfiles/pandoc-completion/pandoc-completion.bash"
+#autoload bashcompinit
+#bashcompinit
+#source "/Users/Roambot/dotfiles/pandoc-completion/pandoc-completion.bash"
 
 #PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
-source ~/perl5/perlbrew/etc/bashrc
+#source ~/perl5/perlbrew/etc/bashrc
 
 # Read man pages in vim
 vman() {
@@ -123,3 +162,7 @@ vman() {
 # autojump
 [[ -s $(brew --prefix)/etc/autojump.sh ]] && . $(brew --prefix)/etc/autojump.sh
 
+
+# fix grep error
+alias grep="/usr/local/bin/grep $GREP_OPTIONS"
+unset GREP_OPTIONS
