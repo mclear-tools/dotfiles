@@ -11,18 +11,21 @@ call plug#begin('~/.vim/plugged')
 " Plugin outside ~/.vim/plugged with post-update hook
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 
+Plug 'szw/vim-smartclose' "window closing utility
+Plug 'vim-scripts/ZoomWin' " zoom in and out of windows
+Plug 'sjl/vitality.vim'
+Plug 'vimwiki/vimwiki' " wiki in vim
 Plug 'git://github.com/sjl/gundo.vim' " graphical tree undo
 " NERD tree will be loaded on the first invocation of NERDTreeToggle command
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' } " file manager
 Plug 'jeetsukumaran/vim-buffergator' "Buffer manager
 Plug 'Z1MM32M4N/vim-superman' " open man pages in vim
-Plug 'git://github.com/cwoac/nvim.git' " nvalt for vim
 Plug 'christoomey/vim-tmux-navigator' " easy navigate tmux and vim panes
 Plug 'wesQ3/vim-windowswap' " Easily swap buffers
 Plug 'bling/vim-bufferline' " plugin for buffer display in lightline/airline
 Plug 'supertab' " Tab completion
-Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax' 
+Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-after' " plugin for vim-pandoc and other plugins
 Plug 'altercation/vim-colors-solarized'
 Plug 'VOoM' " outliner
@@ -32,8 +35,7 @@ Plug 'tpope/vim-surround' "  surround text with whatever
 Plug 'airblade/vim-gitgutter'
 Plug 'itchyny/lightline.vim' " alternate powerline plugin
 Plug 'edkolev/tmuxline.vim' " tmux lightline plugin
-Plug 'scrooloose/nerdtree' 
-Plug 'tpope/vim-obsession' " vim session management
+Plug 'mhinz/vim-startify' " session manager and startup screen
 Plug 'junegunn/goyo.vim' " writeroom style writing
 Plug 'TeX-9' " Latex
 Plug 'gitv' " Git Viewer 
@@ -43,7 +45,9 @@ Plug 'henrik/vim-open-url' " open any url using ruby and regex
 Plug 'vim-pad'  " note plugin
 
 " Not sure about these plugins
-
+"
+" Plug 'tpope/vim-obsession' " vim session management
+" Plug 'git://github.com/cwoac/nvim.git' " nvalt for vim
 " Plug 'svintus/vim-editexisting' " focus file if open rather than swap warning
 " Plug 'extradite.vim'  " More Git action
 " Plug 'utl.vim'   " use Links
@@ -80,18 +84,30 @@ nnoremap <leader>[ :bp<CR>
 nnoremap <leader>] :bn<CR>
 " remap escape
 inoremap jk <Esc>
-" go to beginning of line in insert -- these don't work in tmux
-inoremap <S-Left> <Esc>0i
-" go to end of line in insert --  these don't work in tmux
-inoremap <S-Right> <Esc>$i
+
+" Insert mode navigation mappings
+
+" go to beginning of line in insert 
+"inoremap bb <Esc>0i
+" go to end of line in insert 
+"inoremap nn <Esc>$i
+" go to previous word in insert
+"inoremap jj <Esc>bi
+" go to next word in insert
+" inoremap kk <Esc>wwi
+" delete previous word in insert
+inoremap <C-D> <Esc>bdwi
+
+
+
 " make cursor move to next visual line below cursor this is a test 
 noremap Q gwip
 nnoremap <leader>c :set cursorline! <CR>
 nnoremap <C-N><C-N> :set invnumber<CR>
 " presents spelling options in dropdown and returns to normal mode
-nnoremap \s ea<C-X><C-S>
-" save file
-nnoremap <leader>w :w<CR> 
+nnoremap <leader>s ea<C-X><C-S>
+
+
 " link vim to marked app
 nnoremap <leader>m :silent !open -a Marked\ 2.app '%:p' <CR>\|:redraw!<CR>
 " Let's make it easy to edit this file (mnemonic for the key sequence is " 'e'dit 'v'imrc)
@@ -114,9 +130,11 @@ nnoremap <localLeader>c :TOC<CR>
 nnoremap <localLeader>g :Goyo<CR>
 "Map NERDTree to ,t
 nnoremap <silent> <localLeader>t :NERDTreeToggle<CR>
-nnoremap <localLeader>v :Voom markdown<CR>
+nnoremap <localLeader>v :VoomToggle<CR>
 " Gundo toggle
 nnoremap <localleader>G :GundoToggle<CR>
+"toggle filetype for pandoc
+nnoremap <localleader>f :set filetype=pandoc<CR> 
 
 " Fuzzyfinder for home directory
 noremap <C-t> :FZF ~<CR>
@@ -145,9 +163,9 @@ syntax enable
 " buffer settings
 set hidden
 set switchbuf=useopen
-set noshowmode
-set number
-set numberwidth=3
+" set noshowmode
+" set nonumber
+" set numberwidth=3
 highlight LineNr ctermfg=yellow ctermbg=black guibg=black guifg=grey
 hi CursorLineNR cterm=bold
 augroup CLNRSet
@@ -157,7 +175,12 @@ set cursorline
 hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
 
 " automatically leave insert mode after 'updatetime' milliseconds of inaction
-au CursorHoldI * stopinsert
+" au CursorHoldI * stopinsert
+
+" set vimwiki filetype for path to wiki
+autocmd BufRead,BufNewFile /Users/Roambot/Dropbox/Wiki set filetype=vimwiki
+" include spaces in filenames
+set isfname+=32
 
 " change cursor shape depending on mode with different code for tmux configuration
 if exists('$TMUX')
@@ -167,6 +190,7 @@ if exists('$TMUX')
   let &t_SI = "\<Esc>]50;CursorShape=1\x7"
   let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 endif
+
 
 " iterm settings for getting solarized working
 let g:solarized_termcolors= 16
@@ -262,6 +286,70 @@ endfunction
 command! Reveal call <SID>RevealInFinder()
 
 " }}}
+" Startify Settings {{{
+
+    autocmd User Startified setlocal cursorline
+
+    let g:startify_enable_special         = 0
+    let g:startify_files_number           = 8
+    let g:startify_relative_path          = 0
+    let g:startify_change_to_dir          = 1
+    let g:startify_session_autoload       = 1
+    let g:startify_session_persistence    = 1
+    let g:startify_session_delete_buffers = 1
+
+    let g:startify_list_order = [
+      \ ['   Most recently used:'],
+      \ 'files',
+      \ ['   Recently used within this dir:'],
+      \ 'dir',
+      \ ['   Sessions:'],
+      \ 'sessions',
+      \ ['   Bookmarks:'],
+      \ 'bookmarks',
+      \ ]
+
+    let g:startify_skiplist = [
+                \ 'COMMIT_EDITMSG',
+                \ $VIMRUNTIME .'/doc',
+                \ 'bundle/.*/doc',
+                \ '\.vimgolf',
+                \ ]
+
+    let g:startify_bookmarks = [
+                \ '~/.vim/vimrc',
+                \ '~/Dropbox/Wiki/index.md',
+                \ '~/Dropbox/Work/Teaching',
+                \ '~/Dropbox/Work/Projects',
+                \ '/Users/Roambot/Dropbox/Work/Professional/McLearCV/McLearCV.tex',
+                \ '/Users/Roambot/Dropbox/Webpage/content/pages/101Assignments.md',
+                \ ]
+
+    let g:startify_custom_footer =
+          \ ['', "Aus so krummem Holze, als woraus der Mensch gemacht ist, kann nichts ganz Gerades gezimmert werden (8:23)", '']
+
+    let g:startify_custom_header =
+          \ map(split(system('tips | cowsay -f apt'), '\n'), '"   ". v:val') + ['']
+
+    hi StartifyBracket ctermfg=240
+    hi StartifyFile    ctermfg=147
+    hi StartifyFooter  ctermfg=240
+    hi StartifyHeader  ctermfg=114
+    hi StartifyNumber  ctermfg=215
+    hi StartifyPath    ctermfg=245
+    hi StartifySlash   ctermfg=240
+    hi StartifySpecial ctermfg=240
+
+" open nerdtree at start with startify
+"    autocmd VimEnter *
+"               \   if !argc()
+"                \ |   Startify
+"                \ |   NERDTree
+"                \ |   wincmd w
+"               \ | endif
+
+
+" }}}
 " Vim-Pad {{{
 
 let g:pad#dir = "~/Dropbox/Notes/"
@@ -274,6 +362,23 @@ let g:pad#search_backend = "ag"
 nnoremap <localleader>p :Pad ls<CR>
 nnoremap <localleader>n :Pad new<CR>
 nnoremap <localleader>sp :Pad ls<Space>
+
+
+" }}}
+" Voom Settings {{{
+
+let g:voom_tree_width = 50
+let g:voom_ft_modes = {'pandoc': 'markdown', 'markdown': 'markdown', 'tex': 'latex'}
+let g:voom_default_mode = 'pandoc'
+
+" }}}
+" Vim Wiki {{{
+
+let g:vimwiki_list = [{"path": '/Users/Roambot/Dropbox/Wiki', "path_html": '~/Dropbox/Apps/VimWiki/WikiPages', "template_path": '~/Dropbox/Apps/VimWiki', "template_default": 'default', "template_ext": '.tpl', "syntax": 'markdown', "ext": '.md', "custom_wiki2html": 'vimwiki_markdown', "index": 'index'}] 
+
+" Mappings
+
+nmap <leader>i <Plug>VimwikiIndex
 
 
 " }}}
@@ -307,6 +412,9 @@ let g:pandoc#biblio#bibs = ["/Users/Roambot/Dropbox/Work/Master.bib"]
 let g:pandoc#formatting#textwidth = 80
 let g:pandoc#formatting#mode = 'h'
 let g:pandoc#formatting#extra_equalprg = "--atx-headers"
+let g:pandoc#filetypes#handled = ["pandoc", "markdown"]
+let g:pandoc#filetypes#pandoc_markdown = 0
+let g:pandoc#keyboard#sections#header_style = "a2"
 " let g:pandoc#after#modules#enabled = ["supertab", "goyo"]
 """""""""""""""""""""""""
 " }}}
@@ -370,8 +478,8 @@ let g:lightline = {
       \ 'component_type': {
       \   'syntastic': 'error',
       \ },
-      \ 'separator': { 'left': '⮀', 'right': '⮂' },
-      \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
+      \ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
+      \ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" }
       \ }
 
  function! MyBufferline()
@@ -394,8 +502,8 @@ let g:lightline = {
 endfunction
 
 let g:bufferline_echo = 1 " turn off bufferline in command bar
-let g:bufferline_active_buffer_right = ' '
-let g:bufferline_active_buffer_left = '⮁ '
+let g:bufferline_active_buffer_right = ']'
+let g:bufferline_active_buffer_left = '['
 
 function! WordCount()
   if &filetype == "pandoc"
@@ -425,7 +533,7 @@ function! MyReadonly()
   if &filetype == "help"
     return ""
   elseif &readonly
-    return "⭤"
+    return "\ue0a2"
   else
     return ""
   endif
@@ -454,7 +562,7 @@ function! MyFugitive()
       let mark = ''  " edit here for cool mark
       let _ = fugitive#head()
 "      return strlen(_) ? mark._ : ''
-      return strlen(_) ? '⭠ '._ : ''
+      return strlen(_) ? ' '._ : ''
     endif
   catch
   endtry
@@ -604,8 +712,8 @@ let g:tmuxline_preset = 'full'
 " }}}
 " NerdTree {{{ 
 "Open automatically when file isn't specified
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+"autocmd StdinReadPre * let s:std_in=1
+"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 "
 "NERDTree Window Position
 let NERDTreeWinPos = 'right'
