@@ -113,3 +113,5 @@ source ~/.bashrc
 alias grep="/usr/local/bin/grep $GREP_OPTIONS"
 unset GREP_OPTIONS
 
+# set editor as homebrew's vim
+export EDITOR=/usr/local/bin/vim
