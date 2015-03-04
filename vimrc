@@ -157,6 +157,19 @@ imap <F2> <Esc>:set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
 nmap <F1> :.w !pbcopy<CR><CR>
 vmap <F1> :w !pbcopy<CR><CR>
 
+" start external shell command with a bang
+nnoremap ! :!
+
+" enter command mode with a keystroke
+" nnoremap ; :
+" nnoremap : ;
+
+" correct common misspellings for commands
+cabbrev ew :wq
+cabbrev qw :wq 
+cabbrev Q :q
+cabbrev W :w 
+
 " }}}
 " Settings {{{
 syntax enable
@@ -178,7 +191,8 @@ hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=whi
 " au CursorHoldI * stopinsert
 
 " set vimwiki filetype for path to wiki
-autocmd BufRead,BufNewFile /Users/Roambot/Dropbox/Wiki set filetype=vimwiki
+" autocmd! BufRead,BufNewFile /Users/Roambot/Dropbox/Wiki set filetype=vimwiki
+
 " include spaces in filenames
 set isfname+=32
 
@@ -241,9 +255,9 @@ set whichwrap+=<,>
 " with the current line without adding unwanted spaces.
 setlocal nojoinspaces
 " tells vim to use HTML style comments in your markdown files. For more, see |comments| and |commentstring|.
-setlocal breakat-=*
-setlocal commentstring=<!--%s-->
-setlocal comments=s:<!--,m:\ \ \ \ ,e:-->
+" setlocal breakat-=*
+" setlocal commentstring=<!--%s-->
+" setlocal comments=s:<!--,m:\ \ \ \ ,e:-->
 set backspace=indent,eol,start
 " make vim scrollable with mouse
 set mouse=a
@@ -265,6 +279,8 @@ nnoremap A :Ag<Space>
 
 " }}}
 " Backup and Swap Settings {{{
+"autosave
+autocmd InsertLeave,TextChanged * if expand('%') != '' | update | endif
 set backupdir=~/.vim/backup//
 set directory=~/.vim/swap//
 set undodir=~/.vim/undo//
@@ -317,8 +333,8 @@ command! Reveal call <SID>RevealInFinder()
                 \ ]
 
     let g:startify_bookmarks = [
-                \ '~/.vim/vimrc',
-                \ '~/Dropbox/Wiki/index.md',
+                \ '~/.vimrc',
+                \ '~/Dropbox/Wiki/index.txt',
                 \ '~/Dropbox/Work/Teaching',
                 \ '~/Dropbox/Work/Projects',
                 \ '/Users/Roambot/Dropbox/Work/Professional/McLearCV/McLearCV.tex',
@@ -374,7 +390,7 @@ let g:voom_default_mode = 'pandoc'
 " }}}
 " Vim Wiki {{{
 
-let g:vimwiki_list = [{"path": '/Users/Roambot/Dropbox/Wiki', "path_html": '~/Dropbox/Apps/VimWiki/WikiPages', "template_path": '~/Dropbox/Apps/VimWiki', "template_default": 'default', "template_ext": '.tpl', "syntax": 'markdown', "ext": '.md', "custom_wiki2html": 'vimwiki_markdown', "index": 'index'}] 
+let g:vimwiki_list = [{"path": '/Users/Roambot/Dropbox/Wiki', "path_html": '~/Dropbox/Apps/VimWiki/WikiPages', "template_path": '~/Dropbox/Apps/VimWiki', "template_default": 'default', "template_ext": '.tpl', "syntax": 'markdown', "ext": '.txt', "custom_wiki2html": 'vimwiki_markdown', "index": 'index'}] 
 
 " Mappings
 
@@ -413,7 +429,7 @@ let g:pandoc#formatting#textwidth = 80
 let g:pandoc#formatting#mode = 'h'
 let g:pandoc#formatting#extra_equalprg = "--atx-headers"
 let g:pandoc#filetypes#handled = ["pandoc", "markdown"]
-let g:pandoc#filetypes#pandoc_markdown = 0
+"let g:pandoc#filetypes#pandoc_markdown = 0
 let g:pandoc#keyboard#sections#header_style = "a2"
 " let g:pandoc#after#modules#enabled = ["supertab", "goyo"]
 """""""""""""""""""""""""

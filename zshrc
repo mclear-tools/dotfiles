@@ -1,3 +1,13 @@
+# Set architecture flags
+export ARCHFLAGS="-arch x86_64"
+# Ensure user-installed binaries take precedence
+export PATH=/usr/local/bin:$PATH
+# # Path to Beets
+ export BEETSDIR=~/Dropbox/Apps/Beets/
+# Terminal for 256 colors
+export TERM=xterm-256color-italic
+#export TERM=xterm-256color
+
 # antigen source
 source $HOME/dotfiles/antigen/antigen.zsh
 
@@ -52,16 +62,6 @@ antigen apply
 # bind k and j for VI mode
   bindkey -M vicmd 'k' history-substring-search-up
   bindkey -M vicmd 'j' history-substring-search-down
-
-# Set architecture flags
-export ARCHFLAGS="-arch x86_64"
-# Ensure user-installed binaries take precedence
-export PATH=/usr/local/bin:$PATH
-# # Path to Beets
- export BEETSDIR=~/Dropbox/Apps/Beets/
-# Terminal for 256 colors
-export TERM=xterm-256color-italic
-#export TERM=xterm-256color
 
 ### ALIASES
 
