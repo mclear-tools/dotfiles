@@ -8,46 +8,92 @@ export PATH=/usr/local/bin:$PATH
 export TERM=xterm-256color-italic
 #export TERM=xterm-256color
 
+# load zgen
+source "${HOME}/dotfiles/zgen/zgen.zsh"
+
+# check if there's no init script
+if ! zgen saved; then
+    echo "Creating a zgen save"
+
+    zgen oh-my-zsh
+
+    # plugins
+    zgen oh-my-zsh plugins/git
+    zgen oh-my-zsh plugins/sudo
+    zgen oh-my-zsh plugins/command-not-found
+    zgen oh-my-zsh plugins/vi-mode
+    zgen oh-my-zsh plugins/tmux
+    zgen oh-my-zsh plugins/brew
+    zgen oh-my-zsh plugins/brew-cask
+    zgen oh-my-zsh plugins/marked2
+    zgen oh-my-zsh plugins/tmux
+    zgen oh-my-zsh plugins/tmux
+    
+    # Non-default bundles
+    zgen load zsh-users/zsh-syntax-highlighting
+    zgen load srijanshetty/zsh-pandoc-completion
+    zgen load peterhurford/git-aliases.zsh
+    zgen load zsh-users/zsh-history-substring-search
+    zgen load secrettriangle/smart-cd
+    zgen load voronkovich/gitignore.plugin.zsh
+    zgen load djui/alias-tips
+
+    # completions
+    zgen load zsh-users/zsh-completions src
+
+    # theme
+    zgen oh-my-zsh themes/ys
+
+# OSX bundle if working on mac
+ if [ "$OSTYPE"="darwin14.0.0" ]; then
+   zgen oh-my-zsh plugins/osx
+ fi
+
+
+    # save all to init script
+    zgen save
+fi
+
 # antigen source
-source $HOME/dotfiles/antigen/antigen.zsh
+# source $HOME/dotfiles/antigen/antigen.zsh
 
 # Load the oh-my-zsh's library.
-antigen use oh-my-zsh
+# antigen use oh-my-zsh
 
 # Bundles from the default repo (robbyrussell's oh-my-zsh).
 # antigen bundle git
-antigen bundle pip
-antigen bundle command-not-found
-antigen bundle brew
-antigen bundle brew-cask
-antigen bundle marked2
-antigen bundle tmux
-antigen bundle vi-mode
+# antigen bundle pip
+# antigen bundle command-not-found
+# antigen bundle brew
+# antigen bundle brew-cask
+# antigen bundle marked2
+# antigen bundle tmux
+# antigen bundle vi-mode
 
 # OSX bundle if working on mac
-if [ "$OSTYPE"="darwin11.0" ]; then
-  antigen bundle osx
-fi
+# if [ "$OSTYPE"="darwin14.0.0" ]; then
+#   antigen bundle osx
+# fi
 
 
 # Fish style syntax highlighting
 # Load *before* history substring search
-antigen bundle zsh-users/zsh-syntax-highlighting
+# antigen bundle zsh-users/zsh-syntax-highlighting
 
 # Non-default bundles
-antigen bundle peterhurford/git-aliases.zsh
-antigen bundle zsh-users/zsh-history-substring-search
-antigen bundle srijanshetty/zsh-pandoc-completion
-antigen bundle secrettriangle/smart-cd
-antigen bundle voronkovich/gitignore.plugin.zsh
-antigen bundle unixorn/autoupdate-antigen.zshplugin
-antigen bundle djui/alias-tips
+# antigen bundle peterhurford/git-aliases.zsh
+# antigen bundle zsh-users/zsh-history-substring-search
+# antigen bundle srijanshetty/zsh-pandoc-completion
+# antigen bundle secrettriangle/smart-cd
+# antigen bundle voronkovich/gitignore.plugin.zsh
+# antigen bundle unixorn/autoupdate-antigen.zshplugin
+# antigen bundle djui/alias-tips
 
 # Load the theme.
-antigen theme ys
+# antigen theme ys
 
 # Tell antigen that you're done.
-antigen apply
+# antigen apply
 
 # Bindings for history substring search
 # bind UP and DOWN arrow keys
@@ -70,7 +116,8 @@ antigen apply
 
 # open vim with clientserver
   alias v='vim --servername VIM'
-  alias mvim='/usr/local/Cellar/macvim/7.4-73_1/bin/mvim'
+  alias nv='nvim'
+#  alias mvim='/usr/local/Cellar/macvim/HEAD/bin/mvim'
 # Alias open audio files with Vox in background
   alias p='open -g -a Vox'
 # Alias open file with application
@@ -92,7 +139,7 @@ cdf() {
 # open file with sublime text 2 from terminal
   alias e='subl . &'
 # lets bash scripts get run
-source ~/.bashrc 
+# source ~/.bashrc 
 
 # Read man pages in vim
  vman() {
@@ -115,3 +162,4 @@ unset GREP_OPTIONS
 
 # set editor as homebrew's vim
 export EDITOR=/usr/local/bin/vim
+
