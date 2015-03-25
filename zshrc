@@ -11,6 +11,12 @@ export TERM=xterm-256color-italic
 # load zgen
 source "${HOME}/dotfiles/zgen/zgen.zsh"
 
+# Completion path
+fpath=(~/.zsh/Completion $fpath)
+
+# Enable autocompletion
+autoload -U compinit
+compinit
 # check if there's no init script
 if ! zgen saved; then
     echo "Creating a zgen save"
@@ -114,7 +120,7 @@ fi
 # source
   alias so='source'
 
-# open vim with clientserver
+# Vim
   alias v='vim --servername VIM'
   alias nv='nvim'
 #  alias mvim='/usr/local/Cellar/macvim/HEAD/bin/mvim'
