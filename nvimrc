@@ -26,11 +26,16 @@ Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-after' " plugin for vim-pandoc and other plugins
 Plug 'altercation/vim-colors-solarized'
+Plug 'w0ng/vim-hybrid' " alternate colorscheme
+Plug 'chriskempson/base16-vim' " alternate colorscheme 
+Plug 'freeo/vim-kalisi' " alternate colorscheme
+Plug 'zeis/vim-kolor' " alternate colorscheme
+Plug 'morhetz/gruvbox' " alternate colorscheme
 Plug 'VOoM' " outliner
 Plug 'tpope/vim-commentary' " Comment manager/toggle
 Plug 'tpope/vim-fugitive' " Git management
 Plug 'tpope/vim-surround' "  surround text with whatever
-" "Plug 'airblade/vim-gitgutter'
+Plug 'airblade/vim-gitgutter'
 " Plug 'itchyny/lightline.vim' " alternate powerline plugin
 Plug 'edkolev/tmuxline.vim' " tmux lightline plugin
 Plug 'mhinz/vim-startify' " session manager and startup screen
@@ -85,6 +90,8 @@ nnoremap <leader>; :bp<CR>
 nnoremap <leader>q :tabnew<CR>
 " remap escape
 inoremap jk <Esc>
+" repeat last command line command
+nnoremap <leader>r @:<CR>
 
 " " Insert mode navigation mappings
 
@@ -148,6 +155,9 @@ imap <F2> <Esc>:set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
 nmap <F1> :.w !pbcopy<CR><CR>
 vmap <F1> :w !pbcopy<CR><CR>
 
+" term remappings
+tnoremap <Esc> <c-\><c-n>
+
 " }}}
 " Settings {{{
 syntax enable
@@ -158,12 +168,27 @@ set noshowmode
 set nonumber
 " colorscheme settings
 set background=dark
-colorscheme solarized
+let g:gruvbox_italic=1
+let g:gruvbox_vert_split= 'dark0'
+let g:gruvbox_italicize_comments = 1
+let g:gruvbox_sign_column = 'dark0'
+let g:gruvbox_color_column = 'dark1'
+let g:gruvbox_hls_cursor = 'orange'
+colorscheme gruvbox
+" colorscheme solarized
+" colorscheme base16-default
+
+" let g:hybrid_use_Xresources = 1
+"colorscheme hybrid
+" colorscheme kalisi
+" set t_Co=256
+" let &t_AB="\e[48;5;%dm"
+" let &t_AF="\e[38;5;%dm"
+
 " highlight clear SignColumn
 call togglebg#map("<F5>")
 set spell spelllang=en_us
 set tabstop=4 shiftwidth=2 expandtab
-set linespace=2
 set fo+=t
 set scrolloff=999 " keep cursor in middle of screen
 set textwidth=80
@@ -173,24 +198,30 @@ set ruler
 set laststatus=2
 set showcmd
 set wildmenu
+set wildmode=list:longest,full
+set hlsearch
 
-" set lazyredraw " to avoid scrolling problems
+" automatically leave insert mode after 'updatetime' milliseconds of inaction
+" au CursorHoldI * stopinsert
+
+" set 'updatetime' to 15 seconds when in insert mode
+au InsertEnter * let updaterestore=&updatetime | set updatetime=10000
+au InsertLeave * let &updatetime=updaterestore
+
+set lazyredraw " to avoid scrolling problems
 " Move to next line when using left and right
 set whichwrap+=<,>
 " |nojoinspaces| allows you to use SHIFT-J in normal mode to join the next line 
-" " with the current line without adding unwanted spaces.
+" with the current line without adding unwanted spaces.
 setlocal nojoinspaces
-" " tells vim to use HTML style comments in your markdown files. For more, see |comments| and |commentstring|.
- setlocal breakat-=*
-" setlocal commentstring=<!--%s-->
-" setlocal comments=s:<!--,m:\ \ \ \ ,e:-->
+
+setlocal breakat-=*
 " make delete key work properly
 set backspace=indent,eol,start
 " " make vim scrollable with mouse
 set mouse=a
-
+" guioptions
 set go+=a
-
 
 " " The Silver Searcher
 if executable('ag')
@@ -319,7 +350,7 @@ let g:vimwiki_list = [{"path": '/Users/Roambot/Dropbox/Wiki', "path_html": '~/Dr
 
 " Mappings
 
-nmap <localleader>i <Plug>VimwikiIndex
+nnoremap <localleader>i :VimwikiIndex<CR>
 nnoremap <localleader>sw :VWS 
 
 
@@ -628,34 +659,37 @@ let delimitMate_matchpairs = "(:),[:],{:},<:>"
 
 " " " }}}
 " AIRLINE SETTINGS {{{
-  let g:airline_theme = 'solarized'
+  " let g:airline_theme = 'base16'
+  " let g:airline_theme = 'solarized'
+  " let g:airline_theme = 'hybridline'
+  let g:airline_theme = 'bubblegum'
   let g:airline_powerline_fonts=1
  
-" Tweak of solarized colors
-let g:airline_theme_patch_func = 'AirLineBlaenkTheme'
-" 0,1: gfg, gbg; 2,3: tfg, tbg; 4: styles
-function! AirLineBlaenkTheme(palette)
-  if g:airline_theme == 'solarized'
-    let magenta = ['#ffffff', '#d33682', 255, 125, '']
-    let blue = ['#ffffff', '#268bd2', 255, 33, '']
-    let green = ['#ffffff', '#859900', 255, 64, '']
-    let red = ['#ffffff', '#dc322f', 255, 160, '']
-    let orange = ['#ffffff', '#cb4b16', 255, 166, '']
-    let cyan = ['#ffffff', '#2aa198', 255, 37, '']
-    let modes = {
-      \ 'normal': blue,
-      \ 'insert': cyan,
-      \ 'replace': magenta,
-      \ 'visual': orange
-      \}
-    let a:palette.replace = copy(a:palette.insert)
-    let a:palette.replace_modified = a:palette.insert_modified
-    for key in keys(modes)
-      let a:palette[key].airline_a = modes[key]
-      let a:palette[key].airline_z = modes[key]
-    endfor
-  endif
-endfunction
+" " Tweak of solarized colors
+" let g:airline_theme_patch_func = 'AirLineBlaenkTheme'
+" " 0,1: gfg, gbg; 2,3: tfg, tbg; 4: styles
+" function! AirLineBlaenkTheme(palette)
+"   if g:airline_theme == 'solarized'
+"     let magenta = ['#ffffff', '#d33682', 255, 125, '']
+"     let blue = ['#ffffff', '#268bd2', 255, 33, '']
+"     let green = ['#ffffff', '#859900', 255, 64, '']
+"     let red = ['#ffffff', '#dc322f', 255, 160, '']
+"     let orange = ['#ffffff', '#cb4b16', 255, 166, '']
+"     let cyan = ['#ffffff', '#2aa198', 255, 37, '']
+"     let modes = {
+"       \ 'normal': blue,
+"       \ 'insert': cyan,
+"       \ 'replace': magenta,
+"       \ 'visual': orange
+"       \}
+"     let a:palette.replace = copy(a:palette.insert)
+"     let a:palette.replace_modified = a:palette.insert_modified
+"     for key in keys(modes)
+"       let a:palette[key].airline_a = modes[key]
+"       let a:palette[key].airline_z = modes[key]
+"     endfor
+"   endif
+" endfunction
 
 " enable/disable detection of whitespace errors. >
   let g:airline#extensions#whitespace#enabled = 0
