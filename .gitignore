@@ -49,6 +49,7 @@ Backup[ ]of[ ]*.numbers/
 # Folders
 *Archive/
 oh-my-zsh/
+zgen/
 
 # Skim
 .skim
