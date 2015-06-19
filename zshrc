@@ -1,14 +1,19 @@
 # Set architecture flags
 export ARCHFLAGS="-arch x86_64"
+
 # Ensure user-installed binaries take precedence
 export PATH=/usr/local/bin:$PATH
+
 # # Path to Beets
  export BEETSDIR=~/Dropbox/Apps/Beets/
+
 # Terminal for 256 colors
 export TERM=xterm-256color-italic
 #export TERM=xterm-256color
+
 #export to allow nvim to change cursor shape
 export NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+
 # load zgen
 source "${HOME}/dotfiles/zgen/zgen.zsh"
 
@@ -24,7 +29,7 @@ if ! zgen saved; then
 
     zgen oh-my-zsh
 
-    # plugins
+   # plugins
    # zgen oh-my-zsh plugins/git
     zgen oh-my-zsh plugins/sudo
     zgen oh-my-zsh plugins/command-not-found
@@ -60,47 +65,6 @@ if ! zgen saved; then
     zgen save
 fi
 
-# antigen source
-# source $HOME/dotfiles/antigen/antigen.zsh
-
-# Load the oh-my-zsh's library.
-# antigen use oh-my-zsh
-
-# Bundles from the default repo (robbyrussell's oh-my-zsh).
-# antigen bundle git
-# antigen bundle pip
-# antigen bundle command-not-found
-# antigen bundle brew
-# antigen bundle brew-cask
-# antigen bundle marked2
-# antigen bundle tmux
-# antigen bundle vi-mode
-
-# OSX bundle if working on mac
-# if [ "$OSTYPE"="darwin14.0.0" ]; then
-#   antigen bundle osx
-# fi
-
-
-# Fish style syntax highlighting
-# Load *before* history substring search
-# antigen bundle zsh-users/zsh-syntax-highlighting
-
-# Non-default bundles
-# antigen bundle peterhurford/git-aliases.zsh
-# antigen bundle zsh-users/zsh-history-substring-search
-# antigen bundle srijanshetty/zsh-pandoc-completion
-# antigen bundle secrettriangle/smart-cd
-# antigen bundle voronkovich/gitignore.plugin.zsh
-# antigen bundle unixorn/autoupdate-antigen.zshplugin
-# antigen bundle djui/alias-tips
-
-# Load the theme.
-# antigen theme ys
-
-# Tell antigen that you're done.
-# antigen apply
-
 # Bindings for history substring search
 # bind UP and DOWN arrow keys
   zmodload zsh/terminfo
@@ -117,6 +81,12 @@ fi
 
 ### ALIASES
 
+# General bindings
+alias zu='zgen selfupdate && zgen update'
+alias bu='bubu && brew doctor'
+alias bd='brew desc' 
+alias bi='brew info'
+
 # source
   alias so='source'
 
@@ -125,6 +95,7 @@ fi
   alias nv='nvim'
   alias work='nvim -S ~/.vim/session/Work'
 #  alias mvim='/usr/local/Cellar/macvim/HEAD/bin/mvim'
+
 # Alias open audio files with Vox in background
   alias p='open -g -a Vox'
 # Alias open file with application
@@ -172,10 +143,6 @@ unset GREP_OPTIONS
 # set editor 
 export EDITOR=/usr/local/bin/nvim
 
-alias zu='zgen selfupdate && zgen update'
-alias bu='bubu && brew doctor'
-alias bd='brew desc' 
-alias bi='brew info'
 
 # shell script for colors in nvim using gruvbox
 
