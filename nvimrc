@@ -8,47 +8,58 @@ filetype plugin indent on
 
 call plug#begin('~/.nvim/plugged')
 
-" Plugin outside ~/.vim/plugged with post-update hook
-" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
+" External Plugins ~/.vim/plugged with post-update hook
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
  
+" Important Plugins
 Plug 'bling/vim-airline'  " powerline plugin
-Plug 'vimwiki/vimwiki' " wiki in vim
-Plug 'git://github.com/sjl/gundo.vim' " graphical tree undo
-" NERD tree will be loaded on the first invocation of NERDTreeToggle command
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' } " file manager
-Plug 'jeetsukumaran/vim-buffergator' "Buffer manager
-"Plug 'Z1MM32M4N/vim-superman' " open man pages in vim
-Plug 'christoomey/vim-tmux-navigator' " easy navigate tmux and vim panes
-Plug 'wesQ3/vim-windowswap' " Easily swap buffers
 Plug 'bling/vim-bufferline' " plugin for buffer display in lightline/airline
 Plug 'supertab' " Tab completion
 Plug 'vim-pandoc/vim-pandoc-syntax' 
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-after' " plugin for vim-pandoc and other plugins
+Plug 'vimwiki/vimwiki', 'dev' " wiki in vim
+Plug 'VOoM' " outliner
+Plug 'TeX-9' " Latex
+Plug 'tpope/vim-fugitive' " Git management
+Plug 'airblade/vim-gitgutter'
+Plug 'mhinz/vim-startify' " session manager and startup screen
+
+" " Useful Plugins
+Plug 'tpope/vim-vinegar'  " better netrw use
+Plug 'vim-scripts/EasyMotion' " quick cursor motions
+Plug 'tpope/vim-commentary' " Comment manager/toggle
+Plug 'tpope/vim-surround' "  surround text with whatever
+Plug 'edkolev/tmuxline.vim' " tmux lightline plugin
+Plug 'simnalamburt/vim-mundo' " Undo tree (fork of Gundo with neovim support
+Plug 'junegunn/goyo.vim' " writeroom style writing
+Plug 'gitv' " Git Viewer 
+" Plug 'https://github.com/neilagabriel/vim-geeknote'  "Evernote
+Plug 'davidoc/taskpaper.vim' " taskpaper alternative
+Plug 'vim-pad'  " note plugin
+Plug 'git://github.com/sjl/gundo.vim' " graphical tree undo
+" NERD tree will be loaded on the first invocation of NERDTreeToggle command
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' } " file manager
+Plug 'jeetsukumaran/vim-buffergator' "Buffer manager
+Plug 'Z1MM32M4N/vim-superman' " open man pages in vim
+Plug 'gioele/vim-autoswap' " gracefully handle swaps
+Plug 'vim-scripts/ZoomWin' " zoom in and out of windows
+Plug 'szw/vim-smartclose' "window closing utility
+Plug 'christoomey/vim-tmux-navigator' " easy navigate tmux and vim panes
+Plug 'wesQ3/vim-windowswap' " Easily swap buffers
+
+" " Color Plugins
 Plug 'altercation/vim-colors-solarized'
 Plug 'w0ng/vim-hybrid' " alternate colorscheme
 Plug 'chriskempson/base16-vim' " alternate colorscheme 
 Plug 'freeo/vim-kalisi' " alternate colorscheme
 Plug 'zeis/vim-kolor' " alternate colorscheme
 Plug 'morhetz/gruvbox' " alternate colorscheme
-Plug 'VOoM' " outliner
-Plug 'tpope/vim-commentary' " Comment manager/toggle
-Plug 'tpope/vim-fugitive' " Git management
-Plug 'tpope/vim-surround' "  surround text with whatever
-Plug 'airblade/vim-gitgutter'
-" Plug 'itchyny/lightline.vim' " alternate powerline plugin
-Plug 'edkolev/tmuxline.vim' " tmux lightline plugin
-Plug 'mhinz/vim-startify' " session manager and startup screen
-Plug 'junegunn/goyo.vim' " writeroom style writing
-Plug 'TeX-9' " Latex
-Plug 'gitv' " Git Viewer 
-Plug 'https://github.com/neilagabriel/vim-geeknote'  "Evernote
-Plug 'davidoc/taskpaper.vim' " taskpaper alternative
-" Plug 'henrik/vim-open-url' " open any url using ruby and regex
-Plug 'vim-pad'  " note plugin
 
 " " Not sure about these plugins
 
+" Plug 'henrik/vim-open-url' " open any url using ruby and regex
+" Plug 'itchyny/lightline.vim' " alternate powerline plugin
 " Plug 'svintus/vim-editexisting' " focus file if open rather than swap warning
 " Plug 'extradite.vim'  " More Git action
 " Plug 'utl.vim'   " use Links
@@ -73,19 +84,27 @@ call plug#end()
 " End Plugins
 
 " "}}}
-" General Keymappings {{{"{{{
+" General Keymappings {{{
+
+" let mapleader = "\<Space>"
 
 " Grep TODO and NOTE
 noremap <leader>d :copen<CR>:vimgrep /TODO/gj *.md *.taskpaper<CR>
 noremap <leader>n :copen<CR>:vimgrep /NOTE/gj *.md *.taskpaper<CR>
 " clean up paragraph according to pandoc specs
 nnoremap <leader>= vip=
-" previous and next buffer 
-nnoremap <leader>] :tabnext<CR>
-nnoremap <leader>[ :tabprevious<CR>
+
+" " previous and next buffer 
+nnoremap KK :bn<CR>
+nnoremap JJ :bp<CR>
+" " previous and next tab
+nnoremap L :tabnext<CR>
+nnoremap H :tabprevious<CR>
+" nnoremap <leader>] :tabnext<CR>
+" nnoremap <leader>[ :tabprevious<CR>
 " previous and next tab
-nnoremap <leader>' :bn<CR>
-nnoremap <leader>; :bp<CR>
+" nnoremap <leader>' :bn<CR>
+" nnoremap <leader>; :bp<CR>
 " new tab
 nnoremap <leader>q :tabnew<CR>
 " remap escape
@@ -96,7 +115,7 @@ nnoremap <leader>r @:<CR>
 " " Insert mode navigation mappings
 
 " delete previous word in insert
-inoremap <C-D> <Esc>bdwi
+" inoremap <C-D> <Esc>bdwi
 
 " " make cursor move to next visual line below cursor this is a test 
 noremap Q gwip
@@ -125,8 +144,8 @@ let maplocalleader = ","
  nnoremap <localLeader>c :TOC<CR>
 " " Toggle Goyo on/off
  nnoremap <localLeader>g :Goyo<CR>
-" "Map NERDTree to ,t
- nnoremap <silent> <localLeader>t :NERDTreeToggle<CR>
+" "Map NERDTree to ,,
+ nnoremap <silent> <localLeader>, :NERDTreeToggle<CR>
  nnoremap <localLeader>v :VoomToggle<CR>
 " "toggle filetype for pandoc
  nnoremap <localleader>f :set filetype=pandoc<CR> 
@@ -134,10 +153,22 @@ let maplocalleader = ","
  nnoremap <localleader>G :GundoToggle<CR>
 " quicksave
 nnoremap <localleader>w :w!<CR>
+" quit
+nnoremap <localleader>q :q<CR>
 " Fuzzyfinder for home directory
  noremap <C-t> :FZF ~<CR>
 " Fuzzyfinder for current directory
  noremap <C-f> :FZF<CR>
+
+noremap <localleader>t :tabe term://.//zsh<CR>
+nnoremap <localleader>r :Reveal<CR>
+nnoremap <localleader>z :sp term://zsh<CR>
+
+" " resize current buffer by +/- 5 
+" nnoremap <D-left> :vertical resize -5<cr>
+" nnoremap <D-down> :resize +5<cr>
+" nnoremap <D-up> :resize -5<cr>
+" nnoremap <D-right> :vertical resize +5<cr>
 
 " " Remap navigation commands to center view on cursor using zz
 " " nnoremap <C-U> 11kzz
@@ -155,8 +186,11 @@ imap <F2> <Esc>:set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
 nmap <F1> :.w !pbcopy<CR><CR>
 vmap <F1> :w !pbcopy<CR><CR>
 
-" term remappings
+" terminal remappings
+if has('nvim')
 tnoremap <Esc> <c-\><c-n>
+endif
+
 
 " }}}
 " Settings {{{
@@ -164,8 +198,16 @@ syntax enable
 " buffer settings
 set hidden
 set switchbuf=useopen
+" elinks for browsing
+let g:netrw_http_cmd = "elinks"
+
+
 set noshowmode
-set nonumber
+set number
+" Change number settings depending on mode
+autocmd InsertEnter * :set number
+autocmd InsertEnter * :set norelativenumber
+autocmd InsertLeave * :set relativenumber
 " colorscheme settings
 set background=dark
 let g:gruvbox_italic=1
@@ -199,14 +241,31 @@ set laststatus=2
 set showcmd
 set wildmenu
 set wildmode=list:longest,full
+set wildignore+=.git            " ignore the .git directory
+set wildignore+=*.DS_Store      " ignore Mac finder/spotlight crap
+if exists ("&wildignorecase")
+  set wildignorecase
+endif
 set hlsearch
 
+" Cursor settings
 " automatically leave insert mode after 'updatetime' milliseconds of inaction
-" au CursorHoldI * stopinsert
-
-" set 'updatetime' to 15 seconds when in insert mode
+au CursorHoldI * stopinsert
+" set 'updatetime' to 10 seconds when in insert mode
 au InsertEnter * let updaterestore=&updatetime | set updatetime=10000
 au InsertLeave * let &updatetime=updaterestore
+set cursorline
+
+
+" change cursor shape depending on mode with different code for tmux configuration
+if exists('$TMUX')
+  let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+  let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+  else
+  let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+  let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+endif
+
 
 set lazyredraw " to avoid scrolling problems
 " Move to next line when using left and right
@@ -220,8 +279,6 @@ setlocal breakat-=*
 set backspace=indent,eol,start
 " " make vim scrollable with mouse
 set mouse=a
-" guioptions
-set go+=a
 
 " " The Silver Searcher
 if executable('ag')
@@ -229,11 +286,19 @@ if executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor
 endif
 
-" " bind K to grep word under cursor
-nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+" " bind R to grep word under cursor
+nnoremap R :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 " Ag exec command
 "command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
 nnoremap A :Ag<Space>
+
+" GUI settings and Macvim
+set go+=a
+if has ('gui_running')
+  if has ("gui_macvim")
+    set guifont=Inconsolata\ LGC\ for\ Powerline:h14
+  endif
+endif
 
 " " }}}
 " Backup and Swap Settings {{{
@@ -241,6 +306,9 @@ set backupdir=~/.nvim/backup//
 set directory=~/.nvim/swap//
 set undodir=~/.nvim/undo//
 set noswapfile
+" Enable persistent undo so that undo history persists across vim sessions
+set undofile
+set undodir=~/.nvim/undo
 " }}}
 " Functions {{{
 "Reveal file in finder using :Reveal
@@ -256,6 +324,27 @@ function! s:RevealInFinder()
   redraw!
 endfunction
 command! Reveal call <SID>RevealInFinder()
+"autosave
+autocmd InsertLeave,TextChanged * if expand('%') != '' | update | endif
+
+" Elinks
+
+
+function! ViewHtmlText(url)
+  if !empty(a:url)
+    new
+    setlocal buftype=nofile bufhidden=hide noswapfile
+    execute 'r !elinks ' . a:url . ' -dump -dump-width ' . winwidth(0)
+    1d
+  endif
+endfunction
+" Save and view text for current html file.
+nnoremap <Leader>H :update<Bar>call ViewHtmlText(expand('%:p'))<CR>
+" View text for visually selected url.
+vnoremap <Leader>h y:call ViewHtmlText(@@)<CR>
+" View text for URL from clipboard.
+" On Linux, use @* for current selection or @+ for text in clipboard.
+nnoremap <Leader>h :call ViewHtmlText(@+)<CR>
 
 " }}}
 " Startify Settings {{{
@@ -270,16 +359,18 @@ command! Reveal call <SID>RevealInFinder()
     let g:startify_session_persistence    = 1
     let g:startify_session_delete_buffers = 1
 
+    " let g:startify_session_dir = '~/.vim/session'
     let g:startify_list_order = [
       \ ['   Most recently used:'],
       \ 'files',
-      \ ['   Recently used within this dir:'],
-      \ 'dir',
       \ ['   Sessions:'],
       \ 'sessions',
       \ ['   Bookmarks:'],
       \ 'bookmarks',
       \ ]
+
+      " \ ['   Recently used within this dir:'],
+      " \ 'dir',
 
     let g:startify_skiplist = [
                 \ 'COMMIT_EDITMSG',
@@ -289,7 +380,7 @@ command! Reveal call <SID>RevealInFinder()
                 \ ]
 
     let g:startify_bookmarks = [
-                \ '~/.nvimrc',
+                \ '~/dotfiles/nvimrc',
                 \ '~/Dropbox/Wiki/index.txt',
                 \ '~/Dropbox/Work/Teaching',
                 \ '~/Dropbox/Work/Projects',
@@ -297,11 +388,8 @@ command! Reveal call <SID>RevealInFinder()
                 \ '/Users/Roambot/Dropbox/Webpage/content/pages/101Assignments.md',
                 \ ]
 
-    let g:startify_custom_footer =
-          \ ['', "Aus so krummem Holze, als woraus der Mensch gemacht ist, kann nichts ganz Gerades gezimmert werden (8:23)", '']
-
-    let g:startify_custom_header =
-          \ map(split(system('fortune | cowsay'), '\n'), '"   ". v:val') + ['']
+    let g:startify_custom_footer =        
+          \ ['', "The past is a foreign country; they do things differently there. (L.P. Hartley, The Go-Between)", '']
 
     hi StartifyBracket ctermfg=240
     hi StartifyFile    ctermfg=147
@@ -311,6 +399,11 @@ command! Reveal call <SID>RevealInFinder()
     hi StartifyPath    ctermfg=245
     hi StartifySlash   ctermfg=240
     hi StartifySpecial ctermfg=240
+" 
+" \ ['', "Aus so krummem Holze, als woraus der Mensch gemacht ist, kann nichts ganz Gerades gezimmert werden (Kant, 8:23)", '']
+"
+    " let g:startify_custom_header =
+    "       \ map(split(system('fortune | cowsay'), '\n'), '"   ". v:val') + ['']
 
 " open nerdtree at start with startify
 "    autocmd VimEnter *
@@ -322,6 +415,47 @@ command! Reveal call <SID>RevealInFinder()
 
 
 " }}}
+" Gitv {{{
+
+   nnoremap <leader>v :Gitv --all<cr>
+   nnoremap <leader>V :Gitv! --all<cr>
+   vnoremap <leader>V :Gitv! --all<cr>
+   cabbrev git Git
+
+
+"  }}}
+"  Fugitive {{{
+
+" fugitive shortcuts
+
+
+" noremap ggs :Gstatus<cr>
+" noremap ggc :Gcommit<cr>
+" noremap gga :Gwrite<cr>
+" noremap ggl :Glog<cr>
+" noremap ggd :Gdiff<cr>
+
+nnoremap <leader>gs :Gstatus<CR>
+nnoremap <leader>gc :Gcommit -v -q<CR>
+nnoremap <leader>ga :Gcommit --amend<CR>
+nnoremap <leader>gt :Gcommit -v -q %<CR>
+nnoremap <leader>gd :Gdiff<CR>
+nnoremap <leader>ge :Gedit<CR>
+nnoremap <leader>gr :Gread<CR>
+nnoremap <leader>gw :Gwrite<CR><CR>
+nnoremap <leader>gl :silent! Glog<CR>
+nnoremap <leader>gp :Ggrep<Space>
+nnoremap <leader>gm :Gmove<Space>
+nnoremap <leader>gb :Git branch<Space>
+nnoremap <leader>go :Git checkout<Space>
+nnoremap <leader>gps :Dispatch! git push<CR>
+nnoremap <leader>gpl :Dispatch! git pull<CR>
+
+"  }}}
+" Vim Plug {{{
+nnoremap <localleader>l :PlugUpdate<CR>
+
+" }}} 
 " Vim-Pad {{{
 
 let g:pad#dir = "~/Dropbox/Notes/"
@@ -332,8 +466,8 @@ let g:pad#window_height = 10
 let g:pad#search_backend = "ag"
 
 nnoremap <localleader>p :Pad ls<CR>
-nnoremap <localleader>n :Pad new<CR>
-nnoremap <localleader>sp :Pad ls<Space>
+nnoremap <localleader>pn :Pad new<CR>
+" nnoremap <localleader>sp :Pad ls<Space>
 
 
 " }}}
@@ -342,6 +476,10 @@ nnoremap <localleader>sp :Pad ls<Space>
 let g:voom_tree_width = 50
 let g:voom_ft_modes = {'pandoc': 'markdown', 'markdown': 'markdown', 'tex': 'latex'}
 let g:voom_default_mode = 'pandoc'
+
+" after read in tex file and then execute Voom latex 
+" autocmd BufRead *.tex :Voom latex 
+" autocmd BufRead *.md :Voom pandoc
 
 " }}}
 " Vim Wiki {{{
@@ -662,9 +800,17 @@ let delimitMate_matchpairs = "(:),[:],{:},<:>"
   " let g:airline_theme = 'base16'
   " let g:airline_theme = 'solarized'
   " let g:airline_theme = 'hybridline'
-  let g:airline_theme = 'bubblegum'
-  let g:airline_powerline_fonts=1
- 
+  let g:airline_theme = 'gruvbox'
+  " let g:airline_theme = 'bubblegum'
+  let g:airline_powerline_fonts=1 
+" if has('gui_macvim')
+"   let g:airline_right_sep = '◀'
+"   let g:airline_left_sep = '▶'
+" else
+"  let g:airline_powerline_fonts=1 
+" endif 
+
+
 " " Tweak of solarized colors
 " let g:airline_theme_patch_func = 'AirLineBlaenkTheme'
 " " 0,1: gfg, gbg; 2,3: tfg, tbg; 4: styles
@@ -702,6 +848,23 @@ if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
 
+" unicode symbols
+
+  "
+  " let g:airline_left_sep = '»'
+  " let g:airline_left_sep = '▶'
+  " let g:airline_right_sep = '«'
+  " let g:airline_right_sep = '◀'
+  " let g:airline_symbols.linenr = '␊'
+  " let g:airline_symbols.linenr = '␤'
+  " let g:airline_symbols.linenr = '¶'
+  " let g:airline_symbols.branch = '⎇'
+  " let g:airline_symbols.paste = 'ρ'
+  " let g:airline_symbols.paste = 'Þ'
+  " let g:airline_symbols.paste = '∥'
+  " let g:airline_symbols.whitespace = 'Ξ'
+
+
 " enable/disable bufferline integration >
   let g:airline#extensions#bufferline#enabled = 0
   let g:bufferline_echo = 1
@@ -733,7 +896,6 @@ function! AirlineInit()
    let g:airline_section_y = airline#section#create(['%{strftime("%a %b %d %X")}'])
 endfunction
 autocmd VimEnter * call AirlineInit()
-
 """""""""""""""""""""""""""""""""""
 " }}}
 " Tmuxline {{{
@@ -781,11 +943,15 @@ autocmd User GoyoEnter call <SID>goyo_enter()
 autocmd User GoyoLeave call <SID>goyo_leave()
 
 " }}}
+" FZF {{{
+let g:fzf_launcher = '/Users/Roambot/Documents/Hacks/MacVimFZF.sh %s'
+
+" }}}
 " Extras and Unused {{{
 "Filenames in tabs in iTerm
-"set t_ts=^[]1;
-"set t_fs=^G
-"set guitablabel=%t
+" set t_ts=^[]1;
+" set t_fs=^G
+" set guitablabel=%t
 
 " Switch tabs with numbers
 "if has("gui_macvim")

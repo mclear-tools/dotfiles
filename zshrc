@@ -7,12 +7,13 @@ export PATH=/usr/local/bin:$PATH
 # Terminal for 256 colors
 export TERM=xterm-256color-italic
 #export TERM=xterm-256color
-
+#export to allow nvim to change cursor shape
+export NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 # load zgen
 source "${HOME}/dotfiles/zgen/zgen.zsh"
 
 # Completion path
-fpath=(~/.zsh/Completion $fpath)
+# fpath=(~/.zsh/Completion $fpath)
 
 # Enable autocompletion
 autoload -U compinit
@@ -24,7 +25,7 @@ if ! zgen saved; then
     zgen oh-my-zsh
 
     # plugins
-    zgen oh-my-zsh plugins/git
+   # zgen oh-my-zsh plugins/git
     zgen oh-my-zsh plugins/sudo
     zgen oh-my-zsh plugins/command-not-found
     zgen oh-my-zsh plugins/vi-mode
@@ -33,13 +34,12 @@ if ! zgen saved; then
     zgen oh-my-zsh plugins/brew-cask
     zgen oh-my-zsh plugins/marked2
     zgen oh-my-zsh plugins/tmux
-    zgen oh-my-zsh plugins/tmux
     
     # Non-default bundles
     zgen load zsh-users/zsh-syntax-highlighting
     zgen load srijanshetty/zsh-pandoc-completion
     zgen load peterhurford/git-aliases.zsh
-    zgen load zsh-users/zsh-history-substring-search
+    # zgen load zsh-users/zsh-history-substring-search
     zgen load secrettriangle/smart-cd
     zgen load voronkovich/gitignore.plugin.zsh
     zgen load djui/alias-tips
@@ -123,6 +123,7 @@ fi
 # Vim
   alias v='vim --servername VIM'
   alias nv='nvim'
+  alias work='nvim -S ~/.vim/session/Work'
 #  alias mvim='/usr/local/Cellar/macvim/HEAD/bin/mvim'
 # Alias open audio files with Vox in background
   alias p='open -g -a Vox'
@@ -156,6 +157,8 @@ cdf() {
    fi
  }
 
+ alias man='vman'
+
 # fuzzy completion in zsh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -166,6 +169,15 @@ cdf() {
 alias grep="/usr/local/bin/grep $GREP_OPTIONS"
 unset GREP_OPTIONS
 
-# set editor as homebrew's vim
-export EDITOR=/usr/local/bin/vim
+# set editor 
+export EDITOR=/usr/local/bin/nvim
+
+alias zu='zgen selfupdate && zgen update'
+alias bu='bubu && brew doctor'
+alias bd='brew desc' 
+alias bi='brew info'
+
+# shell script for colors in nvim using gruvbox
+
+source "$HOME/.nvim/plugged/gruvbox/gruvbox_256palette_osx.sh"
 
