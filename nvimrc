@@ -529,9 +529,9 @@ let g:pandoc#folding#fdc = 0
 " let g:pandoc#after#modules#enabled = ["supertab", "goyo"]
 
 " build shortcuts
-nnoremap <localleader>d :Pandoc! pdf -s  -N -V mainfont=Optima --latex-engine=xelatex --smart --bibliography=/Users/Roambot/Dropbox/Work/Master.bib<CR>
-nnoremap <localleader>m :Pandoc! beamer -i -s --latex-engine=xelatex --variable=fontsize:11pt -V sansfont=Avenir -V theme:Hannover -V colortheme:dolphin<CR>
-"""""""""""""""""""""""""
+nnoremap <localleader>d :Pandoc! pdf -s  -N -V mainfont=Optima --latex-engine=xelatex --smart --bibliography=/Users/Roambot/Dropbox/Work/Master.bib --verbose<CR>
+nnoremap <localleader>m :Pandoc! beamer -i -s --latex-engine=xelatex --variable=fontsize:11pt -V sansfont=Avenir -V theme:Hannover -V colortheme:dolphin --verbose<CR>
+nnoremap <localleader>x :Pandoc! docx -s -N --reference-docx=/Users/Roambot/.pandoc/templates/reference.docx<CR> 
 " }}}
 " Delimitmate Settings {{{
 
