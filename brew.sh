@@ -143,12 +143,16 @@ brew cask install --appdir="/Applications" ${apps[@]}
 # Link alfred apps
 brew cask alfred link
 
+# install font set up
+brew tap caskroom/fonts
 
 # fonts
 fonts=(
-  font-m-plus
-  font-clear-sans
-  font-roboto
+  font-inconsolata
+  font-inconsolata-for-powerline
+  font-inconsolata-dz-for-powerline
+  font-inconsolata-lgc
+  font-droid-sans-mono-for-powerline
 )
 
 # install fonts
