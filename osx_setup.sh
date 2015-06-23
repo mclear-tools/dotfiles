@@ -75,9 +75,9 @@ echo ""
 echo "Reveal IP address, hostname, OS version, etc. when clicking the clock in the login window"
 sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo HostName
 
-echo ""
-echo "Never go into computer sleep mode"
-systemsetup -setcomputersleep Off > /dev/null
+# echo ""
+# echo "Never go into computer sleep mode"
+# systemsetup -setcomputersleep Off > /dev/null
 
 echo ""
 echo "Check for software updates daily, not just once per week"
@@ -101,17 +101,17 @@ echo ""
 echo "Enabling full keyboard access for all controls (e.g. enable Tab in modal dialogs)"
 defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
 
-echo ""
-echo "Disabling press-and-hold for keys in favor of a key repeat"
-defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+# echo ""
+# echo "Disabling press-and-hold for keys in favor of a key repeat"
+# defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 
-echo ""
-echo "Setting a blazingly fast keyboard repeat rate (ain't nobody got time fo special chars while coding!)"
-defaults write NSGlobalDomain KeyRepeat -int 0
+# echo ""
+# echo "Setting a blazingly fast keyboard repeat rate (ain't nobody got time fo special chars while coding!)"
+# defaults write NSGlobalDomain KeyRepeat -int 0
 
-echo ""
-echo "Disabling auto-correct"
-defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
+# echo ""
+# echo "Disabling auto-correct"
+# defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 
 echo ""
 echo "Setting trackpad & mouse speed to a reasonable number"
