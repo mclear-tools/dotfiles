@@ -339,6 +339,10 @@ echo ""
 echo "Disable annoying backswipe in Chrome"
 defaults write com.google.Chrome AppleEnableSwipeNavigateWithScrolls -bool false
 
+echo ""
+echo "Always boot in verbose mode"
+sudo nvram boot-args="-v"
+
 ###############################################################################
 # Kill affected applications
 ###############################################################################
