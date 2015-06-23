@@ -2,14 +2,17 @@
 export ARCHFLAGS="-arch x86_64"
 
 # Ensure user-installed binaries take precedence
-export PATH=/usr/local/bin:$PATH
+#export PATH=/usr/local/bin:$PATH
+export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+
 
 # # Path to Beets
  export BEETSDIR=~/Dropbox/Apps/Beets/
 
 # Terminal for 256 colors
-export TERM=xterm-256color-italic
-#export TERM=xterm-256color
+#export TERM=xterm-256color-italic
+export TERM=xterm-256color
 
 #export to allow nvim to change cursor shape
 export NVIM_TUI_ENABLE_CURSOR_SHAPE=1
