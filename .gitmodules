@@ -1,3 +1,6 @@
 [submodule "antigen"]
 	path = antigen
 	url = https://github.com/zsh-users/antigen.git
+[submodule "pandoc/pandoc-templates"]
+	path = pandoc/pandoc-templates
+	url = https://github.com/mclearc/pandoc-templates.git
