@@ -7,3 +7,6 @@
 [submodule "zgen"]
 	path = zgen
 	url = https://github.com/tarjoilija/zgen.git
+[submodule "pandoc/styles"]
+	path = pandoc/styles
+	url = https://github.com/mclearc/styles.git
