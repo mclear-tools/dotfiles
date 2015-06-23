@@ -37,29 +37,22 @@ brew install bash
 brew tap homebrew/dupes
 brew install homebrew/dupes/grep
 
-# Install vim 
-brew install vim --override-system-vi --with-client-server --with-lua --with-luajit
- 
-# Install neovim
-brew tap neovim/neovim
-brew install --HEAD neovim
-
-brew tap rogual/neovim-dot-app
-brew install --HEAD neovim-dot-app
-
-
 binaries=(
+  ack
+  hub
   cmus
   cowsay
   elinks
   ffmpeg
   flac
+  git
   gibo
   graphicsmagick
   lame
   latex2html
   lua
   luajit
+  python
   pandoc
   pandoc-citeproc
   ranger
@@ -72,17 +65,9 @@ binaries=(
   zsh 
   webkit2png
   rename
-  zopfli
   ffmpeg
-  python
-  sshfs
-  trash
-  node
   tree
-  ack
-  hub
-  git
-)
+  )
 
 echo "installing binaries..."
 brew install ${binaries[@]}
@@ -158,6 +143,18 @@ fonts=(
 # install fonts
 echo "installing fonts..."
 brew cask install ${fonts[@]}
+
+# Install vim 
+brew install vim --override-system-vi --with-client-server --with-lua --with-luajit
+ 
+# Install neovim
+brew tap neovim/neovim
+brew install --HEAD neovim
+
+brew tap rogual/neovim-dot-app
+brew install --HEAD neovim-dot-app
+
+
 
 # Change path so Homebrew packages get priority
 
