@@ -199,7 +199,7 @@ syntax enable
 set hidden
 set switchbuf=useopen
 " elinks for browsing
-let g:netrw_http_cmd = "elinks"
+" let g:netrw_http_cmd = "elinks"
 
 
 set noshowmode
@@ -210,7 +210,7 @@ autocmd InsertEnter * :set norelativenumber
 autocmd InsertLeave * :set relativenumber
 " colorscheme settings
 set background=dark
-let g:gruvbox_italic=1
+let g:gruvbox_italic=0
 let g:gruvbox_vert_split= 'dark0'
 let g:gruvbox_italicize_comments = 1
 let g:gruvbox_sign_column = 'dark0'
@@ -359,7 +359,7 @@ nnoremap <Leader>h :call ViewHtmlText(@+)<CR>
     let g:startify_session_persistence    = 1
     let g:startify_session_delete_buffers = 1
 
-    " let g:startify_session_dir = '~/.vim/session'
+    " let g:startify_session_dir = '~/.nvim/session'
     let g:startify_list_order = [
       \ ['   Most recently used:'],
       \ 'files',

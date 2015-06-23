@@ -11,8 +11,10 @@ export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
  export BEETSDIR=~/Dropbox/Apps/Beets/
 
 # Terminal for 256 colors
-#export TERM=xterm-256color-italic
-export TERM=xterm-256color
+export TERM=xterm-256color-italic
+
+# Eval to reset LS_COLORS
+eval "$(TERM=xterm-256color dircolors)"
 
 #export to allow nvim to change cursor shape
 export NVIM_TUI_ENABLE_CURSOR_SHAPE=1
@@ -96,7 +98,7 @@ alias bi='brew info'
 # Vim
   alias v='vim --servername VIM'
   alias nv='nvim'
-  alias work='nvim -S ~/.vim/session/Work'
+  alias work='nvim -S ~/.nvim/session/Work'
 #  alias mvim='/usr/local/Cellar/macvim/HEAD/bin/mvim'
 
 # Alias open audio files with Vox in background
