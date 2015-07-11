@@ -42,11 +42,7 @@ Plug 'git://github.com/sjl/gundo.vim' " graphical tree undo
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' } " file manager
 Plug 'jeetsukumaran/vim-buffergator' "Buffer manager
 Plug 'Z1MM32M4N/vim-superman' " open man pages in vim
-Plug 'gioele/vim-autoswap' " gracefully handle swaps
-Plug 'vim-scripts/ZoomWin' " zoom in and out of windows
-Plug 'szw/vim-smartclose' "window closing utility
 Plug 'christoomey/vim-tmux-navigator' " easy navigate tmux and vim panes
-Plug 'wesQ3/vim-windowswap' " Easily swap buffers
 
 " " Color Plugins
 Plug 'altercation/vim-colors-solarized'
@@ -58,6 +54,10 @@ Plug 'morhetz/gruvbox' " alternate colorscheme
 
 " " Not sure about these plugins
 
+" Plug 'wesQ3/vim-windowswap' " Easily swap buffers
+" Plug 'gioele/vim-autoswap' " gracefully handle swaps
+" Plug 'vim-scripts/ZoomWin' " zoom in and out of windows
+" Plug 'szw/vim-smartclose' "window closing utility
 " Plug 'henrik/vim-open-url' " open any url using ruby and regex
 " Plug 'itchyny/lightline.vim' " alternate powerline plugin
 " Plug 'svintus/vim-editexisting' " focus file if open rather than swap warning
@@ -296,7 +296,8 @@ nnoremap A :Ag<Space>
 set go+=a
 if has ('gui_running')
   if has ("gui_macvim")
-    set guifont=Inconsolata\ LGC\ for\ Powerline:h14
+    set guifont=Inconsolata\ LGC\ for\ Powerline:h12
+    set guioptions=cmg
   endif
 endif
 
