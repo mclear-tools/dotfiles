@@ -359,7 +359,7 @@ nnoremap <Leader>h :call ViewHtmlText(@+)<CR>
     let g:startify_session_persistence    = 1
     let g:startify_session_delete_buffers = 1
 
-    " let g:startify_session_dir = '~/.nvim/session'
+    let g:startify_session_dir = '~/.nvim/session'
     let g:startify_list_order = [
       \ ['   Most recently used:'],
       \ 'files',
@@ -802,13 +802,14 @@ let delimitMate_matchpairs = "(:),[:],{:},<:>"
   " let g:airline_theme = 'hybridline'
   let g:airline_theme = 'gruvbox'
   " let g:airline_theme = 'bubblegum'
-  let g:airline_powerline_fonts=1 
-" if has('gui_macvim')
-"   let g:airline_right_sep = '◀'
-"   let g:airline_left_sep = '▶'
-" else
-"  let g:airline_powerline_fonts=1 
-" endif 
+  " let g:airline_powerline_fonts=1 
+if has('gui_macvim')
+  let g:airline_right_sep = '◀'
+  let g:airline_left_sep = '▶'
+else
+ let g:airline_powerline_fonts=0 
+endif 
+
 
 
 " " Tweak of solarized colors
@@ -850,19 +851,18 @@ endif
 
 " unicode symbols
 
-  "
-  " let g:airline_left_sep = '»'
-  " let g:airline_left_sep = '▶'
-  " let g:airline_right_sep = '«'
-  " let g:airline_right_sep = '◀'
-  " let g:airline_symbols.linenr = '␊'
-  " let g:airline_symbols.linenr = '␤'
-  " let g:airline_symbols.linenr = '¶'
-  " let g:airline_symbols.branch = '⎇'
-  " let g:airline_symbols.paste = 'ρ'
-  " let g:airline_symbols.paste = 'Þ'
-  " let g:airline_symbols.paste = '∥'
-  " let g:airline_symbols.whitespace = 'Ξ'
+   let g:airline_left_sep = '»'
+   let g:airline_left_sep = '▶'
+   let g:airline_right_sep = '«'
+   let g:airline_right_sep = '◀'
+   let g:airline_symbols.linenr = '␊'
+   let g:airline_symbols.linenr = '␤'
+   let g:airline_symbols.linenr = '¶'
+   let g:airline_symbols.branch = '⎇'
+   let g:airline_symbols.paste = 'ρ'
+   let g:airline_symbols.paste = 'Þ'
+   let g:airline_symbols.paste = '∥'
+   let g:airline_symbols.whitespace = 'Ξ'
 
 
 " enable/disable bufferline integration >
@@ -872,8 +872,9 @@ endif
 " enable buffers in tabs
   let g:airline#extensions#tabline#enabled = 1
 " Tabline separators
-  let g:airline#extensions#tabline#left_sep = ''
-  let g:airline#extensions#tabline#left_alt_sep = ''
+  
+  let g:airline#extensions#tabline#left_sep = '▶'
+  let g:airline#extensions#tabline#left_alt_sep = '>'
 " display tab number in tab
   let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
 " go to tab number with <leader>number
