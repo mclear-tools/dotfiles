@@ -6,6 +6,10 @@ export ARCHFLAGS="-arch x86_64"
 export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
+# virtualenvwrapper config
+export PROJECT_HOME=$HOME/bin
+export WORKON_HOME=$HOME/bin/virtualenvs
+source /usr/local/bin/virtualenvwrapper.sh
 
 # # Path to Beets
  export BEETSDIR=~/Dropbox/Apps/Beets/
