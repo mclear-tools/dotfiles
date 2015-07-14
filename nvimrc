@@ -26,6 +26,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'mhinz/vim-startify' " session manager and startup screen
 
 " " Useful Plugins
+Plug 'wincent/terminus'
 Plug 'tpope/vim-vinegar'  " better netrw use
 Plug 'vim-scripts/EasyMotion' " quick cursor motions
 Plug 'tpope/vim-commentary' " Comment manager/toggle
@@ -42,9 +43,9 @@ Plug 'git://github.com/sjl/gundo.vim' " graphical tree undo
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' } " file manager
 Plug 'jeetsukumaran/vim-buffergator' "Buffer manager
 Plug 'Z1MM32M4N/vim-superman' " open man pages in vim
-Plug 'christoomey/vim-tmux-navigator' " easy navigate tmux and vim panes
 
 " " Color Plugins
+Plug 'sjl/badwolf'
 Plug 'altercation/vim-colors-solarized'
 Plug 'w0ng/vim-hybrid' " alternate colorscheme
 Plug 'chriskempson/base16-vim' " alternate colorscheme 
@@ -54,6 +55,7 @@ Plug 'morhetz/gruvbox' " alternate colorscheme
 
 " " Not sure about these plugins
 
+" Plug 'christoomey/vim-tmux-navigator' " easy navigate tmux and vim panes
 " Plug 'wesQ3/vim-windowswap' " Easily swap buffers
 " Plug 'gioele/vim-autoswap' " gracefully handle swaps
 " Plug 'vim-scripts/ZoomWin' " zoom in and out of windows
@@ -287,7 +289,7 @@ if executable('ag')
 endif
 
 " " bind R to grep word under cursor
-nnoremap R :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+nnoremap <leader>R :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 " Ag exec command
 "command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
 nnoremap A :Ag<Space>
@@ -477,6 +479,7 @@ nnoremap <localleader>pn :Pad new<CR>
 let g:voom_tree_width = 50
 let g:voom_ft_modes = {'pandoc': 'markdown', 'markdown': 'markdown', 'tex': 'latex'}
 let g:voom_default_mode = 'pandoc'
+let g:voom_latex_sections = ['marginhead', 'part', 'chapter', 'section', 'subsection', 'subsubsection', 'paragraph', 'subparagraph']
 
 " after read in tex file and then execute Voom latex 
 " autocmd BufRead *.tex :Voom latex 
@@ -532,7 +535,7 @@ let g:pandoc#folding#fdc = 0
 " build shortcuts
 nnoremap <localleader>d :Pandoc! pdf -s  -N -V mainfont=Optima --latex-engine=xelatex --smart --bibliography=/Users/Roambot/Dropbox/Work/Master.bib --verbose<CR>
 nnoremap <localleader>m :Pandoc! beamer -i -s --latex-engine=xelatex --variable=fontsize:11pt -V sansfont=Avenir -V theme:Hannover -V colortheme:dolphin --verbose<CR>
-nnoremap <localleader>x :Pandoc! docx -s -N --reference-docx=/Users/Roambot/.pandoc/templates/reference.docx<CR> 
+nnoremap <localleader>x :Pandoc! docx -s -N --reference-docx=/Users/Roambot/.pandoc/reference.docx<CR> 
 " }}}
 " Delimitmate Settings {{{
 
@@ -946,7 +949,7 @@ autocmd User GoyoLeave call <SID>goyo_leave()
 
 " }}}
 " FZF {{{
-let g:fzf_launcher = '/Users/Roambot/Documents/Hacks/MacVimFZF.sh %s'
+let g:fzf_launcher = '/Users/Roambot/Dropbox/Personal/Hacks/MacVimFZF.sh'
 
 " }}}
 " Extras and Unused {{{
