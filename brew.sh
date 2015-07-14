@@ -83,8 +83,9 @@ apps=(
   arq
   bartender
   caffeine
-  cleanmymac
   carbon-copy-cloner
+  cleanmymac
+  crossover
   devonthink-pro-office
   djview
   dropbox
@@ -145,7 +146,7 @@ echo "installing fonts..."
 brew cask install ${fonts[@]}
 
 # Install vim 
-brew install vim --override-system-vi --with-client-server --with-lua --with-luajit
+brew install macvim --with-lua --with-luajit --custom-icons --override-system-vim
  
 # Install neovim
 brew tap neovim/neovim
