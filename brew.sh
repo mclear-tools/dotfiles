@@ -61,6 +61,7 @@ binaries=(
   task
   tmux
   wget
+  wine
   xvid
   zsh 
   webkit2png
@@ -85,7 +86,6 @@ apps=(
   caffeine
   carbon-copy-cloner
   cleanmymac
-  crossover
   devonthink-pro-office
   djview
   dropbox
@@ -98,6 +98,7 @@ apps=(
   iterm2
   mailmate
   marked
+  meteorologist
   nvalt
   seil
   pdfsam-basic
@@ -109,9 +110,7 @@ apps=(
   textexpander
   textwrangler
   things
-  vagrant
   vlc
-  virtualbox
   flux
   1password
   qlstephen
