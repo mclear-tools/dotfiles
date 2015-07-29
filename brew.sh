@@ -57,6 +57,7 @@ binaries=(
   pandoc-citeproc
   ranger
   reattach-to-user-namespace
+  ruby
   the_silver_searcher
   task
   tmux

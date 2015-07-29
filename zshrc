@@ -3,7 +3,7 @@ export ARCHFLAGS="-arch x86_64"
 
 # Ensure user-installed binaries take precedence
 #export PATH=/usr/local/bin:$PATH
-export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+export PATH="/usr/local/opt/coreutils/libexec/gnubin:/usr/local/bin:/Users/Roambot/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/sbin:/bin:/opt/X11/bin:/Library/TeX/texbin:/Users/Roambot/.fzf/bin"
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
 # virtualenvwrapper config
@@ -62,7 +62,9 @@ if ! zgen saved; then
     zgen load zsh-users/zsh-completions src
 
     # theme
-    zgen oh-my-zsh themes/ys
+    # zgen oh-my-zsh themes/ys  # good standard theme
+    # zgen oh-my-zsh themes/xiong-chiamiov-plus # Good two-line theme
+    zgen load nojhan/liquidprompt  # Very extensible theme
 
 # OSX bundle if working on mac
  if [ "$OSTYPE"="darwin14.0.0" ]; then
@@ -81,12 +83,17 @@ fi
   bindkey "$terminfo[kcud1]" history-substring-search-down
  
 # bind P and N for EMACS mode
-  bindkey -M emacs '^P' history-substring-search-up
-  bindkey -M emacs '^N' history-substring-search-down
+  # bindkey -M emacs '^P' history-substring-search-up
+  # bindkey -M emacs '^N' history-substring-search-down
  
 # bind k and j for VI mode
-  bindkey -M vicmd 'k' history-substring-search-up
-  bindkey -M vicmd 'j' history-substring-search-down
+  # bindkey -M vicmd 'k' history-substring-search-up
+  # bindkey -M vicmd 'j' history-substring-search-down
+
+# Set vi mode
+bindkey -v
+bindkey -M viins 'jk' vi-cmd-mode
+bindkey '^R' history-incremental-search-backward
 
 ### ALIASES
 
@@ -103,12 +110,17 @@ alias bi='brew info'
   alias v='vim --servername VIM'
   alias nv='nvim'
   alias work='nvim -S ~/.nvim/session/Work'
+  alias web='nvim -S ~/.nvim/session/Website'
 #  alias mvim='/usr/local/Cellar/macvim/HEAD/bin/mvim'
 
 # Alias open audio files with Vox in background
   alias p='open -g -a Vox'
 # Alias open file with application
   alias o='open -a'
+
+# Weather
+  alias weather='ansiweather'
+  alias forecast='ansiweather -f 5'
 
 # cd to the path of the front Finder window
 cdf() {
@@ -146,8 +158,8 @@ cdf() {
 [[ -s $(brew --prefix)/etc/autojump.sh ]] && . $(brew --prefix)/etc/autojump.sh
 
 # fix grep error
-alias grep="/usr/local/bin/grep $GREP_OPTIONS"
-unset GREP_OPTIONS
+# alias grep="/usr/local/bin/grep $GREP_OPTIONS"
+# unset GREP_OPTIONS
 
 # set editor 
 export EDITOR=/usr/local/bin/nvim
@@ -157,3 +169,5 @@ export EDITOR=/usr/local/bin/nvim
 
 source "$HOME/.nvim/plugged/gruvbox/gruvbox_256palette_osx.sh"
 
+
+source /Users/Roambot/.iterm2_shell_integration.zsh
