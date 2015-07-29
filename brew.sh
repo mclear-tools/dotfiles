@@ -40,7 +40,7 @@ brew install homebrew/dupes/grep
 binaries=(
   ack
   hub
-  cmus
+  cmus --with-ffmpeg
   cowsay
   elinks
   ffmpeg
@@ -55,20 +55,20 @@ binaries=(
   python
   pandoc
   pandoc-citeproc
+  pdf2htmlex
   ranger
   reattach-to-user-namespace
+  rename
   ruby
   the_silver_searcher
   task
+  tree
   tmux
   wget
   wine
   xvid
   zsh 
   webkit2png
-  rename
-  ffmpeg
-  tree
   )
 
 echo "installing binaries..."
@@ -114,10 +114,7 @@ apps=(
   vlc
   flux
   1password
-  qlstephen
-  qlcolorcode
   qlmarkdown
-  qlprettypatch
   quicklook-json
   )
 
@@ -139,6 +136,11 @@ fonts=(
   font-inconsolata-dz-for-powerline
   font-inconsolata-lgc
   font-droid-sans-mono-for-powerline
+  font-fira-mono-for-powerline
+  font-meslo-lg-for-powerline
+  font-sauce-code-powerline
+  font-source-code-pro-for-powerline
+  font-ubuntu-mono-powerline
 )
 
 # install fonts
