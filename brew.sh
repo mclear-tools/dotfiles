@@ -78,7 +78,7 @@ brew install ${binaries[@]}
 # Install Brew Cask for Mac Apps
 
 brew install caskroom/cask/brew-cask
-
+brew tap caskroom/versions
 
 # Apps
 apps=(
@@ -98,7 +98,7 @@ apps=(
   fluid
   google-chrome
   hazel
-  iterm2
+  iterm2-nightly
   mailmate
   marked
   meteorologist
