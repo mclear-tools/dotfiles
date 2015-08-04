@@ -52,11 +52,13 @@ binaries=(
   latex2html
   lua
   luajit
-  python
   pandoc
   pandoc-citeproc
+  par
+  python
   ranger
   reattach-to-user-namespace
+  ruby
   the_silver_searcher
   task
   tmux
@@ -89,6 +91,7 @@ apps=(
   devonthink-pro-office
   djview
   dropbox
+  easyfind
   evernote
   fantastical
   firefox
