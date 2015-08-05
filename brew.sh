@@ -62,6 +62,7 @@ binaries=(
   the_silver_searcher
   task
   tmux
+  trash
   wget
   wine
   xvid
