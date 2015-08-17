@@ -52,6 +52,7 @@ binaries=(
   latex2html
   lua
   luajit
+  mackup
   pandoc
   pandoc-citeproc
   par
