@@ -301,7 +301,10 @@ nnoremap A :Ag<Space>
 " }}}
 " Backup and Swap Settings {{{
 "autosave
+augroup autosave
+autocmd!
 autocmd InsertLeave,TextChanged * if expand('%') != '' | update | endif
+augroup END
 set backupdir=~/.vim/backup//
 set directory=~/.vim/swap//
 set undodir=~/.vim/undo//
@@ -325,7 +328,7 @@ command! Reveal call <SID>RevealInFinder()
 " }}}
 " Startify Settings {{{
 
-    autocmd User Startified setlocal cursorline
+    au! autocmd User Startified setlocal cursorline
 
     let g:startify_enable_special         = 0
     let g:startify_files_number           = 8
@@ -533,7 +536,7 @@ let g:tmuxline_preset = 'full'
 let NERDTreeWinPos = 'right'
 
 "Close NerdTree when it's the last buffer open
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+au! autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 " }}}
 " Goyo {{{ 
 "
@@ -544,7 +547,10 @@ let g:goyo_width = 85
 function! s:goyo_enter()
   let b:quitting = 0
   let b:quitting_bang = 0
+  augroup quit_goyo
+  autocmd!
   autocmd QuitPre <buffer> let b:quitting = 1
+  augroup END
   cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!
 endfunction
 
@@ -652,7 +658,10 @@ function! AirlineInit()
 "  let g:airline_section_y = airline#section#create(['ffenc', '%{strftime("%H:%M")}'])
    let g:airline_section_y = airline#section#create(['%{strftime("%a %b %d %X")}'])
 endfunction
+augroup time
+autocmd!
 autocmd VimEnter * call AirlineInit()
+augroup END
 
 
 " settings from standard solarized theme

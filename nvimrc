@@ -1,7 +1,7 @@
 " vim:fdm=marker
 set encoding=utf-8
 scriptencoding utf-8
-set nocompatible
+" set nocompatible
 filetype plugin indent on
 
 " Plugins {{{
@@ -26,6 +26,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'mhinz/vim-startify' " session manager and startup screen
 
 " " Useful Plugins
+Plug 'vim-scripts/diffchar.vim'  " make vim-diff more useful
 Plug 'wincent/terminus'
 Plug 'tpope/vim-vinegar'  " better netrw use
 Plug 'vim-scripts/EasyMotion' " quick cursor motions
@@ -43,8 +44,12 @@ Plug 'git://github.com/sjl/gundo.vim' " graphical tree undo
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' } " file manager
 Plug 'jeetsukumaran/vim-buffergator' "Buffer manager
 Plug 'Z1MM32M4N/vim-superman' " open man pages in vim
+Plug 'vim-scripts/ZoomWin' " zoom in and out of windows
+Plug 'christoomey/vim-tmux-navigator' " easy navigate tmux and vim panes
 
 " " Color Plugins
+Plug 'biskark/vim-ultimate-colorscheme-utility'
+Plug 'NLKNguyen/papercolor-theme'
 Plug 'sjl/badwolf'
 Plug 'altercation/vim-colors-solarized'
 Plug 'w0ng/vim-hybrid' " alternate colorscheme
@@ -55,10 +60,9 @@ Plug 'morhetz/gruvbox' " alternate colorscheme
 
 " " Not sure about these plugins
 
-" Plug 'christoomey/vim-tmux-navigator' " easy navigate tmux and vim panes
+" Plug 'vimoutliner/vimoutliner' " vim outliner, kind of clunky
 " Plug 'wesQ3/vim-windowswap' " Easily swap buffers
 " Plug 'gioele/vim-autoswap' " gracefully handle swaps
-" Plug 'vim-scripts/ZoomWin' " zoom in and out of windows
 " Plug 'szw/vim-smartclose' "window closing utility
 " Plug 'henrik/vim-open-url' " open any url using ruby and regex
 " Plug 'itchyny/lightline.vim' " alternate powerline plugin
@@ -88,6 +92,15 @@ call plug#end()
 " "}}}
 " General Keymappings {{{
 
+" Navigate splits
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+" clear search
+noremap // :noh<CR>     
+
 " let mapleader = "\<Space>"
 
 " Grep TODO and NOTE
@@ -114,11 +127,6 @@ inoremap jk <Esc>
 " repeat last command line command
 nnoremap <leader>r @:<CR>
 
-" " Insert mode navigation mappings
-
-" delete previous word in insert
-" inoremap <C-D> <Esc>bdwi
-
 " " make cursor move to next visual line below cursor this is a test 
 noremap Q gwip
 nnoremap <leader>c :set cursorline! <CR>
@@ -129,9 +137,9 @@ nnoremap <leader>s ea<C-X><C-S>
 " " link vim to marked app
 nnoremap <leader>m :silent !open -a Marked\ 2.app '%:p' <CR>\|:redraw!<CR>
 " Let's make it easy to edit this file (mnemonic for the key sequence is " 'e'dit 'v'imrc)
- nnoremap <silent> ,ev :e /Users/Roambot/.nvimrc<cr>
+ nnoremap <silent> ,ev :tabe $HOME/dotfiles/nvimrc<cr>
 " And to source this file as well (mnemonic for the key sequence is " 's'ource 'v'imrc)
- nnoremap <silent> ,sv :so /Users/Roambot/.nvimrc<cr>
+ nnoremap <silent> ,sv :so $HOME/dotfiles/nvimrc<cr>
 " Yank text to the OS X clipboard
 " noremap <leader>y "*y
 " noremap <leader>yy "*Y
@@ -147,7 +155,7 @@ let maplocalleader = ","
 " " Toggle Goyo on/off
  nnoremap <localLeader>g :Goyo<CR>
 " "Map NERDTree to ,,
- nnoremap <silent> <localLeader>, :NERDTreeToggle<CR>
+ nnoremap <silent><localleader>, :NERDTreeToggle<CR>
  nnoremap <localLeader>v :VoomToggle<CR>
 " "toggle filetype for pandoc
  nnoremap <localleader>f :set filetype=pandoc<CR> 
@@ -196,14 +204,15 @@ endif
 
 " }}}
 " Settings {{{
+" let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 syntax enable
 " buffer settings
 set hidden
 set switchbuf=useopen
 " elinks for browsing
 " let g:netrw_http_cmd = "elinks"
-
-
+set splitbelow
+let timeoutlen = 50   " remove pause on leaving insert mode
 set noshowmode
 set number
 " Change number settings depending on mode
@@ -231,6 +240,8 @@ colorscheme gruvbox
 
 " highlight clear SignColumn
 call togglebg#map("<F5>")
+" better rendering for some colorschemes
+" hi! link Conceal Special 
 set spell spelllang=en_us
 set tabstop=4 shiftwidth=2 expandtab
 set fo+=t
@@ -259,14 +270,14 @@ au InsertLeave * let &updatetime=updaterestore
 set cursorline
 
 
-" change cursor shape depending on mode with different code for tmux configuration
-if exists('$TMUX')
-  let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-  let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-  else
-  let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-  let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-endif
+" " change cursor shape depending on mode with different code for tmux configuration
+" if exists('$TMUX')
+"   let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+"   let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+"   else
+"   let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+"   let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+" endif
 
 
 set lazyredraw " to avoid scrolling problems
@@ -297,7 +308,7 @@ nnoremap A :Ag<Space>
 " GUI settings and Macvim
 set go+=a
 if has ('gui_running')
-  if has ("gui_macvim")
+  if has ("gui_macvim") 
     set guifont=Inconsolata\ LGC\ for\ Powerline:h12
     set guioptions=cmg
   endif
@@ -418,15 +429,6 @@ nnoremap <Leader>h :call ViewHtmlText(@+)<CR>
 
 
 " }}}
-" Gitv {{{
-
-   nnoremap <leader>v :Gitv --all<cr>
-   nnoremap <leader>V :Gitv! --all<cr>
-   vnoremap <leader>V :Gitv! --all<cr>
-   cabbrev git Git
-
-
-"  }}}
 "  Fugitive {{{
 
 " fugitive shortcuts
@@ -455,6 +457,17 @@ nnoremap <leader>gps :Dispatch! git push<CR>
 nnoremap <leader>gpl :Dispatch! git pull<CR>
 
 "  }}}
+" Gitv {{{
+
+   nnoremap <leader>v :Gitv --all<cr>
+   nnoremap <leader>V :Gitv! --all<cr>
+   vnoremap <leader>V :Gitv! --all<cr>
+   cabbrev git Git
+
+  let g:Gitv_WrapLines = 0
+  let g:Gitv_TruncateCommitSubjects = 1
+  let g:Gitv_OpenHorizontal = 1
+"  }}}
 " Vim Plug {{{
 nnoremap <localleader>l :PlugUpdate<CR>
 
@@ -467,6 +480,8 @@ let g:pad#default_format = "pandoc"
 let g:pad#default_file_extension = ".md"
 let g:pad#window_height = 10
 let g:pad#search_backend = "ag"
+let g:pad#title_first_line = 1 
+let g:pad#rename_files = 1
 
 nnoremap <localleader>p :Pad ls<CR>
 nnoremap <localleader>pn :Pad new<CR>
@@ -533,9 +548,9 @@ let g:pandoc#folding#fdc = 0
 " let g:pandoc#after#modules#enabled = ["supertab", "goyo"]
 
 " build shortcuts
-nnoremap <localleader>d :Pandoc! pdf -s  -N -V mainfont=Optima --latex-engine=xelatex --smart --bibliography=/Users/Roambot/Dropbox/Work/Master.bib --verbose<CR>
+nnoremap <localleader>d :Pandoc! pdf -s  -N -V mainfont=Optima --latex-engine=xelatex --smart --template=/Users/Roambot/dotfiles/pandoc/pandoc-templates/default.latex --bibliography=/Users/Roambot/Dropbox/Work/Master.bib --verbose<CR>
 nnoremap <localleader>m :Pandoc! beamer -i -s --latex-engine=xelatex --variable=fontsize:11pt -V sansfont=Avenir -V theme:Hannover -V colortheme:dolphin --verbose<CR>
-nnoremap <localleader>x :Pandoc! docx -s -N --reference-docx=/Users/Roambot/.pandoc/reference.docx<CR> 
+nnoremap <localleader>x :Pandoc! docx -s -N --reference-docx=/Users/Roambot/.pandoc/pandoc-templates/reference.docx<CR> 
 " }}}
 " Delimitmate Settings {{{
 
@@ -801,20 +816,61 @@ let delimitMate_matchpairs = "(:),[:],{:},<:>"
 
 " " " }}}
 " AIRLINE SETTINGS {{{
+
+  let g:airline_powerline_fonts=1 
+  let g:airline_theme = 'gruvbox'
+  " let g:airline_left_sep=''
+  " let g:airline_right_sep=''
+  " let g:airline_right_sep = '◀'
+  " let g:airline_left_sep = '▶'
+" enable/disable detection of whitespace errors. >
+  let g:airline#extensions#whitespace#enabled = 0
+" enable/disable tmuxline integration >
+  let g:airline#extensions#tmuxline#enabled = 1
+" enable/disable bufferline integration >
+  let g:airline#extensions#bufferline#enabled = 0
+  let g:bufferline_echo = 1
+" enable buffers in tabs
+  let g:airline#extensions#tabline#enabled = 1
+" Tabline separators
+  " let g:airline#extensions#tabline#left_sep = '|'
+  " let g:airline#extensions#tabline#left_alt_sep = '|'
+  " let g:airline#extensions#tabline#left_sep = '▶'
+  " let g:airline#extensions#tabline#left_alt_sep = '>'
+" display tab number in tab
+  let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
+" go to tab number with <leader>number
+  let g:airline#extensions#tabline#buffer_idx_mode = 1
+  nmap <leader>1 <Plug>AirlineSelectTab1
+  nmap <leader>2 <Plug>AirlineSelectTab2
+  nmap <leader>3 <Plug>AirlineSelectTab3
+  nmap <leader>4 <Plug>AirlineSelectTab4
+  nmap <leader>5 <Plug>AirlineSelectTab5
+  nmap <leader>6 <Plug>AirlineSelectTab6
+  nmap <leader>7 <Plug>AirlineSelectTab7
+  nmap <leader>8 <Plug>AirlineSelectTab8
+  nmap <leader>9 <Plug>AirlineSelectTab9
+" display only filename in tabs
+let g:airline#extensions#tabline#fnamemod = ':t'
+
+" display time
+function! AirlineInit()
+"  let g:airline_section_y = airline#section#create(['ffenc', '%{strftime("%H:%M")}'])
+   let g:airline_section_y = airline#section#create(['%{strftime("%a  %b %d  %X")}'])
+endfunction
+autocmd VimEnter * call AirlineInit()
+"""""""""""""""""""""""""""""""""""
   " let g:airline_theme = 'base16'
   " let g:airline_theme = 'solarized'
   " let g:airline_theme = 'hybridline'
-  let g:airline_theme = 'gruvbox'
   " let g:airline_theme = 'bubblegum'
-  " let g:airline_powerline_fonts=1 
-if has('gui_macvim')
-  let g:airline_right_sep = '◀'
-  let g:airline_left_sep = '▶'
-else
- let g:airline_powerline_fonts=0 
-endif 
 
-
+" if has('gui_macvim') 
+"   let g:airline_right_sep = '◀'
+"   let g:airline_left_sep = '▶'
+" else
+"  let g:airline_powerline_fonts=1 
+" endif 
 
 " " Tweak of solarized colors
 " let g:airline_theme_patch_func = 'AirLineBlaenkTheme'
@@ -842,70 +898,66 @@ endif
 "   endif
 " endfunction
 
-" enable/disable detection of whitespace errors. >
-  let g:airline#extensions#whitespace#enabled = 0
-
-" enable/disable tmuxline integration >
-  let g:airline#extensions#tmuxline#enabled = 1
 
 " symbol dictionary
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
-endif
+" if !exists('g:airline_symbols')
+"   let g:airline_symbols = {}
+" endif
 
-" unicode symbols
+" " unicode symbols
 
-   let g:airline_left_sep = '»'
-   let g:airline_left_sep = '▶'
-   let g:airline_right_sep = '«'
-   let g:airline_right_sep = '◀'
-   let g:airline_symbols.linenr = '␊'
-   let g:airline_symbols.linenr = '␤'
-   let g:airline_symbols.linenr = '¶'
-   let g:airline_symbols.branch = '⎇'
-   let g:airline_symbols.paste = 'ρ'
-   let g:airline_symbols.paste = 'Þ'
-   let g:airline_symbols.paste = '∥'
-   let g:airline_symbols.whitespace = 'Ξ'
+"    let g:airline_left_sep = '»'
+"    let g:airline_left_sep = '▶'
+"    let g:airline_right_sep = '«'
+"    let g:airline_right_sep = '◀'
+"    let g:airline_symbols.linenr = '␊'
+"    let g:airline_symbols.linenr = '␤'
+"    let g:airline_symbols.linenr = '¶'
+"    let g:airline_symbols.branch = '⎇'
+"    let g:airline_symbols.paste = 'ρ'
+"    let g:airline_symbols.paste = 'Þ'
+"    let g:airline_symbols.paste = '∥'
+"    let g:airline_symbols.whitespace = 'Ξ'
+"
+
+ " " powerline symbols
+ "  let g:airline_left_sep = ''
+ "  let g:airline_left_alt_sep = ''
+ "  let g:airline_right_sep = ''
+ "  let g:airline_right_alt_sep = ''
+ "  let g:airline_symbols.branch = ''
+ "  let g:airline_symbols.readonly = ''
+ "  let g:airline_symbols.linenr = ''
 
 
-" enable/disable bufferline integration >
-  let g:airline#extensions#bufferline#enabled = 0
-  let g:bufferline_echo = 1
 
-" enable buffers in tabs
-  let g:airline#extensions#tabline#enabled = 1
-" Tabline separators
-  
-  let g:airline#extensions#tabline#left_sep = '▶'
-  let g:airline#extensions#tabline#left_alt_sep = '>'
-" display tab number in tab
-  let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
-" go to tab number with <leader>number
-  let g:airline#extensions#tabline#buffer_idx_mode = 1
-  nmap <leader>1 <Plug>AirlineSelectTab1
-  nmap <leader>2 <Plug>AirlineSelectTab2
-  nmap <leader>3 <Plug>AirlineSelectTab3
-  nmap <leader>4 <Plug>AirlineSelectTab4
-  nmap <leader>5 <Plug>AirlineSelectTab5
-  nmap <leader>6 <Plug>AirlineSelectTab6
-  nmap <leader>7 <Plug>AirlineSelectTab7
-  nmap <leader>8 <Plug>AirlineSelectTab8
-  nmap <leader>9 <Plug>AirlineSelectTab9
-" display only filename in tabs
-let g:airline#extensions#tabline#fnamemod = ':t'
 
-" display time
-function! AirlineInit()
-"  let g:airline_section_y = airline#section#create(['ffenc', '%{strftime("%H:%M")}'])
-   let g:airline_section_y = airline#section#create(['%{strftime("%a %b %d %X")}'])
-endfunction
-autocmd VimEnter * call AirlineInit()
-"""""""""""""""""""""""""""""""""""
 " }}}
 " Tmuxline {{{
 
-let g:tmuxline_preset = 'full'
+" let g:tmuxline_preset = 'full'
+
+" let g:tmuxline_preset = {
+"     \ 'a': '#S',
+"     \ 'b': '#F',
+"     \ 'c': '#W',
+"     \ 'win': ['#I', '#W'],
+"     \ 'cwin': ['#I', '#W'],
+"     \ 'x': '%a',
+"     \'y': ['#(whoami)', '#(uptime | cut -d " " -f 1,2,3)'],
+"     \ 'z': '#h'}
+
+" \'b'       : '#(rdio current)',
+"
+let g:tmuxline_preset = {
+	\'a'       : '#S:#F',
+	\'b'       : '#(~/bin/rdiocurrent.sh)',
+    \'c'       : ['%X', '#(ansiweather -l Providence,RI -u imperial | cut -d " " -f 7,8)'],	
+    \'win'     : ['#I', '#W'],
+	\'cwin'    : ['#I', '#W'],
+	\'x'       : '#(~/bin/tmux-battery)',
+    \'y'       : '#(whoami)', 
+	\'z'       : ['#(uptime | grep -m3 "load average" | tail -c -17 | sed s/"load average:"/""/g)','#(hostname | nslookup | grep -m2 "Address" | tail -n1 | sed s/"Address:"/""/g | sed "1s/^.//")' ],}
 
 " }}}
 " NerdTree {{{ 
@@ -949,8 +1001,10 @@ autocmd User GoyoLeave call <SID>goyo_leave()
 
 " }}}
 " FZF {{{
-let g:fzf_launcher = '/Users/Roambot/Dropbox/Personal/Hacks/MacVimFZF.sh'
-
+let g:fzf_launcher = '/Users/Roambot/Dropbox/Personal/Hacks/MacVimFZF.sh %s'
+" }}}
+" DiffChar {{{
+let g:DiffUnit='Word1'
 " }}}
 " Extras and Unused {{{
 "Filenames in tabs in iTerm
