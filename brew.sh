@@ -112,7 +112,6 @@ apps=(
   skype
   soulver
   transmission
-  textexpander
   textwrangler
   things
   vlc
