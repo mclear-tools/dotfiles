@@ -110,6 +110,7 @@ apps=(
   path-finder
   rdio
   skype
+  skim
   soulver
   transmission
   textwrangler
