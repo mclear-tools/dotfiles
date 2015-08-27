@@ -106,6 +106,7 @@ apps=(
   meteorologist
   nvalt
   seil
+  spectacle
   pdfsam-basic
   path-finder
   rdio
