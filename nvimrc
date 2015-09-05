@@ -26,6 +26,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'mhinz/vim-startify' " session manager and startup screen
 
 " " Useful Plugins
+Plug 'vim-scripts/loremipsum' " dummy text generator
 Plug 'vim-scripts/diffchar.vim'  " make vim-diff more useful
 Plug 'wincent/terminus'
 Plug 'tpope/vim-vinegar'  " better netrw use
@@ -309,7 +310,7 @@ nnoremap A :Ag<Space>
 set go+=a
 if has ('gui_running')
   if has ("gui_macvim") 
-    set guifont=Inconsolata\ LGC\ for\ Powerline:h12
+    set guifont=Office\ Code\ Pro\ D:h13
     set guioptions=cmg
   endif
 endif
@@ -1001,7 +1002,8 @@ autocmd User GoyoLeave call <SID>goyo_leave()
 
 " }}}
 " FZF {{{
-let g:fzf_launcher = '/Users/Roambot/Dropbox/Personal/Hacks/MacVimFZF.sh %s'
+" let g:fzf_launcher = '/Users/Roambot/Dropbox/Personal/Hacks/MacVimFZF.sh %s'
+let g:fzf_launcher = 'xterm -e bash -ic %s'
 " }}}
 " DiffChar {{{
 let g:DiffUnit='Word1'
