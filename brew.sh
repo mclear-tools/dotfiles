@@ -88,7 +88,7 @@ apps=(
   arq
   bartender
   caffeine
-  carbon-copy-cloner
+  superduper
   cleanmymac
   devonthink-pro-office
   djview
@@ -100,7 +100,7 @@ apps=(
   fluid
   google-chrome
   hazel
-  iterm2-nightly
+  iterm2
   mailmate
   marked
   meteorologist
@@ -119,8 +119,6 @@ apps=(
   vlc
   flux
   1password
-  qlmarkdown
-  quicklook-json
   )
 
 # Install apps to /Applications
