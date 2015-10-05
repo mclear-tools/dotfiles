@@ -1,0 +1,611 @@
+#+TITLE:     Emacs and Org-Mode Tutorial
+#+AUTHOR: Ben Maughan
+#+DESCRIPTION:
+#+KEYWORDS:
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:nil
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:
+#+LINK_HOME:
+#+XSLT:
+
+#+begin_html
+<center>
+<p><a href="http://www.star.bris.ac.uk/bjm/">Ben Maughan</a>, Room 4.19, Physics. <a href="http://www.phy.bris.ac.uk/people/maughan_bj/index.html">Full contact information</a>.</p>
+</center>
+#+end_html
+
+#+TOC: headlines 2
+
+# ################# #
+# NOTE TO BEGINNERS #
+# ################# #
+
+# If you have opened this file in emacs you may just see a few lines
+# below beginning with *. Move the cursor to the line * Introduction
+# and press the tab key to expand that section
+
+* Introduction
+This tutorial is intended to introduce the text editor =emacs= and
+demonstrate some of the advanced techniques that are useful for
+researchers. In particular I will highlight the use of emacs as a
+research notebook.
+
+Note that to call emacs a text editor is a bit of an
+understatement. It is also a web browser, news reader, email client,
+file manager, development environment, and the list goes on.
+
+The structure of this tutorial is a general introduction to emacs,
+with some preparatory work, and then an interactive session where I
+will demonstrate some techniques that you should work along with. To
+begin with you need to work through to the end of the Emacs basics
+section.
+
+* Initial setup
+** Set up emacs
+*** Using the right version
+Linux machines come with emacs installed, but you'll need to be using
+the most recent version of emacs (24.3.92). On the astronomy group's
+linux machines you can access this with
+#+BEGIN_SRC sh
+alias emacs /homeb/bjm/bin/emacs-24.3.92
+#+END_SRC
+# #+BEGIN_SRC sh
+# alias emacs /usr/local/bin/emacs
+# #+END_SRC
+Then check your emacs version with
+#+BEGIN_SRC sh
+emacs --version
+#+END_SRC
+
+Otherwise, contact your system admin to intall the latest version, or
+install it yourself...
+
+*** Installing emacs on a Mac
+Download from [[Emacs for OSX][http://emacsformacosx.com/]]
+
+*** Installing emacs on Linux
+You can install the latest bleeding edge version from source using git:
+#+BEGIN_SRC sh
+  git clone git://git.savannah.gnu.org/emacs.git
+  cd emacs
+  ./autogen.sh
+  ./configure --prefix=/my/install/path
+  make
+  make check
+  make install
+#+END_SRC
+
+** Set up Prelude
+Prelude is a pre-built startup configuration that sets up emacs with
+lots of useful tweaks and extensions. We will get the newest version
+of prelude and install following these steps:
+
+ 1) Back up any previous emacs configuration
+    #+BEGIN_SRC sh
+    mv ~/.emacs ~/.emacs_backup
+    mv ~/.emacs.d ~/.emacs.d_backup
+    rm ~/.emacs.desktop
+    #+END_SRC
+
+ 2) Now we can use curl to install prelude:
+    #+begin_src sh
+    curl -L http://git.io/epre | sh
+    #+end_src
+
+ 3) Next, in a text editor (not emacs) edit the file
+    =~/.emacs.d/prelude-modules.el= - I will use =nano=
+    #+BEGIN_SRC
+    nano ~/.emacs.d/prelude-modules.el
+    #+END_SRC
+    and /comment/ out the line containing =prelude-company= and
+    /uncomment/ the lines containing =prelude-helm= and =prelude-latex=
+
+ 4) Now start =emacs= and wait a minute or two as it sets itself up for
+    the first time. Once it has completed, quit emacs.
+
+ 5) Next copy over some basic configuration tweaks of mine to your personal
+    config file, which we will call =emacs_config.el=
+    #+BEGIN_SRC sh
+    curl http://www.star.bris.ac.uk/bjm/emacs_basic.el -o ~/.emacs.d/personal/emacs_config.el
+    #+END_SRC
+    You can edit this file as you get more familiar with emacs to make
+    further config changes.
+
+ 6) Now start =emacs= again and wait as it finishes setting itself up.
+
+Now see the following section for optional adjustments to prelude
+(changing colours, remove highlighting of long lines etc)
+
+** Optional Prelude Tweaks
+For the following changes you will need to edit your
+=~/.emacs.d/personal/emacs_config.el=, save the changes and restart
+emacs
+
+ - Prelude uses the dark zenburn colour scheme. You can
+   choose lots of others, but if you just want to use the light,
+   default colour scheme, edit your
+   =~/.emacs.d/personal/emacs_config.el= file and uncomment the line
+   mentioning zenburn, so it reads
+   #+BEGIN_SRC elisp
+     ;;uncomment this to use default theme
+     (disable-theme 'zenburn)
+   #+END_SRC
+   and then save the file and restart emacs
+
+ - Prelude highlights the ends of lines longer than 80 characters to
+   encourage good code formatting. To prevent this, add the following
+   to your =emacs_config.el=
+   #+BEGIN_SRC elisp
+     ;;don't highlight the end of long lines
+     (setq whitespace-line-column 99999)
+   #+END_SRC
+
+ - The default highlight colour in the zenburn theme can be hard to
+   see, add the following to your config file to change the colour
+   #+BEGIN_SRC elisp
+     ;;change highlight colour
+     (set-face-attribute 'region t :background "#164040")
+   #+END_SRC
+
+ - Prelude automatically saves your file frequently while you are
+   editing. Instead, you can make emacs keep backups of your files
+   frequently, but not overwrite the file. In this code, we tell it to
+   make the backups in =/tmp/emacs-backup=, so look there if you ever
+   loose or mess up a file!
+   #+BEGIN_SRC elisp
+     ;;turn off aggressive auto save
+     (setq prelude-auto-save nil)
+     (setq
+      backup-by-copying t      ; don't clobber symlinks
+      backup-directory-alist
+      '(("." . "/tmp/emacs-backups"))    ; don't litter my fs tree
+      delete-old-versions t
+      kept-new-versions 6
+      kept-old-versions 2
+      version-control t)
+   #+END_SRC
+
+* Emacs basics
+** Emacs tutorial
+Before we can get into some of the most useful areas of emacs and
+org-mode, you will need to learn the basics of how to operate
+emacs. The best way to do this is to work though the emacs
+tutorial. This is available under the help menu of emacs, and I will
+assume that you have worked through the tutorial, or already know the
+basics of emacs in the following.
+
+Note that our configuration changes some of the default emacs
+behaviour, but basic functions covered in the tutorial should work as
+described.
+
+** Key concepts
+Before we continue, make sure you are happy with the following basic
+concepts:
+ + what the notation C- and M- means (note that M- means the =alt= key
+   on most keyboards, but this might be the command, option, or even
+   escape key on a Mac)
+ + how to open and save files (C-x C-f and C-x C-s)
+ + how to move around a file (arrows, C-v, M-v, C-a, C-e, searching)
+ + how to copy (M-w) kill/cut (C-w) and paste (C-y) and cycle though
+   previous copy/cuts (M-y).
+ + deleting letters and words with C-d, M-d and BACKSPACE and
+   M-BACKSPACE. Note also that undo and redo are set to
+   C-z and C-Z in our configuration.
+ + what is meant by buffers, windows, and frames, and how to switch
+   between buffers (C-x C-b and C-x b)
+ + how to quit out of a command (C-g) and quit emacs (C-x C-c)
+
+
+* Org-mode
+Emacs uses the concepts of modes to provide additional
+functionality. These are either major modes which relate to the type
+of file being edited (e.g. text-mode for text files, cperl-mode for
+perl files, nxml-mode for html, auctex-mode for latex etc). Major
+modes usually activate automatically when a file of a given type is
+opened, and only one major mode is active in a given buffer at a
+time. Minor modes also provide additional functionality, but can work
+across different major modes, and you can have as many active as you
+like. For example, flyspell-mode provides spell checking in many major
+modes. Additional major and minor modes can be installed using the
+emacs package manager (a bit like browser extensions).
+
+[[http://orgmode.org/][Org-mode]] is a very powerful major mode that provides the ability to
+create structured text documents, along with lots of other useful
+things. We will be using it here as a way to make a detailed notebook
+that includes code snippets, tables and images.
+
+Now, copy the tutorial org file to the current directory, and then
+open it in emacs:
+#+BEGIN_EXAMPLE
+curl http://www.star.bris.ac.uk/bjm/emacs_tutorial.org -o emacs_tutorial.org
+#+END_EXAMPLE
+Emacs will automatically start that buffer in org-mode. Now let's
+start work through the tutorial adding our own notes as we go
+
+I have marked points in *bold* where you need to add text.
+
+** org-mode structure
+Text in org is structured by headings, denoted by lines starting with
+one or more * so we are currently in a subsection!
+
+*add a sub-subheading*
+
+*** navigation
+headings can be expanded or collapsed by moving to the (sub)heading
+and pressing TAB. S-TAB cycles all headings. You can jump to next and
+previous headings with C-c C-n and C-c C-p respectively.
+
+*expand and collapse headings and move between them*
+
+You can move headings up and down with M-arrow
+
+*** lists
+**** bullet lists
+*copy the bullet list here*
+
+**** numbered lists
+*make a numbered list*
+
+**** checklists
+*make a check list*
+
+**** definition lists
+*make a definition list*
+
+** org-mode tables
+Hopefully you can see straight away that the simple structure provided
+by org-mode gives a nice way to keep an electronic note book.
+
+Often it is nice to include tables in our notes - org handles this by
+using | to separate columns, and a line of --- (inserted with C-c -)
+to add horizontal lines.
+
+*start typing in the table shown*
+ 1) when you get to the "s" of comments, press TAB to go to the next
+    line
+ 2) go up to the previous line and use C-c - to add the row of dashes
+ 3) next enter a few lines of data, using TAB to go through the
+    cells - you should notice the columns changing width as needed
+ 4) you can move rows and columns around using M-arrow and insert or
+    delete rows and columns using M-S-arrow. Try this out
+
+*** Advanced tables
+**** creating and exporting
+You can easily convert some text to a table - *select the following
+text and click the Tbl menu and choose convert region*
+
+ ID  x   y
+ A   2   4
+ B   3   9
+ C   4  16
+ D   5  25
+
+You can also save tables to files by putting the cursor in the table
+and using M-x org-table-export
+
+**** formulae
+You can use formulae to do arithmetic on tables (e.g. sum a column)
+and other spreadsheet-like functions - see the org manual for details
+
+** org-mode links and images
+Org mode supports links to files, URLs, and to other points in the org
+file. In this example let's use an image from my website. First copy
+it to the current directory (you can do this within emacs but for now
+let's just do this in your terminal!)
+#+BEGIN_EXAMPLE
+curl http://www.star.bris.ac.uk/bjm/superman_cluster.gif -o superman_cluster.gif
+#+END_EXAMPLE
+
+To add a link to a file use C-u C-c C-l and type the name of a file.
+Use tab-completion to select the image we just copied and you will
+then be asked for a description - you can press enter to leave this
+blank
+
+*add a link here*
+
+Since the file we have linked to is an image, we can display the image
+in emacs using C-c C-x C-v and use the same command to turn the image
+off again - try this.
+
+The structure of a link in org mode looks like this
+#+BEGIN_EXAMPLE
+[[link address][text]]
+#+END_EXAMPLE
+where the link address is the URL or file name, and the text is the
+text that is displayed, so we can replace our superman link with
+something tidier like *add a named link here* but note that this will
+not display when we turn on images.
+
+Links to other parts of the org file are added easily like this
+#+BEGIN_EXAMPLE
+[[org-mode structure][this link]]
+#+END_EXAMPLE
+*type this in to make a link to the earlier section*
+
+Finally, we can add a caption and a name to our image like this
+
+*add an image with caption*
+
+which means we can refer to our image later with a link like this one
+*add link back to image*
+
+** Formatting text
+Later on we'll look at exporting our org document to different
+formats. Org does this very nicely, and translates your text and
+markup appropriately.
+
+*add examples here*
+
+** LaTeX and source code blocks
+Sometimes you don't want org mode to try to do anything clever with
+some text and just display it as plain text. One way to do this is to
+use an example block. Go to a new line and type <e then press TAB
+
+*add an example block here*
+
+On the other hand, org does quite a good job at converting latex
+syntax like superscripts or symbols *add examples here*
+
+Org also understands more complex latex like this
+
+\begin{eqnarray}
+x^2 + \left(\frac{y}{z}\right)^4 = 0
+\end{eqnarray}
+
+It is also handy to include source code in your notes - *on a new line
+type <s and TAB to create a source block*. You can tall org what type
+of code is contained - in this case we'll put in some simple shell
+code, so well put "sh" at the top of the block. Now move the cursor
+inside the block and type C-c ' which will create a new temporary
+buffer in the major mode of the programming language you have
+specified. Type some code in, and then type C-c ' again to come back
+to this buffer
+
+*add the source block here*
+
+
+*** Advanced topic - babel
+This feature of org is particularly powerful, and it is possible to
+have org execute the code in a block by putting the cursor in there
+and using C-c C-c and then giving it permission when asked. By default
+the output of the code is added to the org file below the code block -
+try this with the example code above.
+
+There are much more sophisticated things you can do, like have the
+code read data from a table elsewhere in the file and add images to
+the file. You can also add links to line numbers in the code and
+more. Read online about org-mode and babel for more.
+
+** Org mode exporting
+One strength of org-mode is the ability to export to multiple
+formats. Most useful are web pages and pdf (via latex). To export this
+file to a web page, type C-c C-e to start the exporter and then press
+"h" to select html and "o" to select open. A new web page should now
+open in your browser.
+
+*export this file to a web page and view it*
+
+Similarly, typing "l" and "o" in the exporter will convert the org
+file to latex and then compile it to produce a pdf and display
+that.
+
+*export this file to pdf and view it*
+
+*** Advanced export options
+It is possible to add many customisations to the export process. For
+example, go to the top of the buffer (using M-<) and use C-c C-e and
+then # to insert an export template. You can then choose to add
+html or latex (or other) templates.
+
+
+** To do lists
+Org mode has a very nice way of managing todo lists including clocking
+the length of time spent on tasks and adding deadlines etc. Chat to me
+for more details or see [[http://doc.norang.ca/org-mode.html][this page]] for a really detailed example.
+
+* Advanced topics
+Now we will return to more general emacs techniques - these are not
+specific to org mode, but we can demonstrate them in this org mode
+file
+
+** installing packages
+Let's install the multiple-cursors package using the built in emacs
+package manager:
+#+BEGIN_EXAMPLE
+M-x package-list-packages
+#+END_EXAMPLE
+to bring up the list of available and installed packages. Search for
+multiple-cursors and then put the cursor on that line and press i to mark the
+package for installation and x to actually install it.
+
+After you install a package you will often need to edit your config
+file to activate the package and set options. Open your config file
+with C-x C-f and then start typing
+=~/.emacs.d/personal/emacs_config.el= - you will see the completion
+options appear in the mini buffer and you can use the arrows and enter
+to select.
+
+In the emacs config file I have already put the lines we need for
+multiple-cursors mode, but they are commented out. Search for
+multiple-cursors and then highlight the commented text and use M-; to
+uncomment the line. This will also comment regions in one go.
+
+Now save your work C-x s close emacs (C-x C-c) and restart it.
+
+** abbreviations and completion
+Emacs will try to complete words if you use M-/ for example try typing
+"comp" and then pressing M-/ multiple times to cycle through the
+completion options
+
+*try this*
+
+Emacs also has a smart abbreviation system where you can define short
+hand for long terms to save an abbreviation, type the abbreviated text
+e.g. "abbr" and then use C-x a i g and then type the full version
+e.g. abbreviation. From now on, any time you type abbr and space (or
+comma, enter etc) it will magically expand.
+
+*make an abbreviation*
+
+** search and replace
+Use M-% to replace all occurrences of a string with a replacement
+string - you need to type y or n to approve the replacement or use !
+to accept all replacements
+
+*try replacing aaa with bbb in the following*
+
+aaa blah blah aaa blah aaa blaaah blah
+
+** macros
+In emacs you can record sequences of commands and play them back to
+repeat boring tasks. For example in the following text, let's delete
+the x's from the end of each line. Go to the h at the start of the
+first line and use C-x ( to start recording a macro. Then use C-s d to
+search ahead to the and of the word world, then C-k to kill the text
+to the end of the line, then C-a to move back to the start of the line
+and C-n or down arrow to move don to the line below. Now use C-x ) to
+end macro recording and C-x e to run the macro. Pressing e again will
+repeat the macro. Do this until you have cleaned up the text.
+
+*clean up the text*
+
+#+BEGIN_EXAMPLE
+hello worldx
+hello worldxxx
+hello worldxx
+hello worldxxxxx
+hello worldxx
+hello worldxx
+hello worldxxxxxxxx
+hello worldxxxxx
+#+END_EXAMPLE
+
+To repeat the macro N times use M-N C-x e where N is an integer - set
+N to be very large and the macro will repeat until the end of the
+buffer. Many emacs commands accept numerical prefixes in this way to
+cause them to repeat N times.
+
+** Helm
+Type C-x SPACE to activate helm to provide a powerful search for
+files. Start typing the name of a file and it will show a list of
+matches from your current buffers, recent files, and the locate
+database. If you are running emacs on a Mac, you can tweak this to use
+spotlight instead.
+
+*try this*
+
+** Spell checking
+Flyspell is a minor mode that checks spelling as you type. If you make
+a typo, press C-; to cycle through corrections of the mis-spelled word
+closest behind the cursor. You can also correct a particular word by
+putting the cursor on it and pressing M-$. You can spell check the
+whole buffer with M-x ispell
+
+*mis-spell some words and then correct them*
+
+** Shell commands
+It is often useful to operate on text in emacs using standard shell
+commands. For example, suppose we had a text file containing columns
+of numbers that we wanted to manipulate to calculate a radius and unit
+vector from x and y coordinates:
+
+#+BEGIN_EXAMPLE
+#ID  x   y
+A    2   4
+B    3   2
+C    4  -4
+D    5   1
+#+END_EXAMPLE
+
+Select the text in the table, not including the line containing the
+column names, and use M-| to run =shell-command-on-region=. Then type
+#+BEGIN_EXAMPLE
+awk '{printf("%g %g %g\n",sqrt($2**2+$3**2),$2/sqrt($2**2+$3**2),$3/sqrt($2**2+$3**2))}'
+#+END_EXAMPLE
+The output text appears at the bottom of the screen and then
+disappears once you type anything else, but it is saved in a buffer
+called =Shell Command Output= - switch to that buffer with C-x C-b to
+see the output.
+
+Now it would be nice to add this text back into our table - one way to
+do this is to use rectangles...
+
+
+** Rectangles
+Emacs has avery nice feature of letting you select rectangular regions
+of text for manipulation. Recall that we use C-SPACE to start and stop
+normal text section; we use C-RETURN to start and stop rectangular
+selection. Try that here, and then switch to the =Shell Command
+Output= buffer and highlight a rectangle containing the three columns
+that were created, and then use M-w to copy the rectangle
+
+Now type in the names of the new columns in the table and put the
+cursor at the position of the first new value (i.e. under R) and paste
+(yank) the rectangle with C-x r y (or M-x yank-rectangle). Now suppose
+we had wanted to add the new columns before the x and y columns; put
+the cursor in front of the 2 under x and yank-rectangle again.
+
+#+BEGIN_EXAMPLE
+#ID  x   y  R  xhat  yhat
+A    2   4
+B    3   2
+C    4  -4
+D    5   1
+#+END_EXAMPLE
+** Multiple Cursors
+This is similar to rectangles, but more useful for certain
+tasks. Suppose we wanted to make some changes to every line in the
+following block of text. Select the block and use C-c m c to activate
+multiple cursors. Now try making some changes. Press enter to leave
+multiple cursors mode.
+
+#+BEGIN_EXAMPLE
+#ID  x   y  R  xhat  yhat
+A    2   4
+B    3   2
+C    4  -4
+D    5   1
+#+END_EXAMPLE
+
+** Toggle case
+Put your cursor on a word and pres =M-c= to toggle the case of the
+word. Also works for regions
+
+** Paste history
+Copy some text (M-w) and then paste (C-y) and then use M-y to cycle
+through previously copied text.
+** Jump to previous positions
+Do a search (C-s) somewhere in the buffer and then press RET to finish
+the search. Now use =C-u C-SPACE= to jump back to where you started
+the search. Keep pressing =C-SPACE= to jump to previous
+locations. Emacs marks points in the text for lots of reasons
+(searching, copying, pasting etc) so this will usually take you
+somewhere useful.
+
+** ediff
+To compare the contents of two text files, use =M-x ediff-files= and
+open the two files you want to compare. Emacs will then open one above
+the other in your main emacs window, and also open a smaller window
+which says =Type ? for help=.
+
+Press =|= to put the two files side by side in your main emacs window,
+and then stretch your window nice and wide so you can see both files
+side by side clearly. Now click back on the small emacs window with
+the help text.
+
+In your main window, you should see blocks of text that differ between
+the two buffers highlighted. Press =n= to move to the next difference
+and =p= to move to the previous difference. Press =a= to copy the text
+from the left-hand file to the right-hand file, or press =b= to copy
+text from the right-hand file to the left-hand file.
+
+Press =q= to exit =ediff= and then save your files if you have
+modified them.
+
+** auctex
+Preview equations. Add references from bib file =C-c [=. Use latexmk
+to build.

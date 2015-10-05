@@ -11,11 +11,14 @@ export PROJECT_HOME=$HOME/bin
 export WORKON_HOME=$HOME/bin/virtualenvs
 source /usr/local/bin/virtualenvwrapper.sh
 
+# locale
+export LANG=en_US.UTF-8
+
 # # Path to Beets
- export BEETSDIR=~/Dropbox/Apps/Beets/
+export BEETSDIR=~/Dropbox/Apps/Beets/
 
 # Terminal for 256 colors
-export TERM=xterm-256color-italic
+# export TERM=xterm-256color-italic
 
 # Eval to reset LS_COLORS
 eval "$(TERM=xterm-256color dircolors)"
@@ -53,7 +56,7 @@ if ! zgen saved; then
     zgen load zsh-users/zsh-syntax-highlighting
     zgen load srijanshetty/zsh-pandoc-completion
     zgen load peterhurford/git-aliases.zsh
-    # zgen load zsh-users/zsh-history-substring-search
+    zgen load zsh-users/zsh-history-substring-search
     zgen load secrettriangle/smart-cd
     zgen load voronkovich/gitignore.plugin.zsh
     zgen load djui/alias-tips
@@ -64,7 +67,13 @@ if ! zgen saved; then
     # theme
     # zgen oh-my-zsh themes/ys  # good standard theme
     # zgen oh-my-zsh themes/xiong-chiamiov-plus # Good two-line theme
-    zgen load nojhan/liquidprompt  # Very extensible theme
+    
+    
+if [ -n "$INSIDE_EMACS" ]; then
+    export zgen oh-my-zsh themes/ys
+else
+    export zgen load nojhan/liquidprompt  # Very extensible theme
+fi
 
 # OSX bundle if working on mac
  if [ "$OSTYPE"="darwin14.0.0" ]; then
@@ -83,8 +92,8 @@ fi
   bindkey "$terminfo[kcud1]" history-substring-search-down
  
 # bind P and N for EMACS mode
-  # bindkey -M emacs '^P' history-substring-search-up
-  # bindkey -M emacs '^N' history-substring-search-down
+  bindkey -M emacs '^P' history-substring-search-up
+  bindkey -M emacs '^N' history-substring-search-down
  
 # bind k and j for VI mode
   # bindkey -M vicmd 'k' history-substring-search-up
@@ -103,6 +112,7 @@ alias bu='bubu && brew doctor'
 alias bd='brew desc' 
 alias bi='brew info'
 alias ex='exit'
+alias tm='tmux'
 
 # source
   alias so='source'
@@ -175,3 +185,4 @@ source "$HOME/.nvim/plugged/gruvbox/gruvbox_256palette_osx.sh"
 
 
 source /Users/Roambot/.iterm2_shell_integration.zsh
+

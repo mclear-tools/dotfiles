@@ -1,6 +1,6 @@
 " vim:fdm=marker
-set encoding=utf-8
-scriptencoding utf-8
+" set encoding=utf-8
+" scriptencoding utf-8
 " set nocompatible
 filetype plugin indent on
 
@@ -26,6 +26,8 @@ Plug 'airblade/vim-gitgutter'
 Plug 'mhinz/vim-startify' " session manager and startup screen
 
 " " Useful Plugins
+Plug 'jceb/vim-orgmode' "org mode for vim
+Plug 'tpope/vim-speeddating' 
 Plug 'vim-scripts/loremipsum' " dummy text generator
 Plug 'vim-scripts/diffchar.vim'  " make vim-diff more useful
 Plug 'wincent/terminus'

@@ -5,6 +5,10 @@
 (defun dotspacemacs/layers ()
   "Configuration Layers declaration."
   (setq-default
+   ;; Base distribution to use. This is a layer contained in the directory
+   ;; `!distribution'. For now available distributions are `spacemacs-core'
+   ;; or `spacemacs'. (default 'spacemacs)
+   dotspacemacs-distribution 'spacemacs
    ;; List of additional paths where to look for configuration layers.
    ;; Paths must have a trailing slash (i.e. `~/.mycontribs/')
    dotspacemacs-configuration-layer-path '()
@@ -21,18 +25,20 @@
      ;; better-defaults
      deft
      emacs-lisp
+     ;; eyebrowse
      git
      latex
      markdown
      org
      osx
-     ;; eyebrowse
      pandoc
      (shell :variables
+            shell-default-term-shell "/usr/local/bin/zsh"
             shell-default-height 30
             shell-default-position 'bottom
             shell-default-shell 'multi-term
-            shell-default-term-shell "/usr/local/bin/zsh")
+            )
+     spell-checking
      syntax-checking
      version-control
      )
@@ -40,12 +46,14 @@
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages then consider to create a layer, you can also put the
    ;; configuration in `dotspacemacs/config'.
-   dotspacemacs-additional-packages '(
-                                      tabbar
+   dotspacemacs-additional-packages '(lorem-ipsum
                                       sr-speedbar
-                                      gruvbox-theme
-                                      darktooth-theme
-                                      writeroom-mode
+                                      sublimity
+                                      molokai-theme
+                                      flatland-theme
+                                      soothe-theme
+                                      gotham-theme
+                                      visual-fill-column
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
@@ -80,16 +88,10 @@ before layers configuration."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(darktooth
-                         gruvbox
-                         soothe
-                         gotham
-                         spacemacs-dark
-                         solarized-light
-                         solarized-dark
                          spacemacs-light
-                         leuven
-                         monokai
-                         zenburn)
+                         spacemacs-dark
+                         molokai
+                         )
    ;; If non nil the cursor color matches the state color.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
@@ -174,6 +176,12 @@ before layers configuration."
    )
   ;; User initialization goes here
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  (add-hook 'text-mode-hook '(lambda() (turn-on-auto-fill) (set-fill-column 80)))
+  (add-hook 'org-mode-hook '(lambda() (turn-on-auto-fill) (set-fill-column 80)))
+  (add-hook 'markdown-mode-hook '(lambda() (turn-on-auto-fill) (set-fill-column 80)))
+  ;;;;MODELINE;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  (setq display-time-format "%a %b %d | %H:%M |")
+  (display-time-mode)
   )
 
 (defun dotspacemacs/user-config ()
@@ -239,15 +247,17 @@ layers configuration."
   ;; latex config
   (add-hook 'doc-view-mode-hook 'auto-revert-mode)
   ;; deft settings
-  (require 'deft)
+  (setq deft-extensions '("org" "md" "txt" "tex"))
   (setq deft-directory "~/Dropbox/Notes")
-  (setq deft-extensions '("md" "txt" "tex" "org"))
   (setq deft-recursive t)
   (evil-leader/set-key "od" 'deft)
+
   ;; pandoc settings
   (add-hook 'markdown-mode-hook 'pandoc-mode)
+
   ;; Only use spaces
   (setq-default indent-tabs-mode nil)
+
   ;; Speedbar
   (require 'speedbar)
   (setq speedbar-show-unknown-files t) ; show all files
@@ -258,18 +268,61 @@ layers configuration."
   (speedbar-add-supported-extension ".markdown")
   (require 'sr-speedbar)
   (evil-leader/set-key "os" 'sr-speedbar-toggle)
-  (setq sr-speedbar-max-width 60)
-  (setq sr-speedbar-width-console 40)
-  (setq sr-speedbar-right-side nil) ; put on left side
-  (sr-speedbar-open)
+  ;; (setq sr-speedbar-max-width 80)
+  ;; (setq sr-speedbar-width-console 40)
+  ;; (setq sr-speedbar-right-side nil) ; put on left side
+  ;; (sr-speedbar-open)
+  ;; (with-current-buffer sr-speedbar-buffer-name
+  ;;   (setq window-size-fixed 'width))
   ;; (setq sr-speedbar-skip-other-window-p t)
 
+  ;;; TERMINAL SETTINGS
+  (add-hook 'term-mode-hook
+            (lambda ()
+              (define-key term-raw-map (kbd "C-y") 'term-paste)))
+
+  (add-hook 'term-mode-hook
+            (lambda ()
+              (setq show-trailing-whitespace nil)))
+  (add-hook 'term-mode-hook
+            (lambda ()
+              (setq term-buffer-maximum-size 10000)))
   ;;; KEYBINDINGS ;;;;;;;;;;;;;;;;;;;;;;
 
   ;; Quick keyboard shortcut for recent files
   (evil-leader/set-key "or" 'recentf-open-files)
 
+  ;;; SUBLIMITY ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  (require 'sublimity)
+  ;; (require 'sublimity-scroll)
+  (require 'sublimity-map)
+  (setq sublimity-map-size 20)
+  (setq sublimity-map-fraction 0.3)
+  (setq sublimity-map-text-scale -7)
+  (require 'sublimity-attractive)
+  (evil-leader/set-key "oc" 'sublimity-mode)
+  (setq sublimity-attractive-centering-width 100)
+  (add-hook 'sublimity-map-setup-hook
+            (lambda ()
+              (setq buffer-face-mode-face '(:family "Monospace"))
+              (buffer-face-mode)))
+
 )
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(doc-view-continuous t))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:family "Inconsolata LGC for Powerline" :foundry "nil" :slant normal :weight normal :height 120 :width normal))))
+ '(company-tooltip-common ((t (:inherit company-tooltip :weight bold :underline nil))))
+ '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil))))
+ '(term ((t (:inherit default)))))
