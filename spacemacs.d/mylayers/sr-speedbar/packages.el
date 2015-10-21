@@ -27,8 +27,18 @@
     :init
     (setq sr-speedbar-width 50)
     (setq sr-speedbar-right-side nil)
-    (setq speedbar-show-unknown-files t) ; show all files
-    (setq speedbar-use-images nil)
+    (require 'speedbar)
+    (setq speedbar-hide-button-brackets-flag t
+          speedbar-show-unknown-files t
+          speedbar-directory-button-trim-method 'trim
+          speedbar-use-images nil
+          speedbar-indentation-width 2
+          speedbar-use-imenu-flag t
+          speedbar-file-unshown-regexp "flycheck-.*"
+          speedbar-smart-directory-expand-flag t)
+    ;; Add markdown support
+    (setq speedbar-directory-unshown-regexp "^\\(CVS\\|RCS\\|SCCS\\|\\.\\.*$\\)\\'")
+    (speedbar-add-supported-extension ".md")
     :config
     (spacemacs|evilify-map speedbar-mode-map)))
 

@@ -13,7 +13,7 @@ values."
    dotspacemacs-distribution 'spacemacs
    ;; List of additional paths where to look for configuration layers.
    ;; Paths must have a trailing slash (i.e. `~/.mycontribs/')
-   dotspacemacs-configuration-layer-path '("~/.spacemacs.d/mylayers/")
+   dotspacemacs-configuration-layer-path '()
    ;; List of configuration layers to load. If it is the symbol `all' instead
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
@@ -36,7 +36,7 @@ values."
      pandoc
      pdf-tools
      (ranger :variables
-             ranger-show-preview t)
+              ranger-show-preview t)
      (shell :variables
             shell-default-term-shell "/usr/local/bin/zsh"
             shell-default-shell 'eshell
@@ -44,7 +44,6 @@ values."
             shell-default-position 'bottom)
      shell-scripts
      spell-checking
-     sr-speedbar
      syntax-checking
      themes-megapack
      version-control
@@ -55,6 +54,8 @@ values."
    ;; configuration in `dotspacemacs/config'.
    dotspacemacs-additional-packages '(
                                       lorem-ipsum
+                                      sr-speedbar
+                                      (writeroom-mode :location (recipe :fetcher github :repo "joostkremers/writeroom-mode"))
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
@@ -96,7 +97,6 @@ values."
    dotspacemacs-themes '(
                          sanityinc-solarized-dark
                          darktooth
-                         jazz
                          sanityinc-solarized-light
                          leuven
                          ample
@@ -126,8 +126,6 @@ values."
    ;; By default the command key is `:' so ex-commands are executed like in Vim
    ;; with `:' and Emacs commands are executed with `<leader> :'.
    dotspacemacs-command-key ":"
-   ;; If non nil `Y' is remapped to `y$'. (default t)
-   dotspacemacs-remap-Y-to-y$ t
    ;; Location where to auto-save files. Possible values are `original' to
    ;; auto-save the file in-place, `cache' to auto-save the file to another
    ;; file stored in the cache directory and `nil' to disable auto-saving.
@@ -150,7 +148,7 @@ values."
    dotspacemacs-enable-paste-micro-state nil
    ;; Which-key delay in seconds. The which-key buffer is the popup listing
    ;; the commands bound to the current keystroke sequence. (default 0.4)
-   dotspacemacs-which-key-delay 0.4
+   dotspacemacs-which-key-delay 0.3
    ;; Which-key frame position. Possible values are `right', `bottom' and
    ;; `right-then-bottom'. right-then-bottom tries to display the frame to the
    ;; right; if there is insufficient space it displays it at the bottom.
@@ -212,7 +210,6 @@ user code."
   ;;;;MODELINE;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   (setq display-time-format "%a %b %d | %H:%M |")
   (display-time-mode)
-
   ;;;;;;EVIL ESCAPE SEQUENCE;;;;;;;;;;;;;;;;;;
   ;; (setq evil-escape-key-sequence "jk")
 
@@ -230,9 +227,9 @@ user code."
   (menu-bar-mode -1)
 
     ;;; FILL COLUMN
-  (add-hook 'text-mode-hook '(lambda() (turn-on-auto-fill) (set-fill-column 72)))
-  (add-hook 'org-mode-hook '(lambda() (turn-on-auto-fill) (set-fill-column 72)))
-  (add-hook 'markdown-mode-hook '(lambda() (turn-on-auto-fill) (set-fill-column 72)))
+  (add-hook 'text-mode-hook '(lambda() (turn-on-auto-fill) (set-fill-column 80)))
+  (add-hook 'org-mode-hook '(lambda() (turn-on-auto-fill) (set-fill-column 80)))
+  (add-hook 'markdown-mode-hook '(lambda() (turn-on-auto-fill) (set-fill-column 80)))
 
 
   ;;; OTHER ;;;;;;;;;;;;;;;;;;
@@ -246,10 +243,7 @@ user code."
  This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
 
-  ;;;;; GENERAL SETTINGS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-  ;;; Turn of minor mode in modeline
-  (spacemacs/toggle-mode-line-minor-modes)
+    ;;;;; GENERAL SETTINGS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
   ;; Auto-Save ;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -262,10 +256,10 @@ layers configuration. You are free to put any user code."
             (basic-save-buffer)))))
 	(add-hook 'auto-save-hook 'full-auto-save)
 
-  ;; Count words ;;;;;;;;;;;;;;;
-  (evil-leader/set-key "oc" 'count-words)
   ;; visual line mode
   (add-hook 'text-mode-hook 'turn-on-visual-line-mode)
+  ;;; Turn of minor mode in modeline
+  (setq toggle-mode-line-minor-modes-off t)
   ;; navigate using visual lines rather than true lines
   (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
   (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
@@ -319,9 +313,6 @@ layers configuration. You are free to put any user code."
 
   ;;; PACKAGE SETTINGS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-    ;; MAGIT ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    (setq magit-repository-directories '("~/Dropbox/Work/Projects/"))
-
   ;;; RANGER ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (setq
      ranger-cleanup-eagerly t
@@ -332,8 +323,7 @@ layers configuration. You are free to put any user code."
   ;;; ORG MODE ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     (setq default-major-mode 'org-mode) ;; Default to Org Mode
     (require 'org-inlinetask)  ;; allow inline todos
-    (setq org-hide-emphasis-markers t)  ;; hide markers 
-    (setq org-pretty-entities t) ;; make latex look good
+    ;;(setq org-hide-emphasis-markers t)  ;; hide markers 
     ;;(setq org-latex-pdf-process '("latexmk -f -xelatex %f"))
     ;; go to headings in org
     ;; (setq org-goto-interface 'outline
@@ -354,12 +344,22 @@ layers configuration. You are free to put any user code."
     (setq org-pandoc-options-for-beamer-pdf '((latex-engine . "xelatex")))
     (setq org-pandoc-options-for-latex-pdf '((latex-engine . "xelatex")))
 
+  ;;; ORG_REF;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ;; (setq reftex-default-bibliography '("/Users/Roambot/Dropbox/Work/Master.bib"))
+    ;; (setq reftex-bibliography-commands '("bibliography" "nobibliography" "addbibresource"))
+    ;; (setq reftex-bibpath-environment-variables
+    ;;         '("/usr/local/texlive/texmf-local/bibtex/bib"))
+
+    ;; (setq org-ref-bibliography-notes "~/Dropbox/Work/MasterLib/BibNotes/bibnotes.org"
+    ;;         org-ref-default-bibliography '("/Users/Roambot/Dropbox/Work/Master.bib")
+    ;;         org-ref-pdf-directory "~/Dropbox/Work/MasterLib/")
+
   ;;; HELM_BIBTEX ;;;;;;;;;;;;;;;;;;;;;;;;
   (autoload 'helm-bibtex "helm-bibtex" "" t)
   (load "parsebib.el")
   (setq helm-bibtex-bibliography '("~/Dropbox/Work/Master.bib"))
   (setq helm-bibtex-library-path "~/Dropbox/Work/MasterLib/")
-  (setq helm-bibtex-notes-path "~/Dropbox/Work/MasterLib/BibNotes/")
+  (setq helm-bibtex-notes-path "~/Dropbox/Work/MasterLib/BibNotes/bibnotes.org")
   (setq helm-bibtex-notes-extension ".org")
   (setq helm-bibtex-additional-search-fields '(keywords)) ;; search keywords field
   ;; Set insert citekey with markdown citekeys for org-mode
@@ -375,6 +375,17 @@ layers configuration. You are free to put any user code."
   ;; Set default action for helm-bibtex as inserting pandoc citation
   (helm-delete-action-from-source "Insert citation" helm-source-bibtex)
   (helm-add-action-to-source "Insert citation" 'helm-bibtex-insert-citation helm-source-bibtex 0)
+
+;;   (defun helm-bibtex-find-pdf (key)
+;;     "Searches in all directories in `helm-bibtex-library-path' for
+;; a PDF whose name is the name specified in the ’file’ property of the
+;; BibTeX entry or whose name is KEY + \".pdf\".  Returns the first
+;; matching PDF."
+;;     (let* ((entry (helm-bibtex-get-entry key))
+;;            (fname (helm-bibtex-get-value "File" entry))
+;;            (files1 (--map (f-join it fname) (-flatten (list helm-bibtex-library-path))))
+;;            (files2 (--map (f-join it (s-concat key ".pdf")) (-flatten (list helm-bibtex-library-path)))))
+;;       (-first 'f-exists? (append files1 files2))))
 
   ;;; Version Control-X-prefix
   (setq global-diff-hl-mode)
@@ -406,30 +417,57 @@ layers configuration. You are free to put any user code."
   ;;; Only use spaces
   (setq-default indent-tabs-mode nil)
 
-  ;;; SR-SPEEDBAR ;;;;;;;;;;;;;;;;;;;
+  ;;; SR-SPEEDBAR ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  '(require speedbar)
+  '(require sr-speedbar)
+  (setq sr-speedbar-width 50)
+  (setq sr-speedbar-width-console 40)
+  (setq sr-speedbar-max-width 50)
+  (setq speedbar-hide-button-brackets-flag t)
+  (setq speedbar-show-unknown-files t) ; show all files
+  (setq sr-speedbar-right-side nil) ; put on left side
+  (setq speedbar-smart-directory-expand-flag t)
+  (setq speedbar-use-images nil)
+  (setq speedbar-directory-unshown-regexp "^\\(CVS\\|RCS\\|SCCS\\|\\.\\.*$\\)\\'")
+  (speedbar-add-supported-extension ".md")
+  (speedbar-add-supported-extension ".mdown")
+  (speedbar-add-supported-extension ".markdown")
+
   (defun sb-expand-curren-file ()
     "Expand current file in speedbar buffer"
     (interactive)
     (setq current-file (buffer-file-name))
+    (sr-speedbar-refresh)
     (sr-speedbar-toggle)
     (sr-speedbar-select-window)
-    (sr-speedbar-refresh)
     ;; (switch-to-buffer-other-frame "*SPEEDBAR*")
     (speedbar-find-selected-file current-file)
     (speedbar-expand-line))
 
-  ;; (evil-leader/set-key "os" 'sr-speedbar-toggle)
-  (evil-leader/set-key "oe" 'sb-expand-curren-file)
+  (evil-leader/set-key "os" 'sb-expand-curren-file)
+  ;; (sr-speedbar-open)
+  ;; (with-current-buffer sr-speedbar-buffer-name
+  ;;   (setq window-size-fixed 'width))
+  ;; (setq sr-speedbar-skip-other-window-p t)
 
-  ;;; LOCATE WITH SPOTLIGHT ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  (if (eq system-type 'darwin) (setq helm-locate-fuzzy-match nil))
-  (setq helm-locate-command
-        (case system-type
-          ('gnu/linux "locate -i -r %s")
-          ('berkeley-unix "locate -i %s")
-          ('windows-nt "es %s")
-          ('darwin "mdfind -name %s %s")
-          (t "locate %s")))
+  ;;; SUBLIMITY SETTINGS  ;;;;;;;;
+  ;; (require 'sublimity)
+  ;; ;; (require 'sublimity-scroll)
+  ;; ;; (require 'sublimity-map)
+  ;; (require 'sublimity-attractive)
+  ;; (setq sublimity-attractive-centering-width 90)
+  ;; (sublimity-attractive-hide-fringes)
+  ;; (evil-leader/set-key "oc" 'sublimity-mode)
+
+  ;;; WRITEROOM ;;;;;;;;;;;;;;;;;;
+  ;; (evil-leader/set-key "ow" 'writeroom-mode)
+
+  ;;; SPELLING ;;;;;;;;;;;;;;;
+
+  ;; (setq flyspell-issue-welcome-flag nil)
+  ;; (if (eq system-type 'darwin)
+  ;;     (setq-default ispell-program-name "/usr/local/bin/aspell"))
+  ;; (setq-default ispell-list-command "list")
 
 )
 
