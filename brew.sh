@@ -30,7 +30,7 @@ brew install coreutils
 # Install GNU `find`, `locate`, `updatedb`, and `xargs`, g-prefixed
 brew install findutils
 
-# Install Bash 4
+# Install current bash
 brew install bash
 
 # Install more recent versions of some OS X tools
@@ -104,7 +104,6 @@ apps=(
   mailmate
   marked
   meteorologist
-  nvalt
   seil
   spectacle
   pdfsam-basic
@@ -136,7 +135,6 @@ brew tap caskroom/fonts
 fonts=(
   font-inconsolata
   font-inconsolata-for-powerline
-  font-inconsolata-dz-for-powerline
   font-inconsolata-lgc
   font-droid-sans-mono-for-powerline
   font-fira-mono-for-powerline
@@ -167,4 +165,4 @@ brew install emacs-mac --with-ctags --with-dbus --with-glib --with-gnutls --with
 
 # Change path so Homebrew packages get priority
 
-# $PATH=$(brew --prefix coreutils)/libexec/gnubin:$PATH
+$PATH=$(brew --prefix coreutils)/libexec/gnubin:$PATH
