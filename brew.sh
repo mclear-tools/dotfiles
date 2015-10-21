@@ -160,6 +160,9 @@ brew install --HEAD neovim
 brew tap rogual/neovim-dot-app
 brew install --HEAD neovim-dot-app
 
+# Install emacs
+brew tap railwaycat/emacsmacport
+brew install emacs-mac --with-ctags --with-dbus --with-glib --with-gnutls --with-imagemagick --with-spacemacs-icon --with-xml2
 
 
 # Change path so Homebrew packages get priority
