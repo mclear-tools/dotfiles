@@ -67,10 +67,11 @@ binaries=(
   tree
   tmux
   trash
+  xquartz
   wget
   wine
   xvid
-  zsh 
+  zsh
   webkit2png
   )
 
@@ -92,7 +93,6 @@ apps=(
   cleanmymac
   devonthink-pro-office
   djview
-  dropbox
   easyfind
   evernote
   fantastical
@@ -100,7 +100,7 @@ apps=(
   fluid
   google-chrome
   hazel
-  iterm2
+  iterm2-nightly
   mailmate
   marked
   meteorologist
@@ -165,4 +165,4 @@ brew install emacs-mac --with-ctags --with-dbus --with-glib --with-gnutls --with
 
 # Change path so Homebrew packages get priority
 
-$PATH=$(brew --prefix coreutils)/libexec/gnubin:$PATH
+# $PATH=$(brew --prefix coreutils)/libexec/gnubin:$PATH
