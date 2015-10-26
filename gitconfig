@@ -1,0 +1,5 @@
+[user]
+	name = Colin McLear
+	email = mclear@fastmail.com
+[credential]
+	helper = osxkeychain
