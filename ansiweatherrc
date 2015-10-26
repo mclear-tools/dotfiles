@@ -1,3 +1,4 @@
+api_key:d0dfeea1f7a83406288ec55700b36f3d 
 location:Providence,RI
 fetch_cmd:ftp -V -o -
 geo_api_url:www.telize.com/geoip

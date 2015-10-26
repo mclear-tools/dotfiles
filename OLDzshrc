@@ -6,13 +6,10 @@ export ARCHFLAGS="-arch x86_64"
 export PATH="/usr/local/opt/coreutils/libexec/gnubin:/usr/local/bin:/Users/Roambot/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/sbin:/bin:/opt/X11/bin:/Library/TeX/texbin:/Users/Roambot/.fzf/bin"
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
-# TERM
-COLORTERM=yes
-
-# zsh prompt
-# Only load Liquid Prompt in interactive shells, not from a script or from scp
-[[ $- = *i* ]] && source ~/liquidprompt/liquidprompt
-#PROMPT='[%n@%m:%/]%# '
+# virtualenvwrapper config
+export PROJECT_HOME=$HOME/bin
+export WORKON_HOME=$HOME/bin/virtualenvs
+source /usr/local/bin/virtualenvwrapper.sh
 
 # locale
 export LANG=en_US.UTF-8
@@ -20,24 +17,84 @@ export LANG=en_US.UTF-8
 # # Path to Beets
 export BEETSDIR=~/Dropbox/Apps/Beets/
 
-# virtualenvwrapper config
-source /usr/local/bin/virtualenvwrapper.sh
-export PROJECT_HOME=~/bin
-export WORKON_HOME=~/bin/virtualenvs
-
 # Terminal for 256 colors
-export TERM=xterm-256color
+# export TERM=xterm-256color-italic
+
+# Eval to reset LS_COLORS
+eval "$(TERM=xterm-256color dircolors)"
+
+#export to allow nvim to change cursor shape
+export NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+
+# load zgen
+# source "${HOME}/dotfiles/zgen/zgen.zsh"
+
+# Completion path
+# fpath=(~/.zsh/Completion $fpath)
+
+# Enable autocompletion
+autoload -U compinit
+compinit
+# check if there's no init script
+# if ! zgen saved; then
+#     echo "Creating a zgen save"
+
+#     zgen oh-my-zsh
+
+   # plugins
+   # zgen oh-my-zsh plugins/git
+    # zgen oh-my-zsh plugins/sudo
+    # zgen oh-my-zsh plugins/command-not-found
+    # zgen oh-my-zsh plugins/vi-mode
+    # zgen oh-my-zsh plugins/tmux
+    # zgen oh-my-zsh plugins/brew
+    # zgen oh-my-zsh plugins/brew-cask
+    # zgen oh-my-zsh plugins/marked2
+    # zgen oh-my-zsh plugins/tmux
+    
+    # # Non-default bundles
+    # zgen load zsh-users/zsh-syntax-highlighting
+    # zgen load srijanshetty/zsh-pandoc-completion
+    # zgen load peterhurford/git-aliases.zsh
+    # zgen load zsh-users/zsh-history-substring-search
+    # zgen load secrettriangle/smart-cd
+    # zgen load voronkovich/gitignore.plugin.zsh
+    # zgen load djui/alias-tips
+
+    # # completions
+    # zgen load zsh-users/zsh-completions src
+
+    # theme
+    # zgen oh-my-zsh themes/ys  # good standard theme
+    # zgen oh-my-zsh themes/xiong-chiamiov-plus # Good two-line theme
+    
+    
+# if [ -n "$INSIDE_EMACS" ]; then
+#     export zgen oh-my-zsh themes/ys
+# else
+#     export zgen load nojhan/liquidprompt  # Very extensible theme
+# fi
+
+# OSX bundle if working on mac
+#  if [ "$OSTYPE"="darwin14.0.0" ]; then
+#    zgen oh-my-zsh plugins/osx
+#  fi
+
+
+#     # save all to init script
+#     zgen save
+# fi
 
 # Bindings for history substring search
 # bind UP and DOWN arrow keys
   zmodload zsh/terminfo
   bindkey "$terminfo[kcuu1]" history-substring-search-up
   bindkey "$terminfo[kcud1]" history-substring-search-down
-
+ 
 # bind P and N for EMACS mode
   bindkey -M emacs '^P' history-substring-search-up
   bindkey -M emacs '^N' history-substring-search-down
-
+ 
 # bind k and j for VI mode
   # bindkey -M vicmd 'k' history-substring-search-up
   # bindkey -M vicmd 'j' history-substring-search-down
@@ -56,8 +113,6 @@ alias bd='brew desc'
 alias bi='brew info'
 alias ex='exit'
 alias tm='tmux'
-alias ll='ls -lAFh --color -a'
-alias ls='ls --color -a'
 
 # source
   alias so='source'
@@ -91,9 +146,6 @@ cdf() {
 # does the reverse of above
   alias f='open -a Finder ./'
 
-# ls with every cd
-  chpwd() ls
-
 # open file with sublime text 2 from terminal
   alias e='subl . &'
 # lets bash scripts get run
@@ -119,6 +171,18 @@ alias du='~/bin/Dropbox-Uploader/dropbox_uploader.sh'
 # autojump
 [[ -s $(brew --prefix)/etc/autojump.sh ]] && . $(brew --prefix)/etc/autojump.sh
 
+# fix grep error
+# alias grep="/usr/local/bin/grep $GREP_OPTIONS"
+# unset GREP_OPTIONS
+
 # set editor 
-export EDITOR=/usr/local/bin/vim
+export EDITOR=/usr/local/bin/nvim
+
+
+# shell script for colors in nvim using gruvbox
+
+source "$HOME/.nvim/plugged/gruvbox/gruvbox_256palette_osx.sh"
+
+
+source /Users/Roambot/.iterm2_shell_integration.zsh
 

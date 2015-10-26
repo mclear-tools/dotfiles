@@ -39,7 +39,7 @@ values."
              ranger-show-preview t)
      (shell :variables
             shell-default-term-shell "/usr/local/bin/zsh"
-            shell-default-shell 'eshell
+            shell-default-shell 'ansi-term
             shell-default-height 30
             shell-default-position 'bottom)
      shell-scripts
