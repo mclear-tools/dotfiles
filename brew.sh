@@ -53,6 +53,7 @@ binaries=(
   lua
   luajit
   mackup
+  liquidprompt
   pandoc
   pandoc-citeproc
   par
