@@ -27,6 +27,7 @@ values."
      ;; better-defaults
      deft
      emacs-lisp
+     eyebrowse
      git
      helm-bibtex
      latex
@@ -94,8 +95,9 @@ values."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
-                         sanityinc-solarized-dark
                          darktooth
+                         wilson
+                         sanityinc-solarized-dark
                          jazz
                          sanityinc-solarized-light
                          leuven
@@ -229,9 +231,14 @@ user code."
   (tool-bar-mode -1)
   (menu-bar-mode -1)
 
-    ;;; FILL COLUMN
+    ;;; MODE HOOKS
   (add-hook 'text-mode-hook '(lambda() (turn-on-auto-fill) (set-fill-column 72)))
-  (add-hook 'org-mode-hook '(lambda() (turn-on-auto-fill) (set-fill-column 72)))
+  (add-hook 'org-mode-hook
+            '(lambda()
+               (turn-on-auto-fill)
+               (set-fill-column 72)
+               (golden-ratio-mode)
+               (centered-cursor-mode)))
   (add-hook 'markdown-mode-hook '(lambda() (turn-on-auto-fill) (set-fill-column 72)))
 
 
@@ -263,7 +270,7 @@ layers configuration. You are free to put any user code."
 	(add-hook 'auto-save-hook 'full-auto-save)
 
   ;; Count words ;;;;;;;;;;;;;;;
-  (evil-leader/set-key "oc" 'count-words)
+  (evil-leader/set-key "ow" 'count-words)
   ;; visual line mode
   (add-hook 'text-mode-hook 'turn-on-visual-line-mode)
   ;; navigate using visual lines rather than true lines
@@ -334,6 +341,7 @@ layers configuration. You are free to put any user code."
     (require 'org-inlinetask)  ;; allow inline todos
     (setq org-hide-emphasis-markers t)  ;; hide markers 
     (setq org-pretty-entities t) ;; make latex look good
+    (evil-leader/set-key "oc" 'clone-indirect-buffer-other-window) ;; set up outline and doc view
     ;;(setq org-latex-pdf-process '("latexmk -f -xelatex %f"))
     ;; go to headings in org
     ;; (setq org-goto-interface 'outline
@@ -430,7 +438,6 @@ layers configuration. You are free to put any user code."
           ('windows-nt "es %s")
           ('darwin "mdfind -name %s %s")
           (t "locate %s")))
-
 )
 
 ;; Do not write anything past this comment. This is where Emacs will

@@ -1,7 +1,10 @@
 " vim:fdm=marker
 " set encoding=utf-8
 " scriptencoding utf-8
-" set nocompatible
+if has('vim')
+set nocompatible
+endif
+
 filetype plugin indent on
 
 " Plugins {{{
