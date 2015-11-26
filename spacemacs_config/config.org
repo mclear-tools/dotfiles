@@ -1,0 +1,352 @@
+* Installing Emacs
+
+On OS X, [[http://brew.sh/][homebrew]] is an easy way to install emacs.
+
+Here's what the parameter means.
+- ~--with-cocoa~ :: installs emacs with the OS X GUI version
+- ~--with-imagemagick~ :: installs emacs with imagemagick support for image processing
+- ~--with-gnutls~ :: installs emacs with GnuTLS to utilize encrypted SSL and TLS connections
+
+#+begin_src sh
+brew install emacs-mac --with-ctags --with-dbus --with-glib --with-gnutls --with-imagemagick --with-modern-icon --with-xml2
+#+end_src
+
+* Personal Information
+
+#+begin_src emacs-lisp
+(setq user-full-name "Colin McLear"
+      user-mail-address "mclear@fastmail.com")
+#+end_src
+
+* General Settings
+** Line Navigation
+#+BEGIN_SRC emacs-lisp
+  ;; navigate using visual lines rather than true lines
+  (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
+  (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
+#+END_SRC
+
+** Frame Size
+#+BEGIN_SRC emacs-lisp
+  (setq initial-frame-alist
+        '(
+          (width . 102) ; character
+          (height . 54) ; lines
+          ))
+#+END_SRC
+
+** Auto Save
+#+BEGIN_SRC emacs-lisp
+  (defun full-auto-save ()
+    (interactive)
+    (save-excursion
+      (dolist (buf (buffer-list))
+        (set-buffer buf)
+        (if (and (buffer-file-name) (buffer-modified-p))
+            (basic-save-buffer)))))
+  (add-hook 'auto-save-hook 'full-auto-save)
+#+END_SRC
+
+** UTF-8
+#+BEGIN_SRC emacs-lisp
+  (setq locale-coding-system 'utf-8) ; pretty
+  (set-terminal-coding-system 'utf-8) ; pretty
+  (set-keyboard-coding-system 'utf-8) ; pretty
+  (set-selection-coding-system 'utf-8) ; please
+  (prefer-coding-system 'utf-8) ; with sugar on top
+#+END_SRC
+
+** OTHER
+#+BEGIN_SRC emacs-lisp
+  (setq-default vc-follow-symlinks t)
+  (setq-default git-magit-status-fullscreen nil)
+
+  ;; Reload config
+  (global-set-key (kbd "C-c i")
+  (lambda() (interactive)(org-babel-load-file "~/.emacs.d/config.org")))
+#+END_SRC
+
+** Line Numbers
+Let's make the line numbers look good and highlighted.
+
+#+BEGIN_SRC emacs-lisp
+  ;; Line numbers
+  ;(global-linum-mode) ;; show line numbers
+  ; Turn on line numbers for hooked modes
+  (add-hook 'prog-mode-hook 'linum-mode)
+  (add-hook 'markdown-mode-hook
+            (lambda ()
+              (linum-mode)))
+  ;; line number spacing
+  (setq linum-format "%4d ")
+  ;; Highlight current line number
+  ;; (hlinum-activate)
+  ;; (require 'linum)
+    (defvar linum-current-line 1 "Current line number.")
+    (defvar linum-border-width 1 "Border width for linum.")
+
+    (defface linum-current-line
+    `((t :inherit linum
+        :foreground "goldenrod"
+        :weight bold
+        ))
+    "Face for displaying the current line number."
+    :group 'linum)
+
+    (defadvice linum-update (before advice-linum-update activate)
+    "Set the current line."
+    (setq linum-current-line (line-number-at-pos)
+        ;; It's the same algorithm that linum dynamic. I only had added one
+        ;; space in front of the first digit.
+        linum-border-width (number-to-string
+                            (+ 1 (length
+                                    (number-to-string
+                                    (count-lines (point-min) (point-max))))))))
+
+    (defun linum-highlight-current-line (line-number)
+    "Highlight the current line number using `linum-current-line' face."
+    (let ((face (if (= line-number linum-current-line)
+                    'linum-current-line
+                'linum)))
+    (propertize (format (concat "%" linum-border-width "d") line-number)
+                'face face)))
+
+    (setq linum-format 'linum-highlight-current-line)
+
+
+#+END_SRC
+
+** PDF Settings
+#+BEGIN_SRC emacs-lisp
+    (defcustom doc-view-autofit-timer-start 1.0
+    "Initial value (seconds) for the timer that delays the fitting when
+    `doc-view-autofit-fit' is called (Which is when a window
+    configuration change occurs and a document needs to be fitted)."
+    :type 'number
+    :group 'doc-view)
+
+    (defcustom doc-view-autofit-timer-inc 0.02
+    "Value to increase (seconds) the timer (see `doc-view-autofit-timer-start')
+    by, if there is another window configuration change occuring, before
+    it runs out."
+    :type 'number
+    :group 'doc-view)
+
+    (defcustom doc-view-autofit-default-fit 'width
+    "The fitting type initially used when mode is enabled.
+    Valid values are: width, height, page."
+    :type 'symbol
+    :group 'doc-view)
+
+    (defvar doc-view-autofit-mode-map
+    (let ((map (make-sparse-keymap)))
+        (define-key map (kbd "C-c W") 'doc-view-autofit-width)
+        (define-key map (kbd "C-c H") 'doc-view-autofit-height)
+        (define-key map (kbd "C-c P") 'doc-view-autofit-page)
+        map)
+    "Keymap used by `doc-view-autofit-mode'.")
+
+    (defun doc-view-autofit-set (type)
+    "Set autofitting to TYPE for current buffer."
+    (when doc-view-autofit-mode
+        (setq doc-view-autofit-type type)
+        (doc-view-autofit-fit)))
+
+    (defun doc-view-autofit-width ()
+    "Set autofitting to width for current buffer."
+    (interactive) (doc-view-autofit-set 'width))
+
+    (defun doc-view-autofit-height ()
+    "Set autofitting to height for current buffer."
+    (interactive) (doc-view-autofit-set 'height))
+
+    (defun doc-view-autofit-page ()
+    "Set autofitting to page for current buffer."
+    (interactive) (doc-view-autofit-set 'page))
+
+    (defun doc-view-autofit-fit ()
+    "Fits the document in the selected window's buffer
+    delayed with a timer, so multiple calls in succession
+    don't cause as much overhead."
+    (lexical-let
+        ((window (selected-window)))
+        (if (equal doc-view-autofit-timer nil)
+            (setq doc-view-autofit-timer
+                (run-with-timer
+                doc-view-autofit-timer-start nil
+                (lambda ()
+                    (if (window-live-p window)
+                        (save-selected-window
+                        (select-window window)
+                        (cancel-timer doc-view-autofit-timer)
+                        (setq doc-view-autofit-timer nil)
+                        (cond
+                            ((equal 'width doc-view-autofit-type)
+                            (doc-view-fit-width-to-window))
+                            ((equal 'height doc-view-autofit-type)
+                            (doc-view-fit-height-to-window))
+                            ((equal 'page doc-view-autofit-type)
+                            (doc-view-fit-page-to-window))))))))
+        (timer-inc-time doc-view-autofit-timer doc-view-autofit-timer-inc))))
+
+    (define-minor-mode doc-view-autofit-mode
+    "Minor mode for automatic (timer based) fitting in DocView."
+    :lighter " AFit" :keymap doc-view-autofit-mode-map :group 'doc-view
+    (when doc-view-autofit-mode
+        (set (make-local-variable 'doc-view-autofit-type)
+            doc-view-autofit-default-fit)
+        (set (make-local-variable 'doc-view-autofit-timer) nil)
+        (add-hook 'window-configuration-change-hook
+                'doc-view-autofit-fit nil t)
+        (doc-view-autofit-fit))
+    (when (not doc-view-autofit-mode)
+        (remove-hook 'window-configuration-change-hook
+                    'doc-view-autofit-fit t)
+        (when doc-view-autofit-timer
+        (cancel-timer doc-view-autofit-timer)
+        (setq doc-view-autofit-timer nil))
+        (setq doc-view-autofit-type nil)))
+
+    (add-hook 'doc-view-mode-hook 'doc-view-autofit-mode)
+    ;; reload when file changes
+    (add-hook 'doc-view-mode-hook 'auto-revert-mode)
+    ;; continuous scroll mode
+    (setq doc-view-continuous t)
+
+#+END_SRC
+* Customize settings
+
+Set up the customize file to its own separate file, instead of saving
+customize settings in [[file:init.el][init.el]].
+
+#+begin_src emacs-lisp
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(load custom-file)
+#+end_src
+
+* Text Settings
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'text-mode-hook
+            '(lambda()
+               (turn-on-auto-fill) (set-fill-column 80)))
+  (add-hook 'org-mode-hook
+            '(lambda()
+               (turn-on-auto-fill) (set-fill-column 80) (centered-cursor-mode)))
+  (add-hook 'markdown-mode-hook
+            '(lambda()
+               (turn-on-auto-fill) (set-fill-column 80) (centered-cursor-mode)))
+
+  ;; visual line mode
+  (add-hook 'text-mode-hook 'turn-on-visual-line-mode)
+#+END_SRC
+
+* Modeline
+Display date/time and remove cruft in the spaceline.
+
+#+BEGIN_SRC emacs-lisp
+  (setq display-time-format "%a %b %d | %H:%M |")
+  (display-time-mode)
+  ;; get rid of cruft
+  (setq
+    spaceline-buffer-encoding-abbrev-p nil
+    spaceline-line-column-p nil
+    spaceline--line-p nil
+    )
+#+END_SRC
+** Control Seperators
+#+BEGIN_SRC emacs-lisp
+  (setq powerline-default-separator 'slant)
+#+END_SRC
+* Theme
+** Darktooth theme
+   This is my favorite general-purpose theme
+
+      #+begin_src emacs-lisp
+      (use-package darktooth-theme
+        :ensure t
+        :init
+        (progn
+          (load-theme 'darktooth t)))
+      #+end_src
+** Convenient theme functions
+
+#+begin_src emacs-lisp
+(defun switch-theme (theme)
+  "Disables any currently active themes and loads THEME."
+  ;; This interactive call is taken from `load-theme'
+  (interactive
+   (list
+    (intern (completing-read "Load custom theme: "
+                             (mapc 'symbol-name
+                                   (custom-available-themes))))))
+  (let ((enabled-themes custom-enabled-themes))
+    (mapc #'disable-theme custom-enabled-themes)
+    (load-theme theme t)))
+
+(defun disable-active-themes ()
+  "Disables any currently active themes listed in `custom-enabled-themes'."
+  (interactive)
+  (mapc #'disable-theme custom-enabled-themes))
+
+(bind-key "s-<f12>" 'switch-theme)
+(bind-key "s-<f11>" 'disable-active-themes)
+#+end_src
+* Shell
+  Shell settings
+
+    #+begin_src emacs-lisp
+    (setq eshell-aliases-file (concat user-emacs-directory ".eshell-aliases"))
+    (bind-key "C-x m" 'ansi-term)
+    #+end_src
+
+* Packages
+** Deft
+#+BEGIN_SRC emacs-lisp
+  ;; deft settings
+  (setq deft-extensions '("org" "md" "txt" "tex"))
+  (setq deft-directory "~/Dropbox/Notes")
+  (setq deft-recursive t)
+#+END_SRC
+** Speedbar
+#+BEGIN_SRC emacs-lisp
+  ;; SPEEDBAR settings
+  ;; toggle speedbar
+  (defun sr-speedbar/post-init-sr-speedbar ()
+    (defun spacemacs/sr-speedbar-show-or-hide ()
+      (interactive)
+      (cond ((sr-speedbar-exist-p) (kill-buffer speedbar-buffer))
+            (t (sr-speedbar-open) (linum-mode -1) (speedbar-refresh)))))
+  ;; Auto expand
+  (defun sb-expand-current-file ()
+    "Expand current file in speedbar buffer"
+    (interactive)
+    (setq current-file (buffer-file-name))
+    (sr-speedbar-toggle)
+    ;; (sr-speedbar-select-window)
+    ;; (switch-to-buffer-other-frame "*SPEEDBAR*")
+    (speedbar-find-selected-file current-file)
+    (speedbar-toggle-line-expansion))
+  ;; Switch to window
+  (defun speedbar-edit-line-and-switch-to-window ()
+    (interactive)
+    (speedbar-edit-line)
+    (other-window 1))
+  ;; More familiar keymap settings.
+  (add-hook 'speedbar-reconfigure-keymaps-hook
+            '(lambda ()
+               (define-key speedbar-mode-map [tab] 'speedbar-toggle-line-expansion)
+               (define-key speedbar-mode-map [return] 'speedbar-edit-line-and-switch-to-window)))
+  ;; keybinding
+  ;; (evil-leader/set-leader "oe" 'sr-speedbar-toggle)
+  ;; (evil-leader/set-key "os" 'sr-speedbar-toggle)
+  ;; (bind-key "s-e" 'sb-expand-current-file)
+  (spacemacs/set-leader-keys "oe" 'sr-speedbar-toggle)
+#+END_SRC
+
+** Helm-BibTex
+#+BEGIN_SRC emacs-lisp
+  ;; Helm-Bibtex ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; Set global shortcut for calling helm-bibtex
+  ;; (global-set-key (kbd "C-c r") 'helm-bibtex)
+  (spacemacs/set-leader-keys "ox" 'helm-bibtex)
+#+END_SRC

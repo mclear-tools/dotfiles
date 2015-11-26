@@ -1,4 +1,5 @@
 " vim:fdm=marker
+let g:python_host_prog="/Users/Roambot/Dropbox/Personal/bin/virtualenvs/neovim/bin/python"
 " set encoding=utf-8
 " scriptencoding utf-8
 if has('vim')
@@ -248,7 +249,7 @@ colorscheme gruvbox
 call togglebg#map("<F5>")
 " better rendering for some colorschemes
 " hi! link Conceal Special 
-set spell spelllang=en_us
+" set spell spelllang=en_us
 set tabstop=4 shiftwidth=2 expandtab
 set fo+=t
 set scrolloff=999 " keep cursor in middle of screen

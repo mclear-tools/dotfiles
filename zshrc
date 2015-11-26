@@ -1,31 +1,16 @@
 # Set architecture flags
 export ARCHFLAGS="-arch x86_64"
 
+# Ensure user-installed binaries take precedence
+#export PATH=/usr/local/bin:$PATH
+export PATH="/usr/local/opt/coreutils/libexec/gnubin:/usr/local/bin:/Users/Roambot/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/sbin:/bin:/opt/X11/bin:/Library/TeX/texbin:/Users/Roambot/.fzf/bin"
+# export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+
 # set editor 
 export EDITOR=/usr/local/bin/vim
 
 # set shell
 export SHELL=/usr/local/bin/zsh
-
-# Ensure user-installed binaries take precedence
-#export PATH=/usr/local/bin:$PATH
-export PATH="/usr/local/opt/coreutils/libexec/gnubin:/usr/local/bin:/Users/Roambot/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/sbin:/bin:/opt/X11/bin:/Library/TeX/texbin:/Users/Roambot/.fzf/bin"
-export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
-
-# Terminal for 256 colors
-# export TERM=xterm-256color
-
-#export to allow nvim to change cursor shape
-export NVIM_TUI_ENABLE_CURSOR_SHAPE=1
-
-# zsh prompt
-# Only load Liquid Prompt in interactive shells, not from a script or from scp
-if [ -f /usr/local/share/liquidprompt ]; then
-  . /usr/local/share/liquidprompt
-fi  
-#[[ $- = *i* ]] && source ~/liquidprompt/liquidprompt
-#PROMPT='[%n@%m:%/]%# '
-
 # locale
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
@@ -38,12 +23,74 @@ source /usr/local/bin/virtualenvwrapper.sh
 export PROJECT_HOME=~/bin
 export WORKON_HOME=~/bin/virtualenvs
 
+#export to allow nvim to change cursor shape
+export NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+
+# Terminal for 256 colors
+# export TERM=xterm-256color
+
 # Set vi mode
 bindkey -v
 bindkey -M viins 'jk' vi-cmd-mode
 bindkey '^R' history-incremental-search-backward
 
-### ALIASES
+#### ZGEN PLUGINS #######
+
+# load zgen
+ source "${HOME}/zgen/zgen.zsh"
+
+# Completion path
+# fpath=(~/.zsh/Completion $fpath)
+
+# check if there's no init script
+ if ! zgen saved; then
+     echo "Creating a zgen save"
+
+     zgen oh-my-zsh
+
+   # plugins
+     zgen oh-my-zsh plugins/git
+     zgen oh-my-zsh plugins/sudo
+     zgen oh-my-zsh plugins/command-not-found
+     zgen oh-my-zsh plugins/vi-mode
+     zgen oh-my-zsh plugins/tmux
+     zgen oh-my-zsh plugins/brew
+     zgen oh-my-zsh plugins/brew-cask
+     zgen oh-my-zsh plugins/marked2
+     zgen oh-my-zsh plugins/tmux
+
+    # Non-default bundles
+     zgen load zsh-users/zsh-syntax-highlighting
+     zgen load srijanshetty/zsh-pandoc-completion
+     zgen load peterhurford/git-aliases.zsh
+     zgen load zsh-users/zsh-history-substring-search
+     zgen load secrettriangle/smart-cd
+     zgen load voronkovich/gitignore.plugin.zsh
+     zgen load djui/alias-tips
+
+    # completions
+     zgen load zsh-users/zsh-completions src
+
+    # theme
+    # zgen oh-my-zsh themes/ys  # good standard theme
+    # zgen oh-my-zsh themes/xiong-chiamiov-plus # Good two-line theme
+
+
+# save all to init script
+ zgen save
+fi
+
+ ## END ZGEN ################################
+
+ # zsh prompt
+ # Only load Liquid Prompt in interactive shells, not from a script or from scp
+ if [ -f /usr/local/share/liquidprompt ]; then
+     . /usr/local/share/liquidprompt
+ fi  
+ #[[ $- = *i* ]] && source ~/liquidprompt/liquidprompt
+ #PROMPT='[%n@%m:%/]%# '
+
+ ### ALIASES ################################
 
 # General bindings
 alias zu='zgen selfupdate && zgen update'
@@ -52,18 +99,22 @@ alias bd='brew desc'
 alias bi='brew info'
 alias ex='exit'
 alias tm='tmux'
-alias ll='ls -lAFh --color -a'
+alias ll='ls --color -lAFh -a'
 alias ls='ls --color -a'
 
 # source
 alias so='source'
 
 # Vim
-alias v='vim --servername VIM'
+# alias vim='nvim'
+# alias v='nvim'
 alias nv='nvim'
 alias work='nvim -S ~/.nvim/session/Work'
 alias web='nvim -S ~/.nvim/session/Website'
 #  alias mvim='/usr/local/Cellar/macvim/HEAD/bin/mvim'
+
+### EMACS #####
+alias ec='emacsclient -n'
 
 # Alias open audio files with Vox in background
 alias p='open -g -a Vox'
@@ -88,7 +139,7 @@ fi
 alias f='open -a Finder ./'
 
 # ls with every cd
-chpwd() ls
+# chpwd() ls
 
 # Dropbox uploader ("McDrop")
 alias du='~/bin/Dropbox-Uploader/dropbox_uploader.sh'
@@ -113,4 +164,18 @@ setopt nolistbeep
 setopt histignoredups
 setopt autolist
 
+# pip should only run if there is a virtualenv currently activated
+ export PIP_REQUIRE_VIRTUALENV=true
+# cache pip-installed packages to avoid re-downloading
+ export PIP_DOWNLOAD_CACHE=$HOME/.pip/cache
+
+ syspip () {
+     PIP_REQUIRE_VIRTUALENV="" pip "$@"
+ }
+
+# for the fuck
+ eval "$(thefuck --alias fuck)"
+
+# shell script for colors in nvim using gruvbox
+# source "$HOME/.nvim/plugged/gruvbox/gruvbox_256palette_osx.sh"
 
