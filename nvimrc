@@ -1,5 +1,5 @@
 " vim:fdm=marker
-let g:python_host_prog="/Users/Roambot/Dropbox/Personal/bin/virtualenvs/neovim/bin/python"
+let g:python_host_prog="/Users/Roambot/bin/virtualenvs/neovim/bin/python"
 " set encoding=utf-8
 " scriptencoding utf-8
 if has('vim')
@@ -16,13 +16,27 @@ call plug#begin('~/.nvim/plugged')
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
  
 " Important Plugins
+Plug 'sthysel/vim-spacemacs' " make vim like spacemacs!
+""" dependencies
+Plug 'Shougo/neomru.vim'
+Plug 'Shougo/neoyank.vim'
+Plug 'Shougo/vimproc.vim', { 'do': 'make'}
+Plug 'Shougo/unite.vim'
+Plug 'Shougo/unite-outline'
+Plug 'Shougo/unite-session'
+Plug 'scrooloose/syntastic'
+Plug 'rking/ag.vim'
+Plug 'scrooloose/nerdtree'
+Plug 'tpope/vim-commentary'
+Plug 'szw/vim-maximizer'
+
 Plug 'bling/vim-airline'  " powerline plugin
 Plug 'bling/vim-bufferline' " plugin for buffer display in lightline/airline
 Plug 'supertab' " Tab completion
 Plug 'vim-pandoc/vim-pandoc-syntax' 
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-after' " plugin for vim-pandoc and other plugins
-Plug 'vimwiki/vimwiki', 'dev' " wiki in vim
+" Plug 'vimwiki/vimwiki', 'dev' " wiki in vim
 Plug 'VOoM' " outliner
 Plug 'TeX-9' " Latex
 Plug 'tpope/vim-fugitive' " Git management
@@ -108,7 +122,7 @@ nnoremap <C-H> <C-W><C-H>
 " clear search
 noremap // :noh<CR>     
 
-" let mapleader = "\<Space>"
+let mapleader = "\<Space>"
 
 " Grep TODO and NOTE
 noremap <leader>d :copen<CR>:vimgrep /TODO/gj *.md *.taskpaper<CR>
@@ -153,7 +167,7 @@ nnoremap <leader>m :silent !open -a Marked\ 2.app '%:p' <CR>\|:redraw!<CR>
 " " Preserve indentation while pasting text from the OS X clipboard
 " "noremap <leader>p :set paste<CR>:put  *<CR>:set nopaste<CR>
 " Mapping to toggle fold
- nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
+ nnoremap <silent> <TAB> @=(foldlevel('.')?'za':"\<TAB>")<CR>
  vnoremap <Space> zf
 
 let maplocalleader = ","

@@ -3,11 +3,19 @@ export ARCHFLAGS="-arch x86_64"
 
 # Ensure user-installed binaries take precedence
 #export PATH=/usr/local/bin:$PATH
-export PATH="/usr/local/opt/coreutils/libexec/gnubin:/usr/local/bin:/Users/Roambot/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/sbin:/bin:/opt/X11/bin:/Library/TeX/texbin:/Users/Roambot/.fzf/bin"
-# export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+export PATH="$HOME/.cask/bin:/usr/local/opt/coreutils/libexec/gnubin:/usr/local/bin:/Users/Roambot/bin:/Users/Roambot/.local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/sbin:/bin:/opt/X11/bin:/Library/TeX/texbin:/Users/Roambot/.fzf/bin:/Users/Roambot/.cabal/bin:/Users/Roambot/.local/bin"
+export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
-# set editor 
-export EDITOR=/usr/local/bin/vim
+#set GOPATH
+export GOROOT=/usr/local/opt/go/libexec
+export GOPATH=$HOME/.go
+export GOBIN=$HOME/bin
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin:$GOBIN/bin
+
+# set editor
+# export EDITOR="/usr/local/bin/nvim"
+export EDITOR="/usr/local/bin/emacsclient"
+# export EDITOR="/usr/local/Cellar/emacs-mac/emacs-24.5-z-mac-5.15/bin/emacsclient -a -c"
 
 # set shell
 export SHELL=/usr/local/bin/zsh
@@ -20,7 +28,7 @@ export BEETSDIR=~/Dropbox/Apps/Beets/
 
 # virtualenvwrapper config
 source /usr/local/bin/virtualenvwrapper.sh
-export PROJECT_HOME=~/bin
+export PROJECT_HOME=~/projects
 export WORKON_HOME=~/bin/virtualenvs
 
 #export to allow nvim to change cursor shape
@@ -64,9 +72,10 @@ bindkey '^R' history-incremental-search-backward
      zgen load srijanshetty/zsh-pandoc-completion
      zgen load peterhurford/git-aliases.zsh
      zgen load zsh-users/zsh-history-substring-search
-     zgen load secrettriangle/smart-cd
+     # zgen load secrettriangle/smart-cd
      zgen load voronkovich/gitignore.plugin.zsh
      zgen load djui/alias-tips
+     # zgen load supercrabtree/k
 
     # completions
      zgen load zsh-users/zsh-completions src
@@ -101,6 +110,11 @@ alias ex='exit'
 alias tm='tmux'
 alias ll='ls --color -lAFh -a'
 alias ls='ls --color -a'
+alias ld="ls -lht | grep '^d'"
+# List directory on cd
+function chpwd() {
+  ls
+}
 
 # source
 alias so='source'
@@ -114,12 +128,20 @@ alias web='nvim -S ~/.nvim/session/Website'
 #  alias mvim='/usr/local/Cellar/macvim/HEAD/bin/mvim'
 
 ### EMACS #####
-alias ec='emacsclient -n'
+alias ec='/usr/local/bin/emacsclient'
+alias ect='/usr/local/bin/emacsclient -nw'
+alias et='emacs -nw'
+# alias ec='/usr/local/bin/emacsclient -nw'
+# alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw"
+
 
 # Alias open audio files with Vox in background
 alias p='open -g -a Vox'
 # Alias open file with application
 alias o='open -a'
+
+# Alias for Plex
+alias pms="/Applications/Plex\ Media\ Server.app/Contents/MacOS/Plex\ Media\ Scanner"
 
 # Weather
 alias weather='ansiweather'
@@ -138,9 +160,6 @@ fi
 # does the reverse of above
 alias f='open -a Finder ./'
 
-# ls with every cd
-# chpwd() ls
-
 # Dropbox uploader ("McDrop")
 alias du='~/bin/Dropbox-Uploader/dropbox_uploader.sh'
 
@@ -153,7 +172,7 @@ echo "No manual entry for $*"
 fi
 }
 
-alias man='vman'
+# alias man='vman'
 
 # fuzzy completion in zsh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -163,7 +182,7 @@ alias man='vman'
 setopt nolistbeep
 setopt histignoredups
 setopt autolist
-
+set -o promptsubst
 # pip should only run if there is a virtualenv currently activated
  export PIP_REQUIRE_VIRTUALENV=true
 # cache pip-installed packages to avoid re-downloading
@@ -178,4 +197,6 @@ setopt autolist
 
 # shell script for colors in nvim using gruvbox
 # source "$HOME/.nvim/plugged/gruvbox/gruvbox_256palette_osx.sh"
+
+export HOMEBREW_CASK_OPTS='--caskroom=/opt/homebrew-cask/Caskroom'
 

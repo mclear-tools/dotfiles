@@ -101,21 +101,16 @@ apps=(
   fluid
   google-chrome
   hazel
-  iterm2-nightly
-  mailmate
+  iterm2
   marked
   meteorologist
   seil
   spectacle
   pdfsam-basic
   path-finder
-  rdio
   skype
   skim
   soulver
-  transmission
-  textwrangler
-  things
   vlc
   flux
   1password
@@ -124,7 +119,7 @@ apps=(
 # Install apps to /Applications
 # Default is: /Users/$user/Applications
 echo "installing apps..."
-brew cask install --appdir="/Applications" ${apps[@]}
+# brew cask install --appdir="/Applications" ${apps[@]}
 
 # Link alfred apps
 brew cask alfred link
@@ -150,7 +145,7 @@ echo "installing fonts..."
 brew cask install ${fonts[@]}
 
 # Install vim 
-brew install macvim --with-lua --with-luajit --custom-icons --override-system-vim
+# brew install macvim --with-lua --with-luajit --custom-icons --override-system-vim
  
 # Install neovim
 brew tap neovim/neovim
@@ -161,7 +156,7 @@ brew install --HEAD neovim-dot-app
 
 # Install emacs
 brew tap railwaycat/emacsmacport
-brew install emacs-mac --with-ctags --with-dbus --with-glib --with-gnutls --with-imagemagick --with-spacemacs-icon --with-xml2
+brew install emacs-mac --with-glib --with-gnutls --with-imagemagick --with-xml2
 
 
 # Change path so Homebrew packages get priority
