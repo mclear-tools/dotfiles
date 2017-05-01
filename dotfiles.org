@@ -1,0 +1,1153 @@
+#+TITLE: Dotfiles
+#+AUTHOR: Colin McLear
+#+DATE: April 30, 2017
+#+PROPERTY: header-args:conf  :comments link :tangle-mode (identity #o444)
+
+This file contains the source to all my dotfiles, which is then generated into
+distinct files in my home directory via org-babel. Inspiration for this setup
+comes primarily from [[https://expoundite.net/dotfile-management][this discussion]] along with some help from [[https://writequit.org/org/#6017d330-9337-4d97-82f2-2e605b7a262a][writequit]]. 
+
+* Vim
+:PROPERTIES:
+:header-args: :tangle no
+:END:
+
+I use emacs, but it is nice to have a decently configured vim when
+necessary. Right now I have this disabled in favor of spacevim.
+
+** Header Info
+#+BEGIN_SRC vimrc 
+" vim:fdm=marker
+set encoding=utf-8
+scriptencoding utf-8
+set nocompatible
+filetype plugin indent on
+#+END_SRC
+
+** Plugins
+#+BEGIN_SRC vimrc
+" Plugins {{{
+
+call plug#begin('~/.vim/plugged')
+
+Plug 'bling/vim-airline'  " powerline plugin
+Plug 'mkitt/tabline.vim'  " configure tabs and works with airline
+Plug 'git://github.com/sjl/gundo.vim' " graphical tree undo
+" NERD tree will be loaded on the first invocation of NERDTreeToggle command
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' } " file manager
+Plug 'jeetsukumaran/vim-buffergator' "Buffer manager
+Plug 'wesQ3/vim-windowswap' " Easily swap buffers
+Plug 'bling/vim-bufferline' " plugin for buffer display in lightline/airline
+Plug 'supertab' " Tab completion
+Plug 'vim-pandoc/vim-pandoc-syntax' 
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-after' " plugin for vim-pandoc and other plugins
+Plug 'morhetz/gruvbox' " alternate colors
+Plug 'VOoM' " outliner
+Plug 'tpope/vim-commentary' " Comment manager/toggle
+Plug 'tpope/vim-fugitive' " Git management
+Plug 'tpope/vim-surround' "  surround text with whatever
+Plug 'airblade/vim-gitgutter'
+Plug 'mhinz/vim-startify' " session manager and startup screen
+Plug 'junegunn/goyo.vim' " writeroom style writing
+Plug 'TeX-9' " Latex
+Plug 'gitv' " Git Viewer 
+Plug 'henrik/vim-open-url' " open any url using ruby and regex
+Plug 'hecal3/vim-leader-guide' " key guide like emacs which key
+
+call plug#end()
+" End Plugins
+"}}}
+#+END_SRC
+
+** Keymappings
+#+BEGIN_SRC vimrc
+" Grep TODO and NOTE
+noremap <leader>d :copen<CR>:vimgrep /TODO/gj *.md *.taskpaper<CR>
+noremap <leader>n :copen<CR>:vimgrep /NOTE/gj *.md *.taskpaper<CR>
+" clean up paragraph according to pandoc specs
+nnoremap <leader>= vip=
+" previous and next buffer 
+nnoremap <leader>[ :bp<CR>
+nnoremap <leader>] :bn<CR>
+" previous and next tab
+nnoremap <leader>' :tabnext<CR>
+nnoremap <leader>; :tabprevious<CR>
+" remap escape
+inoremap fd <Esc>
+
+" make cursor move to next visual line below cursor this is a test 
+noremap Q gwip
+nnoremap <leader>c :set cursorline! <CR>
+nnoremap <C-N><C-N> :set invnumber<CR>
+" presents spelling options in dropdown and returns to normal mode
+nnoremap <leader>s ea<C-X><C-S>
+
+" Let's make it easy to edit this file (mnemonic for the key sequence is " 'e'dit 'v'imrc)
+nnoremap <silent> ,ev :e $MYVIMRC<cr>
+" And to source this file as well (mnemonic for the key sequence is " 's'ource 'v'imrc)
+nnoremap <silent> ,sv :so $MYVIMRC<cr>
+
+" set leader and local leader
+let mapleader = "\<Space>"
+let maplocalleader = ","
+" Toggle table of contents
+nnoremap <localLeader>c :TOC<CR>
+" Toggle Goyo on/off
+nnoremap <localLeader>g :Goyo<CR>
+"Map NERDTree to ,t
+nnoremap <silent> <localLeader>t :NERDTreeToggle<CR>
+nnoremap <localLeader>v :VoomToggle<CR>
+" Gundo toggle
+nnoremap <localleader>G :GundoToggle<CR>
+"toggle filetype for pandoc
+nnoremap <localleader>f :set filetype=pandoc<CR> 
+" toggle ranger file navigator
+nnoremap <localleader>r :!ranger<CR>
+inoremap <localleader>r :!ranger<CR>
+" Fuzzyfinder for home directory
+noremap <C-t> :FZF ~<CR>
+" Fuzzyfinder for current directory
+noremap <C-f> :FZF<CR>
+" quick save
+nnoremap <localleader>w :w!<CR>
+
+"Copy to system clipboard
+nmap <F2> :set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
+imap <F2> <Esc>:set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
+nmap <F1> :.w !pbcopy<CR><CR>
+vmap <F1> :w !pbcopy<CR><CR>
+
+" start external shell command with a bang
+nnoremap ! :!
+
+" correct common misspellings for commands
+cabbrev ew :wq
+cabbrev qw :wq 
+cabbrev Q :q
+cabbrev W :w 
+#+END_SRC
+
+** Settings
+#+BEGIN_SRC vimrc
+" Settings {{{
+syntax enable
+" buffer settings
+set hidden
+set switchbuf=usetab
+highlight LineNr ctermfg=yellow ctermbg=black guibg=black guifg=grey
+hi CursorLineNR cterm=bold
+augroup CLNRSet
+      autocmd! ColorScheme * hi CursorLineNR cterm=bold ctermfg=white
+    augroup END
+set cursorline
+hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+
+" automatically leave insert mode after 'updatetime' milliseconds of inaction
+" au CursorHoldI * stopinsert
+
+" set vimwiki filetype for path to wiki
+" autocmd! BufRead,BufNewFile /Users/Roambot/Dropbox/Wiki set filetype=vimwiki
+
+" include spaces in filenames
+set isfname+=32
+
+set ttyscroll=3
+" change cursor shape depending on mode with different code for tmux configuration
+if exists('$TMUX')
+  let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+  let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+  else
+  let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+  let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+endif
+
+" split settings
+set splitbelow
+set splitright
+
+" colorscheme settings
+set background=dark
+colorscheme gruvbox
+
+" tab settings
+hi TabLine      ctermfg=Black  ctermbg=Green     cterm=NONE
+hi TabLineFill  ctermfg=Black  ctermbg=Green     cterm=NONE
+hi TabLineSel   ctermfg=White  ctermbg=DarkBlue  cterm=NONE
+
+set spell spelllang=en_us
+set tabstop=4 shiftwidth=2 expandtab
+set linespace=2
+set scrolloff=999 " keep cursor in middle of screen
+set textwidth=80
+" remap paragraph formatting 
+set formatprg=par
+set ruler
+set laststatus=2
+set noshowmode
+set showcmd
+set wildmenu
+set ttyfast " u got a fast terminal
+set lazyredraw " to avoid scrolling problems
+" Move to next line when using left and right
+set whichwrap+=<,>
+" |nojoinspaces| allows you to use SHIFT-J in normal mode to join the next line 
+" with the current line without adding unwanted spaces.
+setlocal nojoinspaces
+set backspace=indent,eol,start
+" make vim scrollable with mouse
+set mouse=a
+set go+=a
+
+
+" The Silver Searcher
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+endif
+
+" bind K to grep word under cursor
+nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+" Ag exec command
+"command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+nnoremap A :Ag<Space>
+
+#+END_SRC
+
+** Functions
+#+BEGIN_SRC vimrc
+" Functions {{{
+"Reveal file in finder using :Reveal
+function! s:RevealInFinder()
+  if filereadable(expand("%"))
+    let l:command = "open -R %"
+  elseif getftype(expand("%:p:h")) == "dir"
+    let l:command = "open %:p:h"
+  else
+    let l:command = "open ."
+  endif
+  execute ":silent! !" . l:command
+  redraw!
+endfunction
+command! Reveal call <SID>RevealInFinder()
+
+" }}}
+
+#+END_SRC
+
+** Startify
+#+BEGIN_SRC vimrc
+  " Startify Settings {{{
+
+      " au! autocmd User Startified setlocal cursorline
+
+      let g:startify_enable_special         = 0
+      let g:startify_files_number           = 8
+      let g:startify_relative_path          = 0
+      let g:startify_change_to_dir          = 1
+      let g:startify_session_autoload       = 1
+      let g:startify_session_persistence    = 1
+      let g:startify_session_delete_buffers = 1
+
+      let g:startify_list_order = [
+        \ ['   Most recently used:'],
+        \ 'files',
+        \ ['   Recently used within this dir:'],
+        \ 'dir',
+        \ ['   Sessions:'],
+        \ 'sessions',
+        \ ['   Bookmarks:'],
+        \ 'bookmarks',
+        \ ]
+
+      let g:startify_skiplist = [
+                  \ 'COMMIT_EDITMSG',
+                  \ $VIMRUNTIME .'/doc',
+                  \ 'bundle/.*/doc',
+                  \ '\.vimgolf',
+                  \ ]
+
+      let g:startify_bookmarks = [
+                  \ '~/.vimrc',
+                  \ '~/Dropbox/Work/Teaching',
+                  \ '~/Dropbox/Work/Projects',
+                  \ ]
+
+      let g:startify_custom_header =
+            \ map(split(system('fortune | cowsay'), '\n'), '"   ". v:val') + ['','']
+
+      let g:startify_custom_footer =
+            \ ['', "Aus so krummem Holze, als woraus der Mensch gemacht ist, kann nichts ganz Gerades gezimmert werden (8:23)", '']
+
+
+      hi StartifyBracket ctermfg=240
+      hi StartifyFile    ctermfg=147
+      hi StartifyFooter  ctermfg=240
+      hi StartifyHeader  ctermfg=114
+      hi StartifyNumber  ctermfg=215
+      hi StartifyPath    ctermfg=245
+      hi StartifySlash   ctermfg=240
+      hi StartifySpecial ctermfg=240
+
+  " }}}
+
+#+END_SRC
+** Voom Settings
+#+BEGIN_SRC vimrc
+" Voom Settings {{{
+
+let g:voom_tree_width = 50
+let g:voom_ft_modes = {'pandoc': 'markdown', 'markdown': 'markdown', 'tex': 'latex'}
+let g:voom_default_mode = 'pandoc'
+
+" }}}
+#+END_SRC
+
+** Airline settings
+#+BEGIN_SRC vimrc
+" AIRLINE SETTINGS {{{
+
+  let g:airline_powerline_fonts=1 
+  let g:airline_theme = 'gruvbox'
+  " let g:airline_left_sep=''
+  " let g:airline_right_sep=''
+  " let g:airline_right_sep = '◀'
+  " let g:airline_left_sep = '▶'
+" enable/disable detection of whitespace errors. >
+  let g:airline#extensions#whitespace#enabled = 0
+" enable/disable tmuxline integration >
+  let g:airline#extensions#tmuxline#enabled = 1
+" enable/disable bufferline integration >
+  let g:airline#extensions#bufferline#enabled = 0
+  let g:bufferline_echo = 1
+" enable buffers in tabs
+  let g:airline#extensions#tabline#enabled = 1
+" Tabline separators
+  " let g:airline#extensions#tabline#left_sep = '|'
+  " let g:airline#extensions#tabline#left_alt_sep = '|'
+  " let g:airline#extensions#tabline#left_sep = '▶'
+  " let g:airline#extensions#tabline#left_alt_sep = '>'
+" display tab number in tab
+  let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
+" go to tab number with <leader>number
+  let g:airline#extensions#tabline#buffer_idx_mode = 1
+  nmap <leader>1 <Plug>AirlineSelectTab1
+  nmap <leader>2 <Plug>AirlineSelectTab2
+  nmap <leader>3 <Plug>AirlineSelectTab3
+  nmap <leader>4 <Plug>AirlineSelectTab4
+  nmap <leader>5 <Plug>AirlineSelectTab5
+  nmap <leader>6 <Plug>AirlineSelectTab6
+  nmap <leader>7 <Plug>AirlineSelectTab7
+  nmap <leader>8 <Plug>AirlineSelectTab8
+  nmap <leader>9 <Plug>AirlineSelectTab9
+" display only filename in tabs
+let g:airline#extensions#tabline#fnamemod = ':t'
+
+" display time
+function! AirlineInit()
+"  let g:airline_section_y = airline#section#create(['ffenc', '%{strftime("%H:%M")}'])
+   let g:airline_section_y = airline#section#create(['%{strftime("%a  %b %d  %X")}'])
+endfunction
+autocmd VimEnter * call AirlineInit()
+"""""""""""""""""""""""""""""""""""
+  " let g:airline_theme = 'base16'
+  " let g:airline_theme = 'solarized'
+  " let g:airline_theme = 'hybridline'
+  " let g:airline_theme = 'bubblegum'
+
+" if has('gui_macvim') 
+"   let g:airline_right_sep = '◀'
+"   let g:airline_left_sep = '▶'
+" else
+"  let g:airline_powerline_fonts=1 
+" endif 
+
+" " Tweak of solarized colors
+" let g:airline_theme_patch_func = 'AirLineBlaenkTheme'
+" " 0,1: gfg, gbg; 2,3: tfg, tbg; 4: styles
+" function! AirLineBlaenkTheme(palette)
+"   if g:airline_theme == 'solarized'
+"     let magenta = ['#ffffff', '#d33682', 255, 125, '']
+"     let blue = ['#ffffff', '#268bd2', 255, 33, '']
+"     let green = ['#ffffff', '#859900', 255, 64, '']
+"     let red = ['#ffffff', '#dc322f', 255, 160, '']
+"     let orange = ['#ffffff', '#cb4b16', 255, 166, '']
+"     let cyan = ['#ffffff', '#2aa198', 255, 37, '']
+"     let modes = {
+"       \ 'normal': blue,
+"       \ 'insert': cyan,
+"       \ 'replace': magenta,
+"       \ 'visual': orange
+"       \}
+"     let a:palette.replace = copy(a:palette.insert)
+"     let a:palette.replace_modified = a:palette.insert_modified
+"     for key in keys(modes)
+"       let a:palette[key].airline_a = modes[key]
+"       let a:palette[key].airline_z = modes[key]
+"     endfor
+"   endif
+" endfunction
+
+
+" symbol dictionary
+" if !exists('g:airline_symbols')
+"   let g:airline_symbols = {}
+" endif
+
+" " unicode symbols
+
+"    let g:airline_left_sep = '»'
+"    let g:airline_left_sep = '▶'
+"    let g:airline_right_sep = '«'
+"    let g:airline_right_sep = '◀'
+"    let g:airline_symbols.linenr = '␊'
+"    let g:airline_symbols.linenr = '␤'
+"    let g:airline_symbols.linenr = '¶'
+"    let g:airline_symbols.branch = '⎇'
+"    let g:airline_symbols.paste = 'ρ'
+"    let g:airline_symbols.paste = 'Þ'
+"    let g:airline_symbols.paste = '∥'
+"    let g:airline_symbols.whitespace = 'Ξ'
+"
+
+ " " powerline symbols
+ "  let g:airline_left_sep = ''
+ "  let g:airline_left_alt_sep = ''
+ "  let g:airline_right_sep = ''
+ "  let g:airline_right_alt_sep = ''
+ "  let g:airline_symbols.branch = ''
+ "  let g:airline_symbols.readonly = ''
+ "  let g:airline_symbols.linenr = ''
+
+
+
+
+" }}}
+
+
+#+END_SRC
+
+* SpaceVim
+:PROPERTIES:
+:header-args: :tangle ~/.vimrc
+:END:
+Here is a config that mimics [[http://spacemacs.org/][spacemacs]] in a nice lightweight manner, but for
+vim. It's [[https://github.com/ctjhoa/spacevim][spacevim]]! 
+
+** Bootstrap
+Download the config and a bootstrap =vimrc= with
+#+BEGIN_SRC sh :tangle no
+curl -sSfL https://raw.githubusercontent.com/ctjhoa/spacevim/master/vimrc.sample -o ~/.vimrc && vim
+#+END_SRC
+
+** Base Config
+Here's the base config file
+
+#+BEGIN_SRC vimrc 
+" -*- mode: vimrc -*-
+"vim: ft=vim
+
+" dotspacevim/auto-install {{{
+" Automatic installation of spacevim.
+
+if empty(glob('~/.vim/autoload/spacevim.vim'))
+    silent !curl -sSfLo ~/.vim/autoload/spacevim.vim --create-dirs
+          \ https://raw.githubusercontent.com/ctjhoa/spacevim/master/autoload/spacevim.vim
+endif
+
+" }}}
+
+" dotspacevim/init {{{
+" This code is called at the very startup of Spacevim initialization
+" before layers configuration.
+" You should not put any user code in there besides modifying the variable
+" values."
+" IMPORTANT: For the moment, any changes in plugins or layers needs
+" a vim restart and :PlugInstall
+
+  let g:dotspacevim_distribution_mode = 1
+
+  let g:dotspacevim_configuration_layers = [
+  \  'core/.*',
+  \  'git',
+  \  'syntax-checking'
+  \]
+
+  let g:dotspacevim_additional_plugins = [
+  \  'morhetz/gruvbox',
+  \  'bling/vim-airline', 
+  \  'mkitt/tabline.vim',
+  \  'git://github.com/sjl/gundo.vim', 
+  \  'vim-pandoc/vim-pandoc-syntax',                                           
+  \  'vim-pandoc/vim-pandoc',
+  \  'vim-pandoc/vim-pandoc-after',
+  \  'VOoM',
+  \  'gitv',
+  \  'henrik/vim-open-url',
+  \]
+  " You can also pass vim plug options like this: [{ 'name': 'Valloric/YouCompleteMe', 'option': {'do': './install.py'}}] 
+
+  let g:dotspacevim_excluded_plugins = []
+
+  let g:dotspacevim_escape_key_sequence = 'fd'
+
+" }}}
+
+" dotspacevim/user-init {{{
+" Initialization for user code.
+" It is compute immediately after `dotspacemacs/init', before layer
+" configuration executes.
+" This function is mostly useful for variables that need to be set
+" before plugins are loaded. If you are unsure, you should try in setting
+" them in `dotspacevim/user-config' first."
+
+  let mapleader = ' '
+  let g:leaderGuide_vertical = 1
+
+" }}}
+
+call spacevim#bootstrap()
+
+" dotspacevim/user-config {{{
+" Configuration for user code.
+" This is computed at the very end of Spacevim initialization after
+" layers configuration.
+" This is the place where most of your configurations should be done.
+" Unless it is explicitly specified that
+" a variable should be set before a plugin is loaded,
+" you should place your code here."
+
+  set background=dark
+  colorscheme gruvbox
+
+" }}}
+
+#+END_SRC
+** Startify
+#+BEGIN_SRC vimrc
+  " Startify Settings {{{
+
+      " au! autocmd User Startified setlocal cursorline
+
+      let g:startify_enable_special         = 0
+      let g:startify_files_number           = 8
+      let g:startify_relative_path          = 0
+      let g:startify_change_to_dir          = 1
+      let g:startify_session_autoload       = 1
+      let g:startify_session_persistence    = 1
+      let g:startify_session_delete_buffers = 1
+
+      let g:startify_list_order = [
+        \ ['   Most recently used:'],
+        \ 'files',
+        \ ['   Recently used within this dir:'],
+        \ 'dir',
+        \ ['   Sessions:'],
+        \ 'sessions',
+        \ ['   Bookmarks:'],
+        \ 'bookmarks',
+        \ ]
+
+      let g:startify_skiplist = [
+                  \ 'COMMIT_EDITMSG',
+                  \ $VIMRUNTIME .'/doc',
+                  \ 'bundle/.*/doc',
+                  \ '\.vimgolf',
+                  \ ]
+
+      let g:startify_bookmarks = [
+                  \ '~/.vimrc',
+                  \ '~/Dropbox/Work/Teaching',
+                  \ '~/Dropbox/Work/Projects',
+                  \ ]
+
+      let g:startify_custom_header =
+            \ map(split(system('fortune | cowsay'), '\n'), '"   ". v:val') + ['','']
+
+      let g:startify_custom_footer =
+            \ ['', "Aus so krummem Holze, als woraus der Mensch gemacht ist, kann nichts ganz Gerades gezimmert werden (8:23)", '']
+
+
+      hi StartifyBracket ctermfg=240
+      hi StartifyFile    ctermfg=147
+      hi StartifyFooter  ctermfg=240
+      hi StartifyHeader  ctermfg=114
+      hi StartifyNumber  ctermfg=215
+      hi StartifyPath    ctermfg=245
+      hi StartifySlash   ctermfg=240
+      hi StartifySpecial ctermfg=240
+
+  " }}}
+
+#+END_SRC
+** Voom Settings
+Some settings for the Voom outliner
+#+BEGIN_SRC vimrc
+" Voom Settings {{{
+
+let g:voom_tree_width = 50
+let g:voom_ft_modes = {'pandoc': 'markdown', 'markdown': 'markdown', 'tex': 'latex'}
+let g:voom_default_mode = 'pandoc'
+
+" }}}
+#+END_SRC
+
+** Airline settings
+Settings for the [[https://github.com/vim-airline/vim-airline][airline]] modeline
+#+BEGIN_SRC vimrc
+" AIRLINE SETTINGS {{{
+
+  let g:airline_powerline_fonts=1 
+  let g:airline_theme = 'gruvbox'
+  " let g:airline_left_sep=''
+  " let g:airline_right_sep=''
+  " let g:airline_right_sep = '◀'
+  " let g:airline_left_sep = '▶'
+" enable/disable detection of whitespace errors. >
+  let g:airline#extensions#whitespace#enabled = 0
+" enable/disable tmuxline integration >
+  let g:airline#extensions#tmuxline#enabled = 1
+" enable/disable bufferline integration >
+  let g:airline#extensions#bufferline#enabled = 0
+  let g:bufferline_echo = 1
+" enable buffers in tabs
+  let g:airline#extensions#tabline#enabled = 1
+" Tabline separators
+  " let g:airline#extensions#tabline#left_sep = '|'
+  " let g:airline#extensions#tabline#left_alt_sep = '|'
+  " let g:airline#extensions#tabline#left_sep = '▶'
+  " let g:airline#extensions#tabline#left_alt_sep = '>'
+" display tab number in tab
+  let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
+" go to tab number with <leader>number
+  let g:airline#extensions#tabline#buffer_idx_mode = 1
+  nmap <leader>1 <Plug>AirlineSelectTab1
+  nmap <leader>2 <Plug>AirlineSelectTab2
+  nmap <leader>3 <Plug>AirlineSelectTab3
+  nmap <leader>4 <Plug>AirlineSelectTab4
+  nmap <leader>5 <Plug>AirlineSelectTab5
+  nmap <leader>6 <Plug>AirlineSelectTab6
+  nmap <leader>7 <Plug>AirlineSelectTab7
+  nmap <leader>8 <Plug>AirlineSelectTab8
+  nmap <leader>9 <Plug>AirlineSelectTab9
+" display only filename in tabs
+let g:airline#extensions#tabline#fnamemod = ':t'
+
+" display time
+function! AirlineInit()
+"  let g:airline_section_y = airline#section#create(['ffenc', '%{strftime("%H:%M")}'])
+   let g:airline_section_y = airline#section#create(['%{strftime("%a  %b %d  %X")}'])
+endfunction
+autocmd VimEnter * call AirlineInit()
+"""""""""""""""""""""""""""""""""""
+  " let g:airline_theme = 'base16'
+  " let g:airline_theme = 'solarized'
+  " let g:airline_theme = 'hybridline'
+  " let g:airline_theme = 'bubblegum'
+
+" if has('gui_macvim') 
+"   let g:airline_right_sep = '◀'
+"   let g:airline_left_sep = '▶'
+" else
+"  let g:airline_powerline_fonts=1 
+" endif 
+
+" " Tweak of solarized colors
+" let g:airline_theme_patch_func = 'AirLineBlaenkTheme'
+" " 0,1: gfg, gbg; 2,3: tfg, tbg; 4: styles
+" function! AirLineBlaenkTheme(palette)
+"   if g:airline_theme == 'solarized'
+"     let magenta = ['#ffffff', '#d33682', 255, 125, '']
+"     let blue = ['#ffffff', '#268bd2', 255, 33, '']
+"     let green = ['#ffffff', '#859900', 255, 64, '']
+"     let red = ['#ffffff', '#dc322f', 255, 160, '']
+"     let orange = ['#ffffff', '#cb4b16', 255, 166, '']
+"     let cyan = ['#ffffff', '#2aa198', 255, 37, '']
+"     let modes = {
+"       \ 'normal': blue,
+"       \ 'insert': cyan,
+"       \ 'replace': magenta,
+"       \ 'visual': orange
+"       \}
+"     let a:palette.replace = copy(a:palette.insert)
+"     let a:palette.replace_modified = a:palette.insert_modified
+"     for key in keys(modes)
+"       let a:palette[key].airline_a = modes[key]
+"       let a:palette[key].airline_z = modes[key]
+"     endfor
+"   endif
+" endfunction
+
+
+" symbol dictionary
+" if !exists('g:airline_symbols')
+"   let g:airline_symbols = {}
+" endif
+
+" " unicode symbols
+
+"    let g:airline_left_sep = '»'
+"    let g:airline_left_sep = '▶'
+"    let g:airline_right_sep = '«'
+"    let g:airline_right_sep = '◀'
+"    let g:airline_symbols.linenr = '␊'
+"    let g:airline_symbols.linenr = '␤'
+"    let g:airline_symbols.linenr = '¶'
+"    let g:airline_symbols.branch = '⎇'
+"    let g:airline_symbols.paste = 'ρ'
+"    let g:airline_symbols.paste = 'Þ'
+"    let g:airline_symbols.paste = '∥'
+"    let g:airline_symbols.whitespace = 'Ξ'
+"
+
+ " " powerline symbols
+ "  let g:airline_left_sep = ''
+ "  let g:airline_left_alt_sep = ''
+ "  let g:airline_right_sep = ''
+ "  let g:airline_right_alt_sep = ''
+ "  let g:airline_symbols.branch = ''
+ "  let g:airline_symbols.readonly = ''
+ "  let g:airline_symbols.linenr = ''
+
+
+
+
+" }}}
+
+
+#+END_SRC
+
+* Bash
+I don't use bash much but there are a couple things that show up in my
+bashrc
+#+BEGIN_SRC conf :tangle ~/.bashrc
+emacs -eval "(woman \"$1\")"
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+#+END_SRC
+* Zsh
+:PROPERTIES:
+:header-args: :tangle ~/.zshrc
+:END:
+
+Zsh is my primary shell. My settings aren't very sophisticated but they work
+for me. 
+
+** Basic Settings
+#+BEGIN_SRC conf 
+  # Set architecture flags
+  export ARCHFLAGS="-arch x86_64"
+
+  # Ensure user-installed binaries take precedence
+  export PATH=/usr/local/opt/coreutils/libexec/gnubin:/usr/local/bin:$HOME/bin:$HOME/.local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/sbin:/bin:/opt/X11/bin:/Library/TeX/texbin:$HOME/.fzf/bin:$HOME/.cabal/bin:$HOME/.local/bin:$PATH
+  export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+
+  #set GOPATH
+  export GOROOT=/usr/local/opt/go/libexec
+  export GOPATH=$HOME/.go
+  export GOBIN=$HOME/bin
+  export PATH=$PATH:$GOROOT/bin:$GOPATH/bin:$GOBIN/bin
+
+  # set editor
+  # export EDITOR="/usr/local/bin/nvim"
+  export EDITOR="/usr/local/bin/emacsclient"
+
+  # set shell
+  export SHELL=/usr/local/bin/zsh
+  # locale
+  export LANG=en_US.UTF-8
+  export LC_ALL=en_US.UTF-8
+#+END_SRC
+
+** Beets
+#+BEGIN_SRC conf
+  # # Path to Beets
+  export BEETSDIR=~/Dropbox/Apps/Beets/
+#+END_SRC
+
+** Virtualenvs
+
+#+BEGIN_SRC conf
+  # virtualenvwrapper config
+  source /usr/local/bin/virtualenvwrapper.sh
+  export PROJECT_HOME=~/Dropbox/Work/projects
+  export WORKON_HOME=~/bin/virtualenvs
+#+END_SRC
+
+** Vi Mode
+#+BEGIN_SRC conf
+  # Set vi mode
+  bindkey -v
+  bindkey -M viins 'jk' vi-cmd-mode
+  bindkey '^R' history-incremental-search-backward
+#+END_SRC
+
+** Plugins
+I use [[https://github.com/tarjoilija/zgen][zgen]] for my zsh plugins.
+
+#+BEGIN_SRC conf
+  #### ZGEN PLUGINS #######
+
+  # load zgen
+   source "${HOME}/.zgen/zgen.zsh"
+
+  # Completion path
+  # fpath=(~/.zsh/Completion $fpath)
+
+  # check if there's no init script
+   if ! zgen saved; then
+       echo "Creating a zgen save"
+
+     # prezto and modules
+       zgen prezto prompt theme 'garrett'
+
+       zgen prezto
+       zgen prezto homebrew
+       zgen prezto git
+       zgen prezto command-not-found
+       zgen prezto utility
+       zgen prezto directory
+       zgen prezto syntax-highlighting
+
+       zgen load zsh-users/zsh-syntax-highlighting
+	   zgen load tarruda/zsh-autosuggestions
+
+  # save all to init script
+     zgen save
+   fi
+   ## END ZGEN ################################
+#+END_SRC
+
+** Prompt
+#+BEGIN_SRC conf
+   # zsh prompt
+   if [ -n "$INSIDE_EMACS" ]; then
+       # LIQUID PROMPT
+       # Only load Liquid Prompt in interactive shells, not from a script or from scp
+       if [ -f /usr/local/share/liquidprompt ]; then
+           . /usr/local/share/liquidprompt
+       fi  
+   else
+       promptinit
+       prompt garrett
+  fi
+
+    # Other prompt themes
+      # zgen oh-my-zsh themes/ys  # good standard theme
+      # zgen oh-my-zsh themes/xiong-chiamiov-plus # Good two-line theme
+#+END_SRC
+
+** Aliases
+#+BEGIN_SRC conf
+### ALIASES ################################
+
+  # General bindings
+  alias zu='zgen selfupdate && zgen update'
+  alias bu='brew update && brew outdated && brew upgrade && brew cleanup && brew doctor'
+  alias bd='brew desc' 
+  alias bi='brew info'
+  alias ex='exit'
+  alias tm='tmux'
+  alias ll='ls --color -lAFh -a'
+  alias ls='ls --color -a'
+  alias ld="ls -lht | grep '^d'"
+  alias nf='neofetch'
+
+  # List directory on cd
+  function chpwd() {
+    ls
+  }
+
+  # source
+  alias so='source'
+
+  # Vim
+  alias v='/usr/local/bin/vim'
+  alias vim='emacs'
+
+  ### EMACS #####
+  alias ec='/usr/local/bin/emacsclient'
+  alias ect='/usr/local/bin/emacsclient -nw'
+  alias et="/Applications/Emacs.app/Contents/MacOS/emacs -nw"
+
+  # Alias open file with application
+  alias o='open -a'
+
+  # Alias for Plex
+  alias pms="/Applications/Plex\ Media\ Server.app/Contents/MacOS/Plex\ Media\ Scanner"
+
+  # Weather
+  alias weather='ansiweather'
+  alias forecast='ansiweather -f 5'
+
+  # cd to the path of the front Finder window
+  cdf() {
+  target=`osascript -e 'tell application "Finder" to if (count of Finder windows) > 0 then get POSIX path of (target of front Finder window as text)'`
+  if [ "$target" != "" ]; then
+  cd "$target"; target=""; pwd
+  else
+  echo 'No Finder window found' >&2
+  fi
+  }
+
+  # does the reverse of above
+  alias f='open -a Finder ./'
+
+  # Dropbox uploader ("McDrop")
+  alias du='~/bin/Dropbox-Uploader/dropbox_uploader.sh'
+
+  # fuzzy completion in zsh
+  [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+#+END_SRC
+
+** Options
+#+BEGIN_SRC conf
+  ### OPTIONS ###
+  setopt nolistbeep
+  setopt histignoredups
+  setopt autolist
+  set -o promptsubst
+  # pip should only run if there is a virtualenv currently activated
+  # export PIP_REQUIRE_VIRTUALENV=true
+  # cache pip-installed packages to avoid re-downloading
+   export PIP_DOWNLOAD_CACHE=$HOME/.pip/cache
+
+   syspip () {
+       PIP_REQUIRE_VIRTUALENV="" pip "$@"
+   }
+
+  # for the fuck
+   eval "$(thefuck --alias fuck)"
+#+END_SRC
+
+* Git
+** Gitconfig
+:PROPERTIES:
+:header-args: :tangle ~/.gitconfig
+:END:
+
+*** User
+#+BEGIN_SRC conf 
+[user]
+	name = Colin McLear
+	email = mclear@fastmail.com
+#+END_SRC
+*** Credential
+#+BEGIN_SRC conf
+[credential]
+	helper = osxkeychain
+#+END_SRC
+*** Push
+#+BEGIN_SRC conf
+[push]
+	default = simple
+#+END_SRC
+*** Alias
+#+BEGIN_SRC conf 
+[alias]
+lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+lg = !"git lg1"
+#+END_SRC
+** Gitignore
+:PROPERTIES:
+:header-args: :tangle ~/.gitignore_global
+:END:
+
+*** Compiled Source
+#+BEGIN_SRC conf
+#TESTcompiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+#+END_SRC
+*** Packages  
+#+BEGIN_SRC conf
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+#+END_SRC
+ 
+*** Logs & Databases
+#+BEGIN_SRC conf
+# Logs and databases #
+######################
+*.log
+*.sql
+*.sqlite
+#+END_SRC
+ 
+***  MacOS
+#+BEGIN_SRC conf
+# MacOS generated files #
+######################
+.DS_Store
+.AppleDouble
+.LSOverride
+#+END_SRC
+
+*** Icons
+#+BEGIN_SRC conf
+# Icon must end with two \r
+Icon
+#+END_SRC
+
+*** Thumbnails
+#+BEGIN_SRC conf
+# Thumbnails
+._*
+#+END_SRC
+
+*** Root Files
+#+BEGIN_SRC conf
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+#+END_SRC
+
+*** Remote Directories
+#+BEGIN_SRC conf
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+#+END_SRC
+
+* LaTeX
+#+BEGIN_SRC conf :tangle ~/.latexmkrc 
+$pdflatex = 'xelatex -synctex=1 %O %S';
+$pdf_mode = 1;
+$postscript_mode = 0;
+$dvi_mode = 0;
+$pdf_previewer = "open -a /Applications/PDF Expert.app";
+$clean_ext = "paux lox pdfsync out";
+#+END_SRC
+* Tmux
+I don't use tmux much but it is great with vim.
+#+BEGIN_SRC conf :tangle ~/.tmux.conf
+# act like GNU screen
+unbind C-b
+set -g prefix C-a
+
+# zsh is kinda tight
+set-option -g default-shell $SHELL
+
+# Tmux status line settings
+source-file ~/.nvim/tmuxline 
+
+# Set a Ctrl-a shortcut for reloading your tmux config
+bind r source-file ~/.tmux.conf
+
+ # set window and pane index to 1 (0 by default)
+set-option -g base-index 1
+setw -g pane-base-index 1
+
+# Bind splits
+bind | split-window -h
+bind - split-window -v
+
+# improve colors
+# set -g default-terminal "screen-256color-italic"
+
+# set mouse selection
+set -g mode-mouse on
+setw -g mouse-select-window on
+setw -g mouse-select-pane on
+
+# Use vim keybindings in copy mode
+setw -g mode-keys vi
+
+# cut and paste
+set -g default-command "reattach-to-user-namespace -l zsh"
+
+# # Setup 'v' to begin selection as in Vim
+bind-key -t vi-copy v begin-selection
+bind-key -t vi-copy y copy-pipe "reattach-to-user-namespace pbcopy"
+
+# # Update default binding of `Enter` to also use copy-pipe
+unbind -t vi-copy Enter
+bind-key -t vi-copy Enter copy-pipe "reattach-to-user-namespace pbcopy"
+
+# act like vim
+bind h select-pane -L
+bind j select-pane -D
+bind k select-pane -U
+bind l select-pane -R
+bind-key -r C-h select-window -t :-
+bind-key -r C-l select-window -t :+
+
+# Smart pane switching with awareness of vim splits
+is_vim='echo "#{pane_current_command}" | grep -iqE "(^|\/)g?(view|n?vim?)(diff)?$"'
+bind -n C-h if-shell "$is_vim" "send-keys C-h" "select-pane -L"
+bind -n C-j if-shell "$is_vim" "send-keys C-j" "select-pane -D"
+bind -n C-k if-shell "$is_vim" "send-keys C-k" "select-pane -U"
+bind -n C-l if-shell "$is_vim" "send-keys C-l" "select-pane -R"
+bind -n C-\ if-shell "$is_vim" "send-keys C-\\" "select-pane -l"
+
+# Use Alt-arrow keys without prefix key to switch panes
+bind -n M-Left select-pane -L
+bind -n M-Right select-pane -R
+bind -n M-Up select-pane -U
+bind -n M-Down select-pane -D
+
+# Shift arrow to switch windows
+bind -n S-Left  previous-window
+bind -n S-Right next-window
+
+# No delay for escape key press
+set -sg escape-time 0
+
+# List of plugins
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-sensible'
+set -g @plugin 'tmux-plugins/tmux-resurrect'
+set -g @plugin 'tmux-plugins/tmux-continuum'
+
+# tmux resurrect for vim
+set -g @resurrect-strategy-nvim 'session'
+set -g @resurrect-save 'S'
+set -g @resurrect-restore 'R'
+
+# tmux continuum
+set -g @continuum-boot 'on'
+set -g @continuum-boot-options 'iterm,fullscreen'
+
+# Other examples:
+# github_username/plugin_name    \
+# git@github.com/user/plugin     \
+# git@bitbucket.com/user/plugin  \
+
+# Initializes TMUX plugin manager.
+# Keep this line at the very bottom of tmux.conf.
+run '~/.tmux/plugins/tpm/tpm'
+#+END_SRC
+* Miscellaneous 
+** Ansiweather
+
+#+BEGIN_SRC conf :tangle ~/.ansiweatherrc
+api_key:d0dfeea1f7a83406288ec55700b36f3d 
+location:Providence,RI
+fetch_cmd:ftp -V -o -
+geo_api_url:www.telize.com/geoip
+geo_api_proto:http
+units:imperial
+daylight:true
+#+END_SRC

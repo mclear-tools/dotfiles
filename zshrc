@@ -3,7 +3,8 @@ export ARCHFLAGS="-arch x86_64"
 
 # Ensure user-installed binaries take precedence
 #export PATH=/usr/local/bin:$PATH
-export PATH="$HOME/.cask/bin:/usr/local/opt/coreutils/libexec/gnubin:/usr/local/bin:/Users/Roambot/bin:/Users/Roambot/.local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/sbin:/bin:/opt/X11/bin:/Library/TeX/texbin:/Users/Roambot/.fzf/bin:/Users/Roambot/.cabal/bin:/Users/Roambot/.local/bin"
+#export PATH="$HOME/.cask/bin:/usr/local/opt/coreutils/libexec/gnubin:/usr/local/bin:$HOME/bin:$HOME/.local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/sbin:/bin:/opt/X11/bin:/Library/TeX/texbin:$HOME/.fzf/bin:$HOME/.cabal/bin:$HOME/.local/bin"
+export PATH=/usr/local/opt/coreutils/libexec/gnubin:/usr/local/bin:$HOME/bin:$HOME/.local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/sbin:/bin:/opt/X11/bin:/Library/TeX/texbin:$HOME/.fzf/bin:$HOME/.cabal/bin:$HOME/.local/bin:$PATH
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
 #set GOPATH
@@ -32,7 +33,7 @@ export PROJECT_HOME=~/projects
 export WORKON_HOME=~/bin/virtualenvs
 
 #export to allow nvim to change cursor shape
-export NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+# export NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
 # Terminal for 256 colors
 # export TERM=xterm-256color
@@ -45,7 +46,7 @@ bindkey '^R' history-incremental-search-backward
 #### ZGEN PLUGINS #######
 
 # load zgen
- source "${HOME}/zgen/zgen.zsh"
+ source "${HOME}/.zgen/zgen.zsh"
 
 # Completion path
 # fpath=(~/.zsh/Completion $fpath)
@@ -120,23 +121,24 @@ function chpwd() {
 alias so='source'
 
 # Vim
+alias v='vim'
 # alias vim='nvim'
 # alias v='nvim'
-alias nv='nvim'
-alias work='nvim -S ~/.nvim/session/Work'
-alias web='nvim -S ~/.nvim/session/Website'
-#  alias mvim='/usr/local/Cellar/macvim/HEAD/bin/mvim'
+# alias nv='nvim'
+# alias work='nvim -S ~/.nvim/session/Work'
+# alias web='nvim -S ~/.nvim/session/Website'
+# alias mvim='/usr/local/Cellar/macvim/HEAD/bin/mvim'
 
 ### EMACS #####
 alias ec='/usr/local/bin/emacsclient'
 alias ect='/usr/local/bin/emacsclient -nw'
-alias et='emacs -nw'
+# alias et='emacs -nw'
 # alias ec='/usr/local/bin/emacsclient -nw'
-# alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw"
+alias et="/Applications/Emacs.app/Contents/MacOS/emacs -nw"
 
 
 # Alias open audio files with Vox in background
-alias p='open -g -a Vox'
+# alias p='open -g -a Vox'
 # Alias open file with application
 alias o='open -a'
 
@@ -164,13 +166,13 @@ alias f='open -a Finder ./'
 alias du='~/bin/Dropbox-Uploader/dropbox_uploader.sh'
 
 # Read man pages in vim
-vman() {
-nvim -c "SuperMan $*"
+# vman() {
+# nvim -c "SuperMan $*"
 
-if [ "$?" != "0" ]; then
-echo "No manual entry for $*"
-fi
-}
+# if [ "$?" != "0" ]; then
+# echo "No manual entry for $*"
+# fi
+# }
 
 # alias man='vman'
 
@@ -184,7 +186,7 @@ setopt histignoredups
 setopt autolist
 set -o promptsubst
 # pip should only run if there is a virtualenv currently activated
- export PIP_REQUIRE_VIRTUALENV=true
+# export PIP_REQUIRE_VIRTUALENV=true
 # cache pip-installed packages to avoid re-downloading
  export PIP_DOWNLOAD_CACHE=$HOME/.pip/cache
 
@@ -198,5 +200,6 @@ set -o promptsubst
 # shell script for colors in nvim using gruvbox
 # source "$HOME/.nvim/plugged/gruvbox/gruvbox_256palette_osx.sh"
 
-export HOMEBREW_CASK_OPTS='--caskroom=/opt/homebrew-cask/Caskroom'
+# Set homebrew cask destination (not necessary any more)
+# export HOMEBREW_CASK_OPTS='--caskroom=/opt/homebrew-cask/Caskroom'
 
