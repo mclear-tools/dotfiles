@@ -29,7 +29,7 @@ export BEETSDIR=~/Dropbox/Apps/Beets/
 
 # virtualenvwrapper config
 source /usr/local/bin/virtualenvwrapper.sh
-export PROJECT_HOME=~/projects
+export PROJECT_HOME=~/Dropbox/Work/projects
 export WORKON_HOME=~/bin/virtualenvs
 
 #export to allow nvim to change cursor shape
@@ -55,50 +55,76 @@ bindkey '^R' history-incremental-search-backward
  if ! zgen saved; then
      echo "Creating a zgen save"
 
-     zgen oh-my-zsh
+    # prezto and modules
+    zgen prezto
+    zgen prezto spectrum
+    zgen prezto homebrew
+    zgen prezto git
+    zgen prezto command-not-found
+    # zgen prezto syntax-highlighting
+    zgen prezto utility
+    zgen prezto directory
+
+
+    # zgen load zsh-users/zsh-completions
+
+    # This must go last
+    zgen load zsh-users/zsh-syntax-highlighting
+    zgen prezto prompt theme 'garrett'
+
+ ### OLD CONFIG ###########
+
+     # zgen oh-my-zsh
 
    # plugins
-     zgen oh-my-zsh plugins/git
-     zgen oh-my-zsh plugins/sudo
-     zgen oh-my-zsh plugins/command-not-found
-     zgen oh-my-zsh plugins/vi-mode
-     zgen oh-my-zsh plugins/tmux
-     zgen oh-my-zsh plugins/brew
-     zgen oh-my-zsh plugins/brew-cask
-     zgen oh-my-zsh plugins/marked2
-     zgen oh-my-zsh plugins/tmux
 
-    # Non-default bundles
-     zgen load zsh-users/zsh-syntax-highlighting
-     zgen load srijanshetty/zsh-pandoc-completion
-     zgen load peterhurford/git-aliases.zsh
-     zgen load zsh-users/zsh-history-substring-search
+     # zgen oh-my-zsh plugins/git
+     # zgen oh-my-zsh plugins/sudo
+     # zgen oh-my-zsh plugins/command-not-found
+     # zgen oh-my-zsh plugins/vi-mode
+     # zgen oh-my-zsh plugins/tmux
+     # zgen oh-my-zsh plugins/brew
+     # zgen oh-my-zsh plugins/brew-cask
+     # zgen oh-my-zsh plugins/marked2
+
+   # Non-default bundles
+
+     # zgen load zsh-users/zsh-syntax-highlighting
+     # zgen load srijanshetty/zsh-pandoc-completion
+     # zgen load peterhurford/git-aliases.zsh
+     # zgen load zsh-users/zsh-history-substring-search
      # zgen load secrettriangle/smart-cd
-     zgen load voronkovich/gitignore.plugin.zsh
-     zgen load djui/alias-tips
+     # zgen load voronkovich/gitignore.plugin.zsh
+     # zgen load djui/alias-tips
      # zgen load supercrabtree/k
 
-    # completions
-     zgen load zsh-users/zsh-completions src
+   # completions
+
+     # zgen load zsh-users/zsh-completions src
 
     # theme
     # zgen oh-my-zsh themes/ys  # good standard theme
     # zgen oh-my-zsh themes/xiong-chiamiov-plus # Good two-line theme
 
+ ## END OLD ZGEN ################################
 
 # save all to init script
  zgen save
 fi
-
  ## END ZGEN ################################
 
  # zsh prompt
- # Only load Liquid Prompt in interactive shells, not from a script or from scp
- if [ -f /usr/local/share/liquidprompt ]; then
-     . /usr/local/share/liquidprompt
- fi  
- #[[ $- = *i* ]] && source ~/liquidprompt/liquidprompt
- #PROMPT='[%n@%m:%/]%# '
+ if [ -n "$INSIDE_EMACS" ]; then
+     # LIQUID PROMPT
+     # Only load Liquid Prompt in interactive shells, not from a script or from scp
+     if [ -f /usr/local/share/liquidprompt ]; then
+         . /usr/local/share/liquidprompt
+     fi  
+ else
+     promptinit
+     prompt garrett
+fi
+
 
  ### ALIASES ################################
 
@@ -112,6 +138,7 @@ alias tm='tmux'
 alias ll='ls --color -lAFh -a'
 alias ls='ls --color -a'
 alias ld="ls -lht | grep '^d'"
+alias nf='neofetch'
 # List directory on cd
 function chpwd() {
   ls
@@ -121,8 +148,8 @@ function chpwd() {
 alias so='source'
 
 # Vim
-alias v='vim'
-# alias vim='nvim'
+alias v='/usr/local/bin/vim'
+alias vim='emacs'
 # alias v='nvim'
 # alias nv='nvim'
 # alias work='nvim -S ~/.nvim/session/Work'
