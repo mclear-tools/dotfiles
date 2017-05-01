@@ -219,7 +219,7 @@ endif
 set splitbelow
 set splitright
 
-" iterm settings for getting solarized working
+" iterm settings for getting solarized working{{{
 " let g:solarized_termcolors= 16
 " let g:solarized_termtrans = 1
 " let g:solarized_degrade   = 0
@@ -227,11 +227,11 @@ set splitright
 " let g:solarized_underline = 1
 " let g:solarized_italic    = 1
 " let g:solarized_contrast  = "normal"
-" let g:solarized_visibility= "normal"
+" let g:solarized_visibility= "normal"}}}
 
 " colorscheme settings
 set background=dark
-colorscheme solarized
+colorscheme gruvbox
 
 " tab settings
 hi TabLine      ctermfg=Black  ctermbg=Green     cterm=NONE
@@ -579,7 +579,7 @@ autocmd User GoyoLeave call <SID>goyo_leave()
 let g:airline_theme_patch_func = 'AirLineBlaenkTheme'
 " 0,1: gfg, gbg; 2,3: tfg, tbg; 4: styles
 function! AirLineBlaenkTheme(palette)
-  if g:airline_theme == 'solarized'
+  if g:airline_theme == 'gruvbox'
     let magenta = ['#ffffff', '#d33682', 255, 125, '']
     let blue = ['#ffffff', '#268bd2', 255, 33, '']
     let green = ['#ffffff', '#859900', 255, 64, '']
