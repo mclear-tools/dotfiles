@@ -38,21 +38,16 @@ brew tap homebrew/dupes
 brew install homebrew/dupes/grep
 
 binaries=(
+  ansiweather
   ack
-  hub
   cmus --with-ffmpeg
   cowsay
   elinks
   ffmpeg
   flac
   git
-  gibo
   graphicsmagick
-  lame
   latex2html
-  lua
-  luajit
-  mackup
   liquidprompt
   pandoc
   pandoc-citeproc
@@ -63,17 +58,17 @@ binaries=(
   reattach-to-user-namespace
   rename
   ruby
+  shpotify
   the_silver_searcher
-  task
   tree
   tmux
   trash
-  xquartz
   wget
-  wine
   xvid
   zsh
+  phantomjs
   webkit2png
+  mas
   )
 
 echo "installing binaries..."
@@ -81,7 +76,7 @@ brew install ${binaries[@]}
 
 # Install Brew Cask for Mac Apps
 
-brew install caskroom/cask/brew-cask
+brew tap caskroom/cask
 brew tap caskroom/versions
 
 # Apps
@@ -90,39 +85,39 @@ apps=(
   arq
   bartender
   caffeine
+  cloudytabs
   superduper
   cleanmymac
   devonthink-pro-office
   djview
-  easyfind
-  evernote
+  dropbox
   fantastical
   firefox
   fluid
-  google-chrome
   hazel
   iterm2
+  mailmate
   marked
-  meteorologist
-  seil
+  pdfexpert
   spectacle
+  spotify
   pdfsam-basic
-  path-finder
   skype
-  skim
   soulver
   vlc
   flux
   1password
+  xquartz
   )
 
 # Install apps to /Applications
 # Default is: /Users/$user/Applications
 echo "installing apps..."
 # brew cask install --appdir="/Applications" ${apps[@]}
+brew cask install ${apps[@]}
 
 # Link alfred apps
-brew cask alfred link
+# brew cask alfred link
 
 # install font set up
 brew tap caskroom/fonts
@@ -132,11 +127,8 @@ fonts=(
   font-inconsolata
   font-inconsolata-for-powerline
   font-inconsolata-lgc
-  font-droid-sans-mono-for-powerline
   font-fira-mono-for-powerline
   font-meslo-lg-for-powerline
-  font-sauce-code-powerline
-  font-source-code-pro-for-powerline
   font-ubuntu-mono-powerline
 )
 
@@ -144,21 +136,13 @@ fonts=(
 echo "installing fonts..."
 brew cask install ${fonts[@]}
 
-# Install vim 
-# brew install macvim --with-lua --with-luajit --custom-icons --override-system-vim
- 
-# Install neovim
-brew tap neovim/neovim
-brew install --HEAD neovim
-
-brew tap rogual/neovim-dot-app
-brew install --HEAD neovim-dot-app
-
 # Install emacs
-brew tap railwaycat/emacsmacport
-brew install emacs-mac --with-glib --with-gnutls --with-imagemagick --with-xml2
+  brew tap railwaycat/emacsmacport
+  brew install emacs-mac --with-glib --with-gnutls --with-imagemagick --with-xml2
+# brew install emacs --HEAD --with-cocoa --with-gnutls --with-librsvg --with-imagemagick
 
+# Install wine
+  brew install wine
 
 # Change path so Homebrew packages get priority
-
-# $PATH=$(brew --prefix coreutils)/libexec/gnubin:$PATH
+$PATH=$(brew --prefix coreutils)/libexec/gnubin:$PATH
