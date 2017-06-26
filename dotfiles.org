@@ -54,6 +54,7 @@ Plug 'junegunn/goyo.vim' " writeroom style writing
 Plug 'TeX-9' " Latex
 Plug 'gitv' " Git Viewer 
 Plug 'henrik/vim-open-url' " open any url using ruby and regex
+Plug 'vim-orgmode' " org mode for vim
 Plug 'hecal3/vim-leader-guide' " key guide like emacs which key
 
 call plug#end()
@@ -477,6 +478,7 @@ endif
   let g:dotspacevim_additional_plugins = [
   \  'morhetz/gruvbox',
   \  'bling/vim-airline', 
+  \  'vim-airline/vim-airline-themes',
   \  'mkitt/tabline.vim',
   \  'git://github.com/sjl/gundo.vim', 
   \  'vim-pandoc/vim-pandoc-syntax',                                           
@@ -485,6 +487,7 @@ endif
   \  'VOoM',
   \  'gitv',
   \  'henrik/vim-open-url',
+  \  'altercation/vim-colors-solarized',
   \]
   " You can also pass vim plug options like this: [{ 'name': 'Valloric/YouCompleteMe', 'option': {'do': './install.py'}}] 
 
@@ -518,12 +521,77 @@ call spacevim#bootstrap()
 " a variable should be set before a plugin is loaded,
 " you should place your code here."
 
-  set background=dark
-  colorscheme gruvbox
+" Solarized stuff
+let g:solarized_termtrans = 1
+set background=dark
+colorscheme solarized
 
 " }}}
 
 #+END_SRC
+** Keymappings
+#+BEGIN_SRC vimrc
+" Grep TODO and NOTE
+noremap <leader>d :copen<CR>:vimgrep /TODO/gj *.md *.taskpaper<CR>
+noremap <leader>n :copen<CR>:vimgrep /NOTE/gj *.md *.taskpaper<CR>
+" clean up paragraph according to pandoc specs
+nnoremap <leader>= vip=
+" previous and next buffer 
+nnoremap <leader>[ :bp<CR>
+nnoremap <leader>] :bn<CR>
+" previous and next tab
+nnoremap <leader>' :tabnext<CR>
+nnoremap <leader>; :tabprevious<CR>
+" remap escape
+inoremap fd <Esc>
+
+" make cursor move to next visual line below cursor this is a test 
+noremap Q gwip
+nnoremap <leader>c :set cursorline! <CR>
+nnoremap <C-N><C-N> :set invnumber<CR>
+" presents spelling options in dropdown and returns to normal mode
+nnoremap <leader>s ea<C-X><C-S>
+
+
+" set leader and local leader
+let maplocalleader = ","
+" Toggle table of contents
+nnoremap <localLeader>c :TOC<CR>
+" Toggle Goyo on/off
+nnoremap <localLeader>g :Goyo<CR>
+"Map NERDTree to ,t
+nnoremap <silent> <localLeader>t :NERDTreeToggle<CR>
+nnoremap <localLeader>v :VoomToggle<CR>
+" Gundo toggle
+nnoremap <localleader>G :GundoToggle<CR>
+"toggle filetype for pandoc
+nnoremap <localleader>f :set filetype=pandoc<CR> 
+" toggle ranger file navigator
+nnoremap <localleader>r :!ranger<CR>
+inoremap <localleader>r :!ranger<CR>
+" Fuzzyfinder for home directory
+noremap <C-t> :FZF ~<CR>
+" Fuzzyfinder for current directory
+noremap <C-f> :FZF<CR>
+" quick save
+nnoremap <localleader>w :w!<CR>
+
+"Copy to system clipboard
+nmap <F2> :set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
+imap <F2> <Esc>:set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
+nmap <F1> :.w !pbcopy<CR><CR>
+vmap <F1> :w !pbcopy<CR><CR>
+
+" start external shell command with a bang
+nnoremap ! :!
+
+" correct common misspellings for commands
+cabbrev ew :wq
+cabbrev qw :wq 
+cabbrev Q :q
+cabbrev W :w 
+#+END_SRC
+
 ** Startify
 #+BEGIN_SRC vimrc
   " Startify Settings {{{
@@ -581,6 +649,89 @@ call spacevim#bootstrap()
   " }}}
 
 #+END_SRC
+** Settings
+#+BEGIN_SRC vimrc
+  " Settings {{{
+  syntax enable
+  " buffer settings
+  set hidden
+  set switchbuf=usetab
+  " cursorline 
+  " highlight LineNr ctermfg=yellow ctermbg=black guibg=black guifg=grey
+  " hi CursorLineNR cterm=bold
+  " augroup CLNRSet
+  "       autocmd! ColorScheme * hi CursorLineNR cterm=bold ctermfg=white
+  "     augroup END
+  " set cursorline
+  " hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+
+  " automatically leave insert mode after 'updatetime' milliseconds of inaction
+  " au CursorHoldI * stopinsert
+
+  " set vimwiki filetype for path to wiki
+  " autocmd! BufRead,BufNewFile /Users/Roambot/Dropbox/Wiki set filetype=vimwiki
+
+  " include spaces in filenames
+  set isfname+=32
+
+  set ttyscroll=3
+  " change cursor shape depending on mode with different code for tmux configuration
+  if exists('$TMUX')
+    let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+    let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+    else
+    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+    let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+  endif
+
+  " split settings
+  set splitbelow
+  set splitright
+
+  " tab settings
+  hi TabLine      ctermfg=Black  ctermbg=Green     cterm=NONE
+  hi TabLineFill  ctermfg=Black  ctermbg=Green     cterm=NONE
+  hi TabLineSel   ctermfg=White  ctermbg=DarkBlue  cterm=NONE
+
+  set spell spelllang=en_us
+  set tabstop=4 shiftwidth=2 expandtab
+  set linespace=2
+  set scrolloff=999 " keep cursor in middle of screen
+  set textwidth=80
+  " remap paragraph formatting 
+  set formatprg=par
+  set ruler
+  set laststatus=2
+  set noshowmode
+  set showcmd
+  set wildmenu
+  set ttyfast " u got a fast terminal
+  set lazyredraw " to avoid scrolling problems
+  " Move to next line when using left and right
+  set whichwrap+=<,>
+  " |nojoinspaces| allows you to use SHIFT-J in normal mode to join the next line 
+  " with the current line without adding unwanted spaces.
+  setlocal nojoinspaces
+  set backspace=indent,eol,start
+  " make vim scrollable with mouse
+  set mouse=a
+  set go+=a
+
+
+  " The Silver Searcher
+  if executable('ag')
+    " Use ag over grep
+    set grepprg=ag\ --nogroup\ --nocolor
+  endif
+
+  " bind K to grep word under cursor
+  nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+  " Ag exec command
+  "command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+  nnoremap A :Ag<Space>
+
+#+END_SRC
+
 ** Voom Settings
 Some settings for the Voom outliner
 #+BEGIN_SRC vimrc
@@ -599,7 +750,7 @@ Settings for the [[https://github.com/vim-airline/vim-airline][airline]] modelin
 " AIRLINE SETTINGS {{{
 
   let g:airline_powerline_fonts=1 
-  let g:airline_theme = 'gruvbox'
+  let g:airline_theme = 'solarized'
   " let g:airline_left_sep=''
   " let g:airline_right_sep=''
   " let g:airline_right_sep = '◀'
