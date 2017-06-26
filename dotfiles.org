@@ -1,13 +1,14 @@
 #+TITLE: Dotfiles
 #+AUTHOR: Colin McLear
 #+DATE: April 30, 2017
+#+TODO: TODO DISABLED CHECK | DONE 
 #+PROPERTY: header-args:conf  :comments link :tangle-mode (identity #o444)
 
 This file contains the source to all my dotfiles, which is then generated into
 distinct files in my home directory via org-babel. Inspiration for this setup
 comes primarily from [[https://expoundite.net/dotfile-management][this discussion]] along with some help from [[https://writequit.org/org/#6017d330-9337-4d97-82f2-2e605b7a262a][writequit]]. 
 
-* Vim
+* DISABLED Vim
 :PROPERTIES:
 :header-args: :tangle no
 :END:
