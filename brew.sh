@@ -69,6 +69,7 @@ binaries=(
   phantomjs
   webkit2png
   mas
+  rg
   )
 
 echo "installing binaries..."
