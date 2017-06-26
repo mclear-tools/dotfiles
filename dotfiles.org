@@ -798,7 +798,7 @@ I use [[https://github.com/tarjoilija/zgen][zgen]] for my zsh plugins.
        echo "Creating a zgen save"
 
      # prezto and modules
-       zgen prezto prompt theme 'garrett'
+     #  zgen prezto prompt theme 'garrett'
 
        zgen prezto
        zgen prezto homebrew
@@ -819,6 +819,14 @@ I use [[https://github.com/tarjoilija/zgen][zgen]] for my zsh plugins.
 
 ** Prompt
 #+BEGIN_SRC conf
+  # LIQUID PROMPT
+  # Only load Liquid Prompt in interactive shells, not from a script or from scp
+  if [ -f /usr/local/share/liquidprompt ]; then
+    . /usr/local/share/liquidprompt
+  fi  
+#+END_SRC
+
+#+BEGIN_SRC conf :tangle no
    # zsh prompt
    if [ -n "$INSIDE_EMACS" ]; then
        # LIQUID PROMPT
@@ -909,11 +917,11 @@ I use [[https://github.com/tarjoilija/zgen][zgen]] for my zsh plugins.
   # pip should only run if there is a virtualenv currently activated
   # export PIP_REQUIRE_VIRTUALENV=true
   # cache pip-installed packages to avoid re-downloading
-   export PIP_DOWNLOAD_CACHE=$HOME/.pip/cache
+   # export PIP_DOWNLOAD_CACHE=$HOME/.pip/cache
 
-   syspip () {
-       PIP_REQUIRE_VIRTUALENV="" pip "$@"
-   }
+   # syspip () {
+   #     PIP_REQUIRE_VIRTUALENV="" pip "$@"
+   # }
 
   # for the fuck
    eval "$(thefuck --alias fuck)"
