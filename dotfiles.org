@@ -18,11 +18,13 @@ necessary. Right now I have this disabled in favor of spacevim.
 
 ** Header Info
 #+BEGIN_SRC vimrc 
+
 " vim:fdm=marker
 set encoding=utf-8
 scriptencoding utf-8
 set nocompatible
 filetype plugin indent on
+
 #+END_SRC
 
 ** Plugins
@@ -484,6 +486,7 @@ endif
   \  'vim-pandoc/vim-pandoc-syntax',                                           
   \  'vim-pandoc/vim-pandoc',
   \  'vim-pandoc/vim-pandoc-after',
+  \  'jceb/vim-orgmode',
   \  'VOoM',
   \  'gitv',
   \  'henrik/vim-open-url',
@@ -890,7 +893,7 @@ for me.
   export ARCHFLAGS="-arch x86_64"
 
   # Ensure user-installed binaries take precedence
-  export PATH=/usr/local/opt/coreutils/libexec/gnubin:/usr/local/bin:$HOME/bin:$HOME/.local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/sbin:/bin:/opt/X11/bin:/Library/TeX/texbin:$HOME/.fzf/bin:$HOME/.cabal/bin:$HOME/.local/bin:$PATH
+  export PATH=/usr/local/opt/coreutils/libexec/gnubin:/usr/local/opt/python/libexec/bin:/usr/local/bin:/usr/local/sbin:$HOME/bin:$HOME/.local/bin:/usr/bin:/usr/sbin:/sbin:/bin:/opt/X11/bin:/Library/TeX/texbin:$HOME/.fzf/bin:$HOME/.cabal/bin:$HOME/.local/bin:$PATH
   export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
   #set GOPATH
@@ -908,6 +911,9 @@ for me.
   # locale
   export LANG=en_US.UTF-8
   export LC_ALL=en_US.UTF-8
+
+  # Pyenv
+  # eval "$(pyenv init -)"
 #+END_SRC
 
 ** Beets
@@ -925,8 +931,8 @@ for me.
   export WORKON_HOME=~/bin/virtualenvs
 #+END_SRC
 
-** Vi Mode
-#+BEGIN_SRC conf
+** DISABLED Vi Mode
+#+BEGIN_SRC conf :tangle no
   # Set vi mode
   bindkey -v
   bindkey -M viins 'jk' vi-cmd-mode
@@ -934,9 +940,114 @@ for me.
 #+END_SRC
 
 ** Plugins
-I use [[https://github.com/tarjoilija/zgen][zgen]] for my zsh plugins.
+I use [[%5B%5Bhttps://github.com/zplug/zplug%5D%5Bzplug/zplug: A next-generation plugin manager for zsh%5D%5D][zplug]] for all plugins. 
 
 #+BEGIN_SRC conf
+  # install zplug if it doensn't exist
+  [ ! -d /usr/local/opt/zplug ] && {
+        brew install zplug
+        source /usr/local/opt/zplug/init.zsh && zplug update --self
+  }
+
+  # Basic setttings
+  export ZPLUG_HOME=/usr/local/opt/zplug
+  source $ZPLUG_HOME/init.zsh 
+
+  # Let zplug manage zplug
+  zplug "zplug/zplug", hook-build:"zplug --self-manage"
+
+  #############################################
+  #               Plugins
+  #############################################
+
+  # OS X ###################################### 
+  zplug "plugins/osx",  from:oh-my-zsh,  if:"[[ $OSTYPE == *darwin* ]]"
+  zplug "plugins/brew", from:oh-my-zsh,  if:"[[ $(command -v brew) ]]"
+
+  # General ###################################
+  zplug "plugins/git", from:oh-my-zsh  # git commands
+  zplug "zsh-users/zsh-autosuggestions"  # useful autosuggestions
+  zplug "zsh-users/zsh-history-substring-search" # like what it says
+  zplug "modules/directory", from:prezto  # better directory commands
+  # define RPS1 in order to avoid the annoying vim status
+  # export RPS1=" "
+  zplug "plugins/vi-mode", from:oh-my-zsh 
+
+  # zsh-syntax-highlighting must be loaded
+  # after executing compinit command and sourcing other plugins
+  # (If the defer tag is given 2 or above, run after compinit command)
+  zplug "zsh-users/zsh-syntax-highlighting", defer:2  # fish syntax highlight
+
+  # Theme #####################################
+
+  # spaceship-prompt
+  # https://github.com/denysdovhan/spaceship-prompt
+  zplug "denysdovhan/spaceship-prompt", use:spaceship.zsh, from:github, as:theme
+
+  # Liquid prompt https://github.com/nojhan/liquidprompt
+  # LP_ENABLE_TIME=1
+  # LP_USER_ALWAYS=1
+  # zplug 'nojhan/liquidprompt'
+
+  # Installation ###############################
+  # Install packages that have not been installed yet
+  if ! zplug check --verbose; then
+      printf "Install? [y/N]: "
+      if read -q; then
+          echo; zplug install
+      else
+          echo
+      fi
+  fi
+  # Then, source plugins and add commands to $PATH
+  zplug load # --verbose # uncomment if verbose loading preferred
+
+#+END_SRC
+
+** Spaceship Theme Settings
+See https://denysdovhan.com/spaceship-prompt/docs/Options.html#options for explanation
+#+BEGIN_SRC conf
+  SPACESHIP_HOST_SHOW='always'
+  SPACESHIP_USER_SHOW='needed'
+  SPACESHIP_TIME_SHOW=true
+  SPACESHIP_TIME_FORMAT="%*"
+  SPACESHIP_CHAR_SYMBOL='➜' 
+  SPACESHIP_CHAR_SUFFIX='  '
+  SPACESHIP_VENV_COLOR='grey'
+  SPACESHIP_VENV_PREFIX='( '
+  SPACESHIP_VENV_SUFFIX=') '
+  SPACESHIP_VI_MODE_INSERT='' 
+  SPACESHIP_VI_MODE_COLOR='yellow'
+  SPACESHIP_PROMPT_ORDER=(
+    time          # Time stampts section
+    user          # Username section
+    host          # Hostname section
+    dir           # Current directory section
+    git           # Git section (git_branch + git_status)
+    hg            # Mercurial section (hg_branch  + hg_status)
+    package       # Package version
+    node          # Node.js section
+    ruby          # Ruby section
+    xcode         # Xcode section
+    swift         # Swift section
+    golang        # Go section
+    haskell       # Haskell Stack section
+    venv          # virtualenv section
+    pyenv         # Pyenv section
+    exec_time     # Execution time
+    line_sep      # Line break
+    battery       # Battery level and status
+    vi_mode       # Vi-mode indicator
+    jobs          # Backgound jobs indicator
+    exit_code     # Exit code section
+    char          # Prompt character
+  )
+#+END_SRC
+
+** DISABLED Zgen config 
+I used to use [[https://github.com/tarjoilija/zgen][zgen]] for my zsh plugins.
+
+#+BEGIN_SRC conf :tangle no
   #### ZGEN PLUGINS #######
 
   # load zgen
@@ -958,10 +1069,9 @@ I use [[https://github.com/tarjoilija/zgen][zgen]] for my zsh plugins.
        zgen prezto command-not-found
        zgen prezto utility
        zgen prezto directory
-       zgen prezto syntax-highlighting
+       # zgen prezto syntax-highlighting
 
-       zgen load zsh-users/zsh-syntax-highlighting
-	   zgen load tarruda/zsh-autosuggestions
+       zgen load tarruda/zsh-autosuggestions
 
   # save all to init script
      zgen save
@@ -996,6 +1106,22 @@ I use [[https://github.com/tarjoilija/zgen][zgen]] for my zsh plugins.
       # zgen oh-my-zsh themes/xiong-chiamiov-plus # Good two-line theme
 #+END_SRC
 
+** Emacs Directory Tracking
+From [[https://jackkamm.github.io/blog/directory-tracking-in-emacs-terminal-emulators/][this]] blog post
+
+#+BEGIN_SRC conf 
+if [ -n "$INSIDE_EMACS" ]; then
+    # function to set the dired and host for ansiterm
+    set_eterm_dir() {
+        print -P "\033AnSiTu %n"
+        print -P "\033AnSiTh" "$(hostname -f)"
+        print -P "\033AnSiTc %d"
+    }
+
+    # call prmptcmd whenever prompt is redrawn
+    precmd_functions=($precmd_functions set_eterm_dir)
+fi
+#+END_SRC
 ** Aliases
 #+BEGIN_SRC conf
 ### ALIASES ################################
@@ -1005,6 +1131,9 @@ I use [[https://github.com/tarjoilija/zgen][zgen]] for my zsh plugins.
   alias bu='brew update && brew outdated && brew upgrade && brew cleanup && brew doctor'
   alias bd='brew desc' 
   alias bi='brew info'
+  alias bc='brew cask' 
+  alias bcs='brew cask search'
+  alias bci='brew cask install'
   alias ex='exit'
   alias tm='tmux'
   alias ll='ls --color -lAFh -a'
@@ -1077,6 +1206,12 @@ I use [[https://github.com/tarjoilija/zgen][zgen]] for my zsh plugins.
 
   # for the fuck
    eval "$(thefuck --alias fuck)"
+#+END_SRC
+** DISABLED Sourcing
+For syntax highlighting in zsh
+#+BEGIN_SRC conf :tangle no
+  zgen load zsh-users/zsh-syntax-highlighting
+  # source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 #+END_SRC
 
 * Git
