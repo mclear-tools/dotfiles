@@ -969,6 +969,7 @@ I use [[%5B%5Bhttps://github.com/zplug/zplug%5D%5Bzplug/zplug: A next-generation
   zplug "zsh-users/zsh-autosuggestions"  # useful autosuggestions
   zplug "zsh-users/zsh-history-substring-search" # like what it says
   zplug "modules/directory", from:prezto  # better directory commands
+  zplug "modules/completion", from:prezto # better completion
   # define RPS1 in order to avoid the annoying vim status
   # export RPS1=" "
   zplug "plugins/vi-mode", from:oh-my-zsh 
@@ -1284,7 +1285,7 @@ lg = !"git lg1"
 *.sqlite
 #+END_SRC
  
-***  MacOS
+*** MacOS
 #+BEGIN_SRC conf
 # MacOS generated files #
 ######################
@@ -1336,7 +1337,7 @@ $pdf_previewer = "open -a /Applications/PDF Expert.app";
 $clean_ext = "paux lox pdfsync out";
 #+END_SRC
 * Tmux
-I don't use tmux much but it is great with vim.
+I don't use tmux much anymore but it is great with vim.
 #+BEGIN_SRC conf :tangle ~/.tmux.conf
 # act like GNU screen
 unbind C-b
