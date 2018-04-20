@@ -614,41 +614,6 @@ See https://denysdovhan.com/spaceship-prompt/docs/Options.html#options for expla
   )
 #+END_SRC
 
-** DISABLED Zgen config 
-I used to use [[https://github.com/tarjoilija/zgen][zgen]] for my zsh plugins.
-
-#+BEGIN_SRC conf :tangle no
-  #### ZGEN PLUGINS #######
-
-  # load zgen
-   source "${HOME}/.zgen/zgen.zsh"
-
-  # Completion path
-  # fpath=(~/.zsh/Completion $fpath)
-
-  # check if there's no init script
-   if ! zgen saved; then
-       echo "Creating a zgen save"
-
-     # prezto and modules
-     #  zgen prezto prompt theme 'garrett'
-
-       zgen prezto
-       zgen prezto homebrew
-       zgen prezto git
-       zgen prezto command-not-found
-       zgen prezto utility
-       zgen prezto directory
-       # zgen prezto syntax-highlighting
-
-       zgen load tarruda/zsh-autosuggestions
-
-  # save all to init script
-     zgen save
-   fi
-   ## END ZGEN ################################
-#+END_SRC
-
 ** Prompt
 #+BEGIN_SRC conf
   # LIQUID PROMPT
