@@ -1435,15 +1435,3 @@ set -g @continuum-boot-options 'iterm,fullscreen'
 # Keep this line at the very bottom of tmux.conf.
 run '~/.tmux/plugins/tpm/tpm'
 #+END_SRC
-* Miscellaneous 
-** Ansiweather
-
-#+BEGIN_SRC conf :tangle ~/.ansiweatherrc
-api_key:d0dfeea1f7a83406288ec55700b36f3d 
-location:Providence,RI
-fetch_cmd:ftp -V -o -
-geo_api_url:www.telize.com/geoip
-geo_api_proto:http
-units:imperial
-daylight:true
-#+END_SRC
