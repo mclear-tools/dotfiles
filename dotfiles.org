@@ -508,14 +508,6 @@ for me.
   export WORKON_HOME=~/bin/virtualenvs
 #+END_SRC
 
-** DISABLED Vi Mode
-#+BEGIN_SRC conf :tangle no
-  # Set vi mode
-  bindkey -v
-  bindkey -M viins 'jk' vi-cmd-mode
-  bindkey '^R' history-incremental-search-backward
-#+END_SRC
-
 ** Plugins
 I use [[%5B%5Bhttps://github.com/zplug/zplug%5D%5Bzplug/zplug: A next-generation plugin manager for zsh%5D%5D][zplug]] for all plugins. 
 
