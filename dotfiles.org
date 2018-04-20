@@ -742,13 +742,6 @@ fi
   # for the fuck
    eval "$(thefuck --alias fuck)"
 #+END_SRC
-** DISABLED Sourcing
-For syntax highlighting in zsh
-#+BEGIN_SRC conf :tangle no
-  zgen load zsh-users/zsh-syntax-highlighting
-  # source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-#+END_SRC
-
 * Git
 ** Gitconfig
 :PROPERTIES:
