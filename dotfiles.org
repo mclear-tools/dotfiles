@@ -456,6 +456,18 @@ bashrc
 emacs -eval "(woman \"$1\")"
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 #+END_SRC
+
+And setup of Emacs-anywhere
+#+BEGIN_SRC conf :tangle ~/.bash_profile 
+  # export EA_EDITOR='/usr/local/bin/emacsclient -a "" -c'
+  # export EA_WINDOW_TITLE='Emacs Anywhere'
+  # export EA_X='300'             
+  # export EA_Y='400'
+  # export EA_WIDTH='90'
+  # export EA_HEIGHT="15"
+  # export EA_EDITOR='/usr/local/bin/emacsclient -n -c -e "((name . \"Emacs-Nowhere\") (left . 300) (top . 400) (width . 90) (height . 15))"'
+
+#+END_SRC
 * Zsh
 :PROPERTIES:
 :header-args: :tangle ~/.zshrc
