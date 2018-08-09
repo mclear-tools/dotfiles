@@ -470,7 +470,7 @@ for me.
   export ARCHFLAGS="-arch x86_64"
 
   # Ensure user-installed binaries take precedence
-  export PATH=/usr/local/opt/coreutils/libexec/gnubin:/usr/local/opt/python/libexec/bin:/usr/local/bin:/usr/local/sbin:$HOME/bin:$HOME/.local/bin:/usr/bin:/usr/sbin:/sbin:/bin:/opt/X11/bin:/Library/TeX/texbin:$HOME/.fzf/bin:$HOME/.cabal/bin:$HOME/.local/bin:$PATH
+  export PATH=/usr/local/opt/texinfo/bin:/usr/local/opt/coreutils/libexec/gnubin:/usr/local/opt/python/libexec/bin:/usr/local/bin:/usr/local/sbin:$HOME/bin:$HOME/.local/bin:/usr/bin:/usr/sbin:/sbin:/bin:/opt/X11/bin:/Library/TeX/texbin:$HOME/.fzf/bin:$HOME/.cabal/bin:$HOME/.local/bin:$PATH
   export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
   #set GOPATH
@@ -481,14 +481,18 @@ for me.
 
   # set editor
   # export EDITOR="/usr/local/bin/nvim"
-  export EDITOR="/usr/local/bin/emacsclient"
-
+  export VISUAL="/usr/local/bin/emacsclient"
+  export EDITOR="$VISUAL"
+  export ALTERNATE_EDITOR="vim"
+  
   # set shell
   export SHELL=/usr/local/bin/zsh
   # locale
   export LANG=en_US.UTF-8
   export LC_ALL=en_US.UTF-8
 
+  # speed up start time
+  skip_global_compinit=1
   # Pyenv
   # eval "$(pyenv init -)"
 #+END_SRC
@@ -504,6 +508,7 @@ for me.
 #+BEGIN_SRC conf
   # virtualenvwrapper config
   source /usr/local/bin/virtualenvwrapper.sh
+  export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
   export PROJECT_HOME=~/Dropbox/Work/projects
   export WORKON_HOME=~/bin/virtualenvs
 #+END_SRC
@@ -531,17 +536,17 @@ I use [[%5B%5Bhttps://github.com/zplug/zplug%5D%5Bzplug/zplug: A next-generation
 
   # OS X ###################################### 
   zplug "plugins/osx",  from:oh-my-zsh,  if:"[[ $OSTYPE == *darwin* ]]"
-  zplug "plugins/brew", from:oh-my-zsh,  if:"[[ $(command -v brew) ]]"
+  # zplug "plugins/brew", from:oh-my-zsh,  if:"[[ $(command -v brew) ]]"
 
   # General ###################################
-  zplug "plugins/git", from:oh-my-zsh  # git commands
+  # zplug "plugins/git", from:oh-my-zsh  # git commands
   zplug "zsh-users/zsh-autosuggestions"  # useful autosuggestions
   zplug "zsh-users/zsh-history-substring-search" # like what it says
   zplug "modules/directory", from:prezto  # better directory commands
   zplug "modules/completion", from:prezto # better completion
   # define RPS1 in order to avoid the annoying vim status
   # export RPS1=" "
-  zplug "plugins/vi-mode", from:oh-my-zsh 
+  # zplug "plugins/vi-mode", from:oh-my-zsh 
 
   # zsh-syntax-highlighting must be loaded
   # after executing compinit command and sourcing other plugins
@@ -659,70 +664,81 @@ fi
 #+END_SRC
 ** Aliases
 #+BEGIN_SRC conf
-### ALIASES ################################
+  ### ALIASES ################################
 
-  # General bindings
-  alias zu='zgen selfupdate && zgen update'
-  alias bu='brew update && brew outdated && brew upgrade && brew cleanup && brew doctor'
-  alias bd='brew desc' 
-  alias bi='brew info'
-  alias bc='brew cask' 
-  alias bcs='brew cask search'
-  alias bci='brew cask install'
-  alias ex='exit'
-  alias tm='tmux'
-  alias ll='ls --color -lAFh -a'
-  alias ls='ls --color -a'
-  alias ld="ls -lht | grep '^d'"
-  alias nf='neofetch'
+    # General bindings
+    alias zu='zgen selfupdate && zgen update'
+    alias bu='brew update && brew outdated && brew upgrade && brew cleanup && brew doctor'
+    alias bd='brew desc' 
+    alias bi='brew info'
+    alias bs='brew search'
+    alias bc='brew cask' 
+    alias bcs='brew cask search'
+    alias bci='brew cask install'
+    alias ex='exit'
+    alias tm='tmux'
+    alias ll='ls --color -lAFh -a'
+    alias lc="colorls -lA --sd"
+    alias ls='ls --color -a'
+    alias ld="ls -lht | grep '^d'"
+    alias nf='neofetch'
 
-  # List directory on cd
-  function chpwd() {
-    ls
-  }
+    # List directory on cd
+    function chpwd() {
+      ls
+    }
 
-  # source
-  alias so='source'
+    # source
+    alias so='source'
 
-  # Vim
-  alias v='/usr/local/bin/vim'
-  alias vim='emacs'
+    # Vim
+    alias v='/usr/local/bin/vim'
+    # alias vim='emacs'
 
-  ### EMACS #####
-  alias ec='/usr/local/bin/emacsclient'
-  alias ect='/usr/local/bin/emacsclient -nw'
-  alias et="/Applications/Emacs.app/Contents/MacOS/emacs -nw"
+    ### EMACS #####
+    alias ec='/usr/local/bin/emacsclient'
+    alias ect='/usr/local/bin/emacsclient -nw'
+    alias et='/usr/local/Cellar/emacs-plus/26.1/Emacs.app/Contents/MacOS/Emacs -nw' 
+    alias emacs='/usr/local/Cellar/emacs-plus/26.1/Emacs.app/Contents/MacOS/Emacs'
 
-  # Alias open file with application
-  alias o='open -a'
+    # alias ec= '/Applications/Emacs.app/Contents/MacOS/bin/emacsclient'
+    # alias ect='/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -nw'
+    # alias et="/Applications/Emacs.app/Contents/MacOS/emacs -nw"
+    # alias emacs='/Applications/Emacs.app/Contents/MacOS/emacs'
 
-  # Alias for Plex
-  alias pms="/Applications/Plex\ Media\ Server.app/Contents/MacOS/Plex\ Media\ Scanner"
+    # Alias open file with application
+    alias o='open -a'
 
-  # Weather
-  alias weather='ansiweather'
-  alias forecast='ansiweather -f 5'
+    # Alias for Plex
+    alias pms="/Applications/Plex\ Media\ Server.app/Contents/MacOS/Plex\ Media\ Scanner"
 
-  # cd to the path of the front Finder window
-  cdf() {
-  target=`osascript -e 'tell application "Finder" to if (count of Finder windows) > 0 then get POSIX path of (target of front Finder window as text)'`
-  if [ "$target" != "" ]; then
-  cd "$target"; target=""; pwd
-  else
-  echo 'No Finder window found' >&2
-  fi
-  }
+    # Weather
+    alias weather='ansiweather'
+    alias forecast='ansiweather -f 5'
 
-  # does the reverse of above
-  alias f='open -a Finder ./'
+    # cd to the path of the front Finder window
+    cdf() {
+    target=`osascript -e 'tell application "Finder" to if (count of Finder windows) > 0 then get POSIX path of (target of front Finder window as text)'`
+    if [ "$target" != "" ]; then
+    cd "$target"; target=""; pwd
+    else
+    echo 'No Finder window found' >&2
+    fi
+    }
 
-  # Dropbox uploader ("McDrop")
-  alias du='~/bin/Dropbox-Uploader/dropbox_uploader.sh'
+    # does the reverse of above
+    alias f='open -a Finder ./'
 
-  # fuzzy completion in zsh
-  [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+    # Dropbox uploader ("McDrop")
+    alias du='~/bin/Dropbox-Uploader/dropbox_uploader.sh'
+
+    # fuzzy completion in zsh
+    [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 #+END_SRC
-
+** Colorls
+#+BEGIN_SRC conf
+source $(dirname $(gem which colorls))/tab_complete.sh
+#+END_SRC
 ** Options
 #+BEGIN_SRC conf
   ### OPTIONS ###
@@ -741,6 +757,12 @@ fi
 
   # for the fuck
    eval "$(thefuck --alias fuck)"
+   
+  # Disable marking untracked files
+  # under VCS as dirty. This makes repository status check for large repositories
+  # much, much faster.
+  DISABLE_UNTRACKED_FILES_DIRTY="true"
+
 #+END_SRC
 * Git
 ** Gitconfig
