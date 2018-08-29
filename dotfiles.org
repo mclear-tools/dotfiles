@@ -712,7 +712,8 @@ fi
     alias ect='/usr/local/bin/emacsclient -nw'
     alias et='/usr/local/Cellar/emacs-plus/26.1/Emacs.app/Contents/MacOS/Emacs -nw' 
     alias emacs='/usr/local/Cellar/emacs-plus/26.1/Emacs.app/Contents/MacOS/Emacs'
-
+    alias magit='emacsclient -n -e "(progn (magit-status) (delete-other-windows))"'
+    
     # alias ec= '/Applications/Emacs.app/Contents/MacOS/bin/emacsclient'
     # alias ect='/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -nw'
     # alias et="/Applications/Emacs.app/Contents/MacOS/emacs -nw"
