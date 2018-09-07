@@ -1,6 +1,12 @@
+# [[file:~/dotfiles/dotfiles.org::*Header][Header:1]]
 #!/usr/bin/env bash
+# Header:1 ends here
 
+# [[file:~/dotfiles/dotfiles.org::*Download][Download:1]]
+# curl -O https://raw.githubusercontent.com/mclear-tools/dotfiles/master/bootstrap.sh && source bootstrap.sh
+# Download:1 ends here
 
+# [[file:~/dotfiles/dotfiles.org::*Brewfile][Brewfile:1]]
 # Ask for the administrator password upfront.
 sudo -v
 
@@ -147,3 +153,4 @@ brew cask install ${fonts[@]}
 
 # Change path so Homebrew packages get priority
 $PATH=$(brew --prefix coreutils)/libexec/gnubin:$PATH
+# Brewfile:1 ends here
