@@ -119,6 +119,16 @@ defaults write -g com.apple.trackpad.scaling 2
 defaults write -g com.apple.mouse.scaling 2.5
 
 echo ""
+echo " Trackpad: enable tap to click for this user and for the login screen"
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+
+echo ""
+echo " Automatically illuminate built-in MacBook keyboard in low light"
+defaults write com.apple.BezelServices kDim -bool true
+
+echo ""
 echo "Turn off keyboard illumination when computer is not used for 5 minutes"
 defaults write com.apple.BezelServices kDimTime -int 300
 
@@ -174,6 +184,35 @@ defaults write com.apple.finder FXPreferredViewStyle Clmv
 echo ""
 echo "Avoiding the creation of .DS_Store files on network volumes"
 defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+
+echo ""
+echo " Empty Trash securely by default"
+defaults write com.apple.finder EmptyTrashSecurely -bool true
+
+echo ""
+echo " Hot corners"
+# Possible values:
+#  0: no-op
+#  2: Mission Control
+#  3: Show application windows
+#  4: Desktop
+#  5: Start screen saver
+#  6: Disable screen saver
+#  7: Dashboard
+# 10: Put display to sleep
+# 11: Launchpad
+echo "Top left screen corner → Screen Saver"
+defaults write com.apple.dock wvous-tl-corner -int 5
+defaults write com.apple.dock wvous-tl-modifier -int 0
+echo "Top right screen corner → Desktop"
+defaults write com.apple.dock wvous-tr-corner -int 4
+defaults write com.apple.dock wvous-tr-modifier -int 0
+echo " Bottom right screen corner → Sleep display"
+defaults write com.apple.dock wvous-br-corner -int 10
+defaults write com.apple.dock wvous-br-modifier -int 0
+echo " Bottom left screen corner → Show app windows"
+defaults write com.apple.dock wvous-br-corner -int 3
+defaults write com.apple.dock wvous-br-modifier -int 0
 
 # echo ""
 # echo "Disabling disk image verification"

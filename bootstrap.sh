@@ -114,7 +114,7 @@ apps=(
   mactex
   mailmate
   marked
-  pdfexpert
+  pdf-expert
   spotify
   pdfsam-basic
   plex-media-player
@@ -155,7 +155,7 @@ fonts=(
   font-inconsolata-for-powerline
   font-inconsolata-lgc
   font-fira-mono-for-powerline
-  font-meslo-lg-for-powerline
+  # font-meslo-lg-for-powerline
   font-ubuntu-mono-powerline
   font-hasklig
 )
@@ -165,13 +165,15 @@ echo "installing fonts..."
 brew cask install ${fonts[@]}
 
 # Install emacs
-  brew tap railwaycat/emacsmacport
-  brew install emacs-mac --with-glib --with-gnutls --with-imagemagick --with-xml2
-# brew install emacs --HEAD --with-cocoa --with-gnutls --with-librsvg --with-imagemagick
+brew tap d12frosted/emacs-plus
+brew install emacs-plus --without-spacemacs-icon 
 
 # Install wine
-  brew install wine
+brew install wine
 
 # Change path so Homebrew packages get priority
 $PATH=$(brew --prefix coreutils)/libexec/gnubin:$PATH
+
+# Change shell to zsh
+sudo dscl . -create /Users/$USER UserShell /usr/local/bin/zsh
 # Brewfile:1 ends here
