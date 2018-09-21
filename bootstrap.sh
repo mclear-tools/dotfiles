@@ -152,8 +152,6 @@ fonts=(
   font-inconsolata-for-powerline
   font-inconsolata-lgc
   font-fira-mono-for-powerline
-  # font-meslo-lg-for-powerline
-  font-ubuntu-mono-powerline
   font-hasklig
 )
 
