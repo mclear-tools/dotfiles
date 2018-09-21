@@ -129,6 +129,7 @@ Install homebrew and use it to install most of what we need.
     istat-menus
     iterm2
     karabiner-elements
+    lingon-x
     mactex
     mailmate
     marked
@@ -196,7 +197,7 @@ Install homebrew and use it to install most of what we need.
   sudo dscl . -create /Users/$USER UserShell /usr/local/bin/zsh
 
 #+END_SRC
-* MacOS Config
+* MacOS Settings Config
 :PROPERTIES:
 :header-args: :tangle ~/dotfiles/macos-settings.sh
 :END:
@@ -339,10 +340,10 @@ Install homebrew and use it to install most of what we need.
   # Screen
   ###############################################################################
 
-  # echo ""
-  # echo "Requiring password immediately after sleep or screen saver begins"
-  # defaults write com.apple.screensaver askForPassword -int 1
-  # defaults write com.apple.screensaver askForPasswordDelay -int 0
+  echo ""
+  echo "Requiring password immediately after sleep or screen saver begins"
+  defaults write com.apple.screensaver askForPassword -int 1
+  defaults write com.apple.screensaver askForPasswordDelay -int 0
 
   # echo ""
   # echo "Enabling subpixel font rendering on non-Apple LCDs"

@@ -107,6 +107,7 @@ apps=(
   istat-menus
   iterm2
   karabiner-elements
+  lingon-x
   mactex
   mailmate
   marked
