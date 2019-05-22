@@ -1,5 +1,5 @@
 # [[file:~/dotfiles/dotfiles.org::*Brewfile][Brewfile:1]]
-#!/usr/bin/env bash 
+#!/usr/bin/env bash
 
 # Ask for the administrator password upfront.
 sudo -v
@@ -36,7 +36,7 @@ brew install bash
 binaries=(
   ansiweather
   ack
-  aspell --with-all-langs
+  aspell
   cmus --with-ffmpeg
   cmatrix
   cowsay
@@ -94,6 +94,7 @@ apps=(
   cleanmymac
   deluge
   devonthink-pro-office
+  dictcc-en-de-dictionary-plugin
   djview
   dropbox
   fantastical
@@ -115,12 +116,12 @@ apps=(
   spotify
   pdfsam-basic
   plex-media-player
-  qlcolorcode 
-  qlstephen 
-  qlmarkdown 
-  quicklook-json 
-  qlimagesize 
-  quicklookase 
+  qlcolorcode
+  qlstephen
+  qlmarkdown
+  quicklook-json
+  qlimagesize
+  quicklookase
   qlvideo
   rocket
   skim
@@ -128,7 +129,7 @@ apps=(
   soulver
   suspicious-package
   vlc
-  webpquicklook 
+  webpquicklook
   1password
   xquartz
   zotero
@@ -161,7 +162,7 @@ brew cask install ${fonts[@]}
 
 # Install emacs
 brew tap d12frosted/emacs-plus
-brew install emacs-plus --without-spacemacs-icon 
+brew install emacs-plus --without-spacemacs-icon
 
 # Install wine
 brew install wine

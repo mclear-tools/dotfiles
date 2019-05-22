@@ -58,7 +58,7 @@ Install homebrew and use it to install most of what we need.
   binaries=(
     ansiweather
     ack
-    aspell --with-all-langs
+    aspell 
     cmus --with-ffmpeg
     cmatrix
     cowsay
@@ -116,6 +116,7 @@ Install homebrew and use it to install most of what we need.
     cleanmymac
     deluge
     devonthink-pro-office
+    dictcc-en-de-dictionary-plugin
     djview
     dropbox
     fantastical
@@ -647,8 +648,8 @@ endif
   \  'vim-pandoc/vim-pandoc',
   \  'vim-pandoc/vim-pandoc-after',
   \  'jceb/vim-orgmode',
-  \  'VOoM',
-  \  'gitv',
+  \  'vim-voom/VOoM',
+  \  'gregsexton/gitv',
   \  'henrik/vim-open-url',
   \  'altercation/vim-colors-solarized',
   \]
@@ -1215,7 +1216,7 @@ See https://denysdovhan.com/spaceship-prompt/docs/Options.html#options for expla
 #+END_SRC
 
 ** Prompt
-#+BEGIN_SRC conf
+#+BEGIN_SRC conf :tangle no
   # LIQUID PROMPT
   # Only load Liquid Prompt in interactive shells, not from a script or from scp
   if [ -f /usr/local/share/liquidprompt ]; then
@@ -1277,6 +1278,7 @@ fi
     alias ls='ls --color -a'
     alias ld="ls -lht | grep '^d'"
     alias nf='neofetch'
+    alias gl="git log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all"
 
     # List directory on cd
     function chpwd() {
@@ -1293,10 +1295,10 @@ fi
     ### EMACS #####
     alias ec='/usr/local/bin/emacsclient'
     alias ect='/usr/local/bin/emacsclient -nw'
-    alias et='/usr/local/Cellar/emacs-plus/26.1/Emacs.app/Contents/MacOS/Emacs -nw' 
-    alias emacs='/usr/local/Cellar/emacs-plus/26.1/Emacs.app/Contents/MacOS/Emacs'
+    alias et='emacs -nw' 
+    # alias emacs='/usr/local/Cellar/emacs-plus/26.1/Emacs.app/Contents/MacOS/Emacs'
     alias magit='emacsclient -n -e "(progn (magit-status) (delete-other-windows))"'
-    
+
     # alias ec= '/Applications/Emacs.app/Contents/MacOS/bin/emacsclient'
     # alias ect='/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -nw'
     # alias et="/Applications/Emacs.app/Contents/MacOS/emacs -nw"
