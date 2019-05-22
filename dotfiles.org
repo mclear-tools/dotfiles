@@ -1396,6 +1396,12 @@ lg = !"git lg1"
 [init]
 templatedir = ~/Dropbox/Apps/Git/git-templates/
 #+END_SRC
+*** Submodules
+Ignore dirty submodules
+#+begin_src conf
+[diff]
+  ignoreSubmodules = dirty
+#+end_src
 ** Gitignore
 :PROPERTIES:
 :header-args: :tangle ~/.gitignore_global
