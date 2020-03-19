@@ -1,7 +1,7 @@
 #+TITLE: Dotfiles
 #+AUTHOR: Colin McLear
 #+DATE: April 30, 2017
-#+TODO: TODO DISABLED CHECK | DONE 
+#+TODO: TODO FIXME | DISABLED 
 #+PROPERTY: header-args:conf  :comments link :tangle-mode (identity #o444)
 
 This file contains the source to all my dotfiles, which is then generated into
@@ -704,7 +704,7 @@ nnoremap <leader>= vip=
 nnoremap <leader>[ :bp<CR>
 nnoremap <leader>] :bn<CR>
 " previous and next tab
-nnoremap <leader>' :tabnext<CR>
+nnoremap <leader>\' :tabnext<CR>
 nnoremap <leader>; :tabprevious<CR>
 " remap escape
 inoremap fd <Esc>
@@ -1043,15 +1043,17 @@ emacs -eval "(woman \"$1\")"
 
 And setup of Emacs-anywhere
 #+BEGIN_SRC conf :tangle ~/.bash_profile 
-  # export EA_EDITOR='/usr/local/bin/emacsclient -a "" -c'
+export launchctl limit maxfiles 65536 200000
+  # export EA_EDITOR='/usr/bin/emacsclient -a "" -c'
   # export EA_WINDOW_TITLE='Emacs Anywhere'
   # export EA_X='300'             
   # export EA_Y='400'
   # export EA_WIDTH='90'
   # export EA_HEIGHT="15"
-  # export EA_EDITOR='/usr/local/bin/emacsclient -n -c -e "((name . \"Emacs-Nowhere\") (left . 300) (top . 400) (width . 90) (height . 15))"'
+  # export EA_EDITOR='/usr/bin/emacsclient -n -c -e "((name . \"Emacs-Nowhere\") (left . 300) (top . 400) (width . 90) (height . 15))"'
 
 #+END_SRC
+
 * Zsh
 :PROPERTIES:
 :header-args: :tangle ~/.zshrc
@@ -1076,11 +1078,11 @@ for me.
   export PATH=$PATH:$GOROOT/bin:$GOPATH/bin:$GOBIN/bin
 
   # set editor
-  # export EDITOR="/usr/local/bin/nvim"
   export VISUAL="/usr/local/bin/emacsclient"
+  # export VISUAL="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient"
   export EDITOR="$VISUAL"
   export ALTERNATE_EDITOR="vim"
-  
+
   # set shell
   export SHELL=/usr/local/bin/zsh
   # locale
@@ -1091,6 +1093,11 @@ for me.
   skip_global_compinit=1
   # Pyenv
   # eval "$(pyenv init -)"
+  
+  # For libffi compiling
+  export LDFLAGS="-L/usr/local/opt/libffi/lib"
+  export PKG_CONFIG_PATH="/usr/local/opt/libffi/lib/pkgconfig"
+  
 #+END_SRC
 
 ** Beets
@@ -1102,11 +1109,13 @@ for me.
 ** Virtualenvs
 
 #+BEGIN_SRC conf
-  # virtualenvwrapper config
-  source /usr/local/bin/virtualenvwrapper.sh
-  export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
+  # per https://github.com/sorin-ionescu/prezto/issues/1416#issuecomment-320328622
+  export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
+  export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
   export PROJECT_HOME=~/Dropbox/Work/projects
   export WORKON_HOME=~/bin/virtualenvs
+  # virtualenvwrapper config
+  source /usr/local/bin/virtualenvwrapper.sh
 #+END_SRC
 
 ** Plugins
@@ -1135,8 +1144,9 @@ I use [[%5B%5Bhttps://github.com/zplug/zplug%5D%5Bzplug/zplug: A next-generation
   # zplug "plugins/brew", from:oh-my-zsh,  if:"[[ $(command -v brew) ]]"
 
   # General ###################################
-  # zplug "plugins/git", from:oh-my-zsh  # git commands
+  zplug "plugins/git", from:oh-my-zsh  # git commands
   zplug "zsh-users/zsh-autosuggestions"  # useful autosuggestions
+  typeset -g ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=10' # fix colors for emacs
   zplug "zsh-users/zsh-history-substring-search" # like what it says
   zplug "modules/directory", from:prezto  # better directory commands
   zplug "modules/completion", from:prezto # better completion
@@ -1242,21 +1252,30 @@ See https://denysdovhan.com/spaceship-prompt/docs/Options.html#options for expla
       # zgen oh-my-zsh themes/xiong-chiamiov-plus # Good two-line theme
 #+END_SRC
 
-** Emacs Directory Tracking
-From [[https://jackkamm.github.io/blog/directory-tracking-in-emacs-terminal-emulators/][this]] blog post
+** FIXME Emacs Directory Tracking
+Directory tracking allows things like =find-file= to work when =cd=-ing around. Note that
+this doesn't presently work for vterm.  
 
-#+BEGIN_SRC conf 
-if [ -n "$INSIDE_EMACS" ]; then
-    # function to set the dired and host for ansiterm
-    set_eterm_dir() {
-        print -P "\033AnSiTu %n"
-        print -P "\033AnSiTh" "$(hostname -f)"
-        print -P "\033AnSiTc %d"
-    }
+#+BEGIN_SRC conf
+  if [ $TERM  = eterm-color ]; then
+      # function to set the dired and host for ansiterm
+      set_eterm_dir() {
+          print -P "\033AnSiTu %n"
+          print -P "\033AnSiTh" "$(hostname -f)"
+          print -P "\033AnSiTc %d"
+      }
 
-    # call prmptcmd whenever prompt is redrawn
-    precmd_functions=($precmd_functions set_eterm_dir)
-fi
+      # call prmptcmd whenever prompt is redrawn
+      precmd_functions=($precmd_functions set_eterm_dir)
+  fi
+
+  # for vterm
+  case $TERM in
+    xterm*)
+      precmd () {print -Pn "\e]0;%n@%m: %~\a"}
+      ;;
+  esac
+
 #+END_SRC
 ** Aliases
 #+BEGIN_SRC conf
@@ -1296,13 +1315,14 @@ fi
     alias ec='/usr/local/bin/emacsclient'
     alias ect='/usr/local/bin/emacsclient -nw'
     alias et='emacs -nw' 
-    # alias emacs='/usr/local/Cellar/emacs-plus/26.1/Emacs.app/Contents/MacOS/Emacs'
-    alias magit='emacsclient -n -e "(progn (magit-status) (delete-other-windows))"'
 
-    # alias ec= '/Applications/Emacs.app/Contents/MacOS/bin/emacsclient'
-    # alias ect='/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -nw'
+    alias magit='emacsclient -n -e "(progn (magit-status) (delete-other-windows))"'
+    alias emacs="/Applications/Emacs.app/Contents/MacOS/emacs"
+
+    # alias emacsclient="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient"
+    # alias ec="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient"
+    # alias ect="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -nw"
     # alias et="/Applications/Emacs.app/Contents/MacOS/emacs -nw"
-    # alias emacs='/Applications/Emacs.app/Contents/MacOS/emacs'
 
     # Alias open file with application
     alias o='open -a'
@@ -1332,11 +1352,24 @@ fi
 
     # fuzzy completion in zsh
     [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+    
+    # alias for magit on commandline
+    alias magit='emacs -nw -q --load ~/.magit/init.el'
 #+END_SRC
 ** Colorls
 #+BEGIN_SRC conf
 source $(dirname $(gem which colorls))/tab_complete.sh
 #+END_SRC
+** FZF (Fuzzy finder)
+#+begin_src conf
+  # fzf completion trigger
+  # FZF_COMPLETION_TRIGGER='ff'
+  FZF_COMPLETION_TRIGGER=''
+  bindkey '^T' fzf-completion
+  bindkey '^I' $fzf_default_completion
+  # automatically select if 1 candidate 
+  FZF_CTRL_T_OPTS="--select-1 --exit-0"
+#+end_src
 ** Options
 #+BEGIN_SRC conf
   ### OPTIONS ###
