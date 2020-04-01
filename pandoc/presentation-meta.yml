@@ -1,0 +1,24 @@
+---
+author: 'Colin McLear'
+institute: 'University of Nebraska–Lincoln'
+authoremail: 'mclear@unl.edu'
+bibliography: '/Users/Roambot/Dropbox/Work/bibfile.bib'
+csl: '/Users/roambot/.pandoc/styles/chicago-author-date.csl'
+smart: t
+introduction: t
+theme: metropolis
+colortheme: metropolis
+# mainfont: Source Sans Pro
+# sansfont: Source Sans Pro
+# monofont: Fira Mono
+fontsize: 11pt
+header-includes:
+- \definecolor{unlred1}{rgb}{0.556, 0.0, 0.0}
+  \definecolor{unlred2}{rgb}{0.6667, 0.0, 0.0}
+  \definecolor{Purple}{HTML}{911146}
+  \definecolor{Orange}{HTML}{CF4A30}
+  \setbeamercolor{alerted text}{fg=Orange}
+  \setbeamercolor{frametitle}{bg=unlred1}
+  \metroset{titleformat=smallcaps}
+beameroption: show notes on second screen
+---

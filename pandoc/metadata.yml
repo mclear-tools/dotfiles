@@ -10,9 +10,11 @@ colorlinks: t
 numbersections: t
 secnumdepth: 4
 smart: t
-### LaTeX specific 
+# reference-section-title: 'References & Further Reading'
+### LaTeX specific
 # add latex section head
 introduction: t
 graphics: t
 linestretch: '1.15'
+mainfont: Optima
 ---

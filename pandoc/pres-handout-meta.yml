@@ -1,0 +1,22 @@
+---
+author: 'Colin McLear'
+affiliation: 'University of Nebraska–Lincoln'
+authoremail: 'mclear@unl.edu'
+bibliography: '/Users/Roambot/Dropbox/Work/bibfile.bib'
+csl: '/Users/roambot/.pandoc/styles/chicago-author-date.csl'
+smart: t
+introduction: t
+theme: metropolis
+mainfont: Minion Pro
+sansfont: Avenir Next Medium
+monofont: Fira Mono
+handout: t
+beamerarticle: t
+colorlinks: t
+numbersections: 4
+secnumdepth: 2
+geometry: 'letterpaper,centering,margin=1.25in'
+fontsize: 12pt
+sans-sections: t
+header-includes:
+---
