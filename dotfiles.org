@@ -5,22 +5,334 @@
 #+PROPERTY: header-args:conf  :comments link :tangle-mode (identity #o444)
 
 This file contains the source to all my dotfiles, which is then generated into
-distinct files in my home directory via org-babel. Inspiration for this setup
-comes primarily from [[https://expoundite.net/dotfile-management][this discussion]] along with some help from [[https://writequit.org/org/#6017d330-9337-4d97-82f2-2e605b7a262a][writequit]]. 
+distinct files in my home directory via org-babel. Inspiration for this setup comes
+primarily from [[https://writepermission.com/introducing-literate-dotfiles.html][this discussion]] along with some help from [[https://writequit.org/org/#6017d330-9337-4d97-82f2-2e605b7a262a][writequit]].
 
-* MacOS Bootstrap
+* Bootstrap Macos
 :PROPERTIES:
-:header-args: :tangle ~/dotfiles/bootstrap.sh
+:header-args: :tangle no
+:END:
+** Mac Brewfile 
+:PROPERTIES:
+:header-args: :tangle ~/Documents/mac-bootstrap/brewfile
+:END:
+#+begin_src ruby
+  cask_args appdir: "/Applications"
+
+  brew "mas"
+
+  # taps
+  tap "clementtsang/bottom"
+  tap "d12frosted/emacs-plus"
+  tap "daviderestivo/emacs-head"
+  tap "homebrew/bundle"
+  tap "homebrew/cask"
+  tap "homebrew/cask-fonts"
+  tap "homebrew/cask-versions"
+  tap "homebrew/core"
+  tap "homebrew/services"
+  tap "jez/formulae"
+  tap "melonamin/formulae"
+
+  # binaries
+  brew "ack"
+  brew "ansiweather"
+  brew "aspell"
+  brew "python@3.8"
+  brew "automake"
+  brew "bash"
+  brew "bfg"
+  brew "bluetoothconnector"
+  brew "pkg-config"
+  brew "clisp"
+  brew "cmake"
+  brew "cmatrix"
+  brew "gnutls"
+  brew "libass"
+  brew "ffmpeg"
+  brew "cmus"
+  brew "coreutils"
+  brew "cowsay"
+  brew "curl"
+  brew "dark-mode"
+  brew "djvulibre"
+  brew "djvu2pdf"
+  brew "elinks", link: false
+  brew "exa"
+  brew "expat"
+  brew "fd"
+  brew "findutils"
+  brew "fortune"
+  brew "fzf"
+  brew "gcc"
+  brew "git"
+  brew "git-extras"
+  brew "gnupg"
+  brew "gpgme"
+  brew "gnu-sed"
+  brew "graphicsmagick"
+  brew "librsvg"
+  brew "graphviz"
+  brew "gstreamer"
+  brew "libpsl"
+  brew "libsoup"
+  brew "highlight"
+  brew "htop"
+  brew "imagemagick"
+  brew "isync"
+  brew "jansson"
+  brew "latex2html"
+  brew "libao"
+  brew "libgccjit"
+  brew "libiconv"
+  brew "liquidprompt"
+  brew "mailutils"
+  brew "make"
+  brew "neofetch"
+  brew "nmap"
+  brew "node"
+  brew "optipng"
+  brew "pandoc"
+  brew "par"
+  brew "pngpaste"
+  brew "qt"
+  brew "poppler"
+  brew "pyenv"
+  brew "pyenv-virtualenv"
+  brew "pyenv-virtualenvwrapper"
+  brew "pympress"
+  brew "ranger"
+  brew "rename"
+  brew "ripgrep"
+  brew "the_silver_searcher"
+  brew "thefuck"
+  brew "tmux"
+  brew "trash"
+  brew "tree"
+  brew "vim"
+  brew "w3m", link: false
+  brew "webkit2png"
+  brew "wget"
+  brew "youtube-dl"
+  brew "zlib"
+  brew "zplug"
+  brew "zsh"
+  brew "d12frosted/emacs-plus/emacs-plus@28", args: ["with-modern-black-variant-icon", "with-no-frame-refocus", "with-xwidgets", "with-native-comp"]
+
+  # Apps
+  cask "1password", args: { appdir: "/Applications" }
+  cask "1password-cli"
+  cask "alfred", args: { appdir: "/Applications" }
+  cask "anki", args: { appdir: "/Applications" }
+  cask "appcleaner"
+  cask "arq", args: { appdir: "/Applications" }
+  cask "arq-cloud-backup", args: { appdir: "/Applications" }
+  cask "bartender", args: { appdir: "/Applications" }
+  cask "bookends", args: { appdir: "/Applications" }
+  cask "cakebrew"
+  cask "calibre", args: { appdir: "/Applications" }
+  cask "camo-studio"
+  cask "cardhop"
+  cask "crossover"
+  cask "davmail"
+  cask "deluge", args: { appdir: "/Applications" }
+  cask "devonthink"
+  cask "dictcc-en-de-dictionary-plugin", args: { appdir: "/Applications" }
+  cask "djview", args: { appdir: "/Applications" }
+  cask "finereader", args: { appdir: "/Applications" }
+  cask "firefox", args: { appdir: "/Applications" }
+  cask "gfxcardstatus"
+  cask "handbrake", args: { appdir: "/Applications" }
+  cask "hazel", args: { appdir: "/Applications" }
+  cask "istat-menus", args: { appdir: "/Applications" }
+  cask "iterm2", args: { appdir: "/Applications" }
+  cask "karabiner-elements", args: { appdir: "/Applications" }
+  cask "keepingyouawake", args: { appdir: "/Applications" }
+  cask "keka", args: { appdir: "/Applications" }
+  cask "libreoffice"
+  cask "lingon-x5"
+  cask "little-snitch", args: { appdir: "/Applications" }
+  cask "mactex", args: { appdir: "/Applications" }
+  cask "maestral"
+  cask "mailmate"
+  cask "microsoft-auto-update"
+  cask "microsoft-outlook"
+  cask "netnewswire"
+  cask "obs"
+  cask "pdf-expert", args: { appdir: "/Applications" }
+  cask "pdfsam-basic", args: { appdir: "/Applications" }
+  cask "plex-media-player", args: { appdir: "/Applications" }
+  cask "presentation", args: { appdir: "/Applications" }
+  cask "prince", args: { appdir: "/Applications" }
+  cask "qbittorrent"
+  cask "qlcolorcode"
+  cask "qlimagesize", args: { appdir: "/Applications" }
+  cask "qlmarkdown", args: { appdir: "/Applications" }
+  cask "qlstephen", args: { appdir: "/Applications" }
+  cask "qlvideo", args: { appdir: "/Applications" }
+  cask "quicklook-json", args: { appdir: "/Applications" }
+  cask "quicklookase", args: { appdir: "/Applications" }
+  cask "rectangle"
+  cask "rocket", args: { appdir: "/Applications" }
+  cask "signal"
+  cask "spotify", args: { appdir: "/Applications" }
+  cask "spotmenu"
+  cask "superduper", args: { appdir: "/Applications" }
+  cask "suspicious-package", args: { appdir: "/Applications" }
+  cask "swinsian", args: { appdir: "/Applications" }
+  cask "tor-browser", args: { appdir: "/Applications" }
+  cask "torguard"
+  cask "vlc", args: { appdir: "/Applications" }
+  cask "webpquicklook", args: { appdir: "/Applications" }
+  cask "whatsapp"
+  cask "xquartz", args: { appdir: "/Applications" }
+  cask "yacreader"
+
+  # Mac app store
+  mas "1Blocker", id: 1107421413
+  mas "24 Hour Wallpaper", id: 1226087575
+  mas "Clearview", id: 557090104
+  mas "Dark Mode for Safari", id: 1397180934
+  mas "FruitJuice", id: 671736912
+  mas "Irvue", id: 1039633667
+  mas "Tweetbot", id: 557168941
+
+  # Fonts
+  cask "font-cascadia-code-pl"
+  cask "font-cascadia-mono-pl"
+  cask "font-consolas-for-powerline"
+  cask "font-dejavusansmono-nerd-font"
+  cask "font-et-book"
+  cask "font-fira-code"
+  cask "font-fira-mono"
+  cask "font-fira-mono-for-powerline"
+  cask "font-fira-sans"
+  cask "font-firacode-nerd-font"
+  cask "font-hack-nerd-font"
+  cask "font-hasklig"
+  cask "font-hasklig-nerd-font"
+  cask "font-ia-writer-duospace"
+  cask "font-inconsolata"
+  cask "font-inconsolata-for-powerline"
+  cask "font-inconsolata-lgc"
+  cask "font-inconsolatalgc-nerd-font"
+  cask "font-noto-sans"
+  cask "font-roboto"
+  cask "font-roboto-mono"
+  cask "font-roboto-slab"
+  cask "font-robotomono-nerd-font"
+  cask "font-source-sans-pro"
+  cask "font-sourcecodepro-nerd-font"
+  cask "font-victor-mono"
+  cask "font-sf-mono-for-powerline"
+#+end_src
+
+** MacOS Bootstrap
+:PROPERTIES:
+:header-args: :tangle ~/Documents/mac-bootstrap/bootstrap.sh
 :END:
 A shell script to bootstrap a new mac (or clean reinstall) up to working order. Download and run the bootstrap file
 
-** Download
+Checklist:
+
+- [X] Bootstrap file
+- [X] Brew file
+- [X] Settings file
+- [X] Hazel rules
+- [X] Spectacle settings
+- [X] Config files (i.e. ~/.config)
+- [X] Dotemacs
+- [ ] Databases
+- [ ] Executables
+- [X] bin directory
+- [X] Adobe fonts
+- [-] Application Library files
+   + [X] Bookends
+   + [ ] Devonthink (?)
+   + [X] Mailmate
+   + [X] PDF Expert
+   + [X] Colors
+   + [X] Little Snitch (better to export)  
+
+** Download Bootstrap :noexport:
 #+BEGIN_SRC conf :tangle no
 curl -O https://raw.githubusercontent.com/mclear-tools/dotfiles/master/bootstrap.sh && source bootstrap.sh
 #+END_SRC
-** Brewfile
+
+** Install
 Install homebrew and use it to install most of what we need. 
 #+BEGIN_SRC conf
+   #!/usr/bin/env bash 
+
+   # Ask for the administrator password upfront.
+   echo "Installing...you will need to enter your password"
+   sudo -v
+
+
+   # Keep-alive: update existing `sudo` time stamp until the script has finished.
+   while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
+   # See https://gist.github.com/ChristopherA/98628f8cd00c94f11ee6035d53b0d3c6#file-macos-preferences-defaults-sh-L81
+  # Prompt user to give Terminal Full Disk Access
+  if [[ $errstr == *"Operation not permitted" ]]; then
+    printf "Terminal.app needs Full Disk Access permission\n"
+
+     osascript   -e "tell application \"System Preferences\" to activate " \
+                 -e "tell application \"System Preferences\" to reveal anchor \"Privacy_AllFiles\" of pane id \"com.apple.preference.security\" " \
+                 -e "display dialog \"Before continuing:\n\nUnlock and check the box next to Terminal to give it full disk access.\n\nThen quit Terminal and run this script again.\" buttons {\"OK\"} default button 1 with icon caution "
+     exit # as we can't proceed until Terminal has been granted full Disk Access
+     else
+     printf "Terminal.app has permission to continue\n"
+     fi
+
+   # Install xcode command line tools
+   xcode-select --install
+
+   # Check for Homebrew,
+   # Install if we don't have it
+   if test ! $(which brew); then
+     echo "Installing homebrew..."
+     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+   fi
+
+   # Update homebrew recipes
+   brew update
+
+   # Upgrade any already-installed formulae.
+   brew upgrade 
+
+   # Install GNU core utilities (those that come with OS X are outdated)
+   brew install coreutils
+
+   # Install GNU `find`, `locate`, `updatedb`, and `xargs`, g-prefixed
+   brew install findutils
+
+   # Install current bash and zsh
+   brew install bash zsh
+
+   # Install from mac app store
+   brew install mas
+
+   # Install Brew Cask for Mac Apps
+   brew tap homebrew/cask-versions
+
+   # Change path so Homebrew packages get priority
+   $PATH=$(brew --prefix coreutils)/libexec/gnubin:$PATH
+
+   # Change shell to zsh
+   sudo dscl . -create /Users/$USER UserShell /usr/local/bin/zsh
+
+   # Run Brewfile
+   brew bundle
+
+   ## Cleanup
+   echo "Cleaning up"
+   brew cleanup
+#+END_SRC
+
+** Old Install :noexport:
+Install homebrew and use it to install most of what we need. 
+#+BEGIN_SRC conf :tangle no
   #!/usr/bin/env bash 
 
   # Ask for the administrator password upfront.
@@ -38,14 +350,14 @@ Install homebrew and use it to install most of what we need.
   # Install if we don't have it
   if test ! $(which brew); then
     echo "Installing homebrew..."
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   fi
 
   # Update homebrew recipes
   brew update
 
   # Upgrade any already-installed formulae.
-  brew upgrade --all
+  brew upgrade 
 
   # Install GNU core utilities (those that come with OS X are outdated)
   brew install coreutils
@@ -64,8 +376,6 @@ Install homebrew and use it to install most of what we need.
     bash
     bfg
     bluetoothconnector
-    cabal-install
-    cabextract
     clisp
     cmake
     cmatrix
@@ -75,11 +385,12 @@ Install homebrew and use it to install most of what we need.
     dark-mode
     djvu2pdf
     elinks
+    exa
     fd
     findutils
     fzf
     git
-    gnu-sed --with-default-names
+    gnu-sed 
     graphicsmagick
     graphviz
     highlight
@@ -93,15 +404,12 @@ Install homebrew and use it to install most of what we need.
     neofetch
     node
     pandoc
-    pandoc-citeproc
-    jez/formulae/pandoc-sidenote
     par
     pdf2htmlex
     pkg-config
     poppler
     python
     ranger
-    reattach-to-user-namespace
     rename
     ripgrep
     shpotify
@@ -111,57 +419,55 @@ Install homebrew and use it to install most of what we need.
     tmux
     trash
     tree
-    vim --with-override-system-vi
+    vim 
     webkit2png
     wget
-    wine
+    # wine
     youtube-dl
-    zplug
+    # zplug
     )
 
   echo "installing binaries..."
   brew install ${binaries[@]}
 
+  # Install from mac app store
+  brew install mas
   # Install Brew Cask for Mac Apps
-  brew tap homebrew/cask-cask
   brew tap homebrew/cask-versions
 
   # Apps
   apps=(
     alfred
+    anki
     arq
+    arq-cloud-backup
     bartender
-    caffeine
+    bitbar
+    bookends
     calibre
-    cloudytabs
+    cardhop
     superduper
     cleanmymac
     deluge
-    devonthink-pro-office
+    devonthink
     dictcc-en-de-dictionary-plugin
     djview
     dropbox
     fantastical
     firefox
     flux
-    forklift
-    fluid
-    google-chrome
-    hammerspoon
     handbrake
     hazel
     iina
-    install-disk-creator
     istat-menus
     iterm2
-    jabref
+    # jabref
     karabiner-elements
     keepingyouawake
     keka
     little-snitch
     lingon-x
     mactex
-    mailmate
     marked
     pdf-expert
     presentation
@@ -178,18 +484,16 @@ Install homebrew and use it to install most of what we need.
     quicklookase 
     rocket
     slack
-    skim
     skype
-    soulver
     spectacle
     suspicious-package
     swinsian
     tor-browser
     vlc
     webpquicklook 
+    yacreader
     1password
     xquartz
-    zotero
     )
 
   # Install apps to /Applications (default)
@@ -198,7 +502,7 @@ Install homebrew and use it to install most of what we need.
 
   # install font set up
   brew tap homebrew/cask-fonts 
-  
+
   # fonts
   fonts=(
     font-consolas-for-powerline
@@ -207,6 +511,7 @@ Install homebrew and use it to install most of what we need.
     font-inconsolata
     font-inconsolata-for-powerline
     font-inconsolata-lgc
+    font-inconsolatalgc-nerd-font
     font-fira-mono
     font-fira-sans
     font-firacode-nerd-font
@@ -216,7 +521,6 @@ Install homebrew and use it to install most of what we need.
     font-noto-sans
     font-source-sans-pro
     font-sourcecodepro-nerd-font
-    font-symbola
   )
 
   # install fonts
@@ -232,12 +536,13 @@ Install homebrew and use it to install most of what we need.
   # Install emacs
   brew tap daviderestivo/emacs-head
   brew install emacs-head --with-cocoa --with-librsvg --with-imagemagick --with-no-frame-refocus --with-mailutils --with-modules
-  
+
   echo "Creating symlink"
   ln -s /usr/local/opt/emacs-head/Emacs.app /Applications
-  
+
   echo "Change icons"
-  cp ~/Pictures/emacs-icons/emacs-icon.icns /usr/local/opt/emacs-head/Emacs.app/Contents/Resources/Emacs.icns
+  cp ~/Pictures/emacs-icons/emacs-icon.icns /Applications/Emacs.app/Contents/Resources/Emacs.icns
+  # cp ~/Pictures/emacs-icons/emacs-icon.icns /usr/local/opt/emacs-head/Emacs.app/Contents/Resources/Emacs.icns
   cp ~/Pictures/emacs-icons/info.plist /usr/local/opt/emacs-head/Emacs.app/Contents/Info.plist
 
   # Clone emacs directory
@@ -252,973 +557,1423 @@ Install homebrew and use it to install most of what we need.
   open /Applications/Emacs.app
 
 #+END_SRC
-* MacOS Settings Config (Sierra & Newer)
+** MacOS Sane Settings (Big Sur & Newer)
 :PROPERTIES:
-:header-args: :tangle ~/dotfiles/macos-settings.sh
+:header-args: :tangle ~/Documents/mac-bootstrap/macos-settings.sh
 :END:
 
 #+begin_src conf
-#!/usr/bin/env bash
+  #!/usr/bin/env bash
 
-# ~/.macos — https://mths.be/macos
-# https://github.com/mathiasbynens/dotfiles/blob/master/.macos
+  # ~/.macos — https://mths.be/macos
 
-# Close any open System Preferences panes, to prevent them from overriding
-# settings we’re about to change
-osascript -e 'tell application "System Preferences" to quit'
+  # Close any open System Preferences panes, to prevent them from overriding
+  # settings we’re about to change
+  osascript -e 'tell application "System Preferences" to quit'
 
-# Ask for the administrator password upfront
-sudo -v
+  # Ask for the administrator password upfront
+  echo "Password please"
+  sudo -v
 
-# Keep-alive: update existing `sudo` time stamp until `.macos` has finished
-while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+  # Keep-alive: update existing `sudo` time stamp until `.macos` has finished
+  while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
-###############################################################################
-# General UI/UX                                                               #
-###############################################################################
+  ###############################################################################
+  # General UI/UX                                                               #
+  ###############################################################################
+  echo "general ui/ux"
 
-# Set computer name (as done via System Preferences → Sharing)
-#sudo scutil --set ComputerName "0x6D746873"
-#sudo scutil --set HostName "0x6D746873"
-#sudo scutil --set LocalHostName "0x6D746873"
-#sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "0x6D746873"
+  # Set highlight color to green
+  defaults write NSGlobalDomain AppleHighlightColor -string "0.764700 0.976500 0.568600"
 
-# Disable the sound effects on boot
-sudo nvram SystemAudioVolume=" "
+  # Set sidebar icon size to medium
+  defaults write NSGlobalDomain NSTableViewDefaultSizeMode -int 2
 
-# Disable transparency in the menu bar and elsewhere on Yosemite
-defaults write com.apple.universalaccess reduceTransparency -bool true
+  # Set scrollbars
+  defaults write NSGlobalDomain AppleShowScrollBars -string "WhenScrolling"
+  # Possible values: `WhenScrolling`, `Automatic` and `Always`
 
-# Set highlight color to green
-defaults write NSGlobalDomain AppleHighlightColor -string "0.764700 0.976500 0.568600"
+  # Increase window resize speed for Cocoa applications
+  defaults write NSGlobalDomain NSWindowResizeTime -float 0.001
 
-# Set sidebar icon size to medium
-defaults write NSGlobalDomain NSTableViewDefaultSizeMode -int 2
+  # Expand save panel by default
+  defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
+  defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
 
-# Always show scrollbars
-defaults write NSGlobalDomain AppleShowScrollBars -string "Always"
-# Possible values: `WhenScrolling`, `Automatic` and `Always`
+  # Expand print panel by default
+  defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
+  defaults write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true
 
-# Disable the over-the-top focus ring animation
-defaults write NSGlobalDomain NSUseAnimatedFocusRing -bool false
+  # Save to disk (not to iCloud) by default
+  defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
 
-# Disable smooth scrolling
-# (Uncomment if you’re on an older Mac that messes up the animation)
-#defaults write NSGlobalDomain NSScrollAnimationEnabled -bool false
+  # Automatically quit printer app once the print jobs complete
+  defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true
 
-# Increase window resize speed for Cocoa applications
-defaults write NSGlobalDomain NSWindowResizeTime -float 0.001
+  # Remove duplicates in the “Open With” menu (also see `lscleanup` alias)
+  /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user
 
-# Expand save panel by default
-defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
-defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
+  # Set Help Viewer windows to non-floating mode
+  defaults write com.apple.helpviewer DevMode -bool true
 
-# Expand print panel by default
-defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
-defaults write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true
+  # Disable automatic capitalization as it’s annoying when typing code
+  defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
 
-# Save to disk (not to iCloud) by default
-defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
+  # Disable smart dashes as they’re annoying when typing code
+  defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
 
-# Automatically quit printer app once the print jobs complete
-defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true
+  # Disable automatic period substitution as it’s annoying when typing code
+  defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false
 
-# Disable the “Are you sure you want to open this application?” dialog
-defaults write com.apple.LaunchServices LSQuarantine -bool false
+  # Disable smart quotes as they’re annoying when typing code
+  defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
 
-# Remove duplicates in the “Open With” menu (also see `lscleanup` alias)
-/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user
+  ###############################################################################
+  # Trackpad, mouse, keyboard, Bluetooth accessories, and input                 #
+  ###############################################################################
+  echo "### trackpad"
 
-# Display ASCII control characters using caret notation in standard text views
-# Try e.g. `cd /tmp; unidecode "\x{0000}" > cc.txt; open -e cc.txt`
-defaults write NSGlobalDomain NSTextShowsControlCharacters -bool true
+  # Trackpad: enable tap to click for this user and for the login screen
+  defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+  defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+  defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 
-# Disable Resume system-wide
-defaults write com.apple.systempreferences NSQuitAlwaysKeepsWindows -bool false
+    # Trackpad: map bottom right corner to right-click
+    defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadCornerSecondaryClick -int 2
+    defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadRightClick -bool true
+    defaults -currentHost write NSGlobalDomain com.apple.trackpad.trackpadCornerClickBehavior -int 1
+    defaults -currentHost write NSGlobalDomain com.apple.trackpad.enableSecondaryClick -bool true
 
-# Disable automatic termination of inactive apps
-defaults write NSGlobalDomain NSDisableAutomaticTermination -bool true
+  # Enable “natural” (Lion-style) scrolling
+  defaults write NSGlobalDomain com.apple.swipescrolldirection -bool true
 
-# Disable the crash reporter
-#defaults write com.apple.CrashReporter DialogType -string "none"
+  # Enable full keyboard access for all controls
+  # (e.g. enable Tab in modal dialogs)
+  defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
 
-# Set Help Viewer windows to non-floating mode
-defaults write com.apple.helpviewer DevMode -bool true
+  # Use scroll gesture with the Ctrl (^) modifier key to zoom
+  defaults write com.apple.universalaccess closeViewScrollWheelToggle -bool true
+  defaults write com.apple.universalaccess HIDScrollZoomModifierMask -int 262144
+  # Follow the keyboard focus while zoomed in
+  defaults write com.apple.universalaccess closeViewZoomFollowsFocus -bool true
 
-# Fix for the ancient UTF-8 bug in QuickLook (https://mths.be/bbo)
-# Commented out, as this is known to cause problems in various Adobe apps :(
-# See https://github.com/mathiasbynens/dotfiles/issues/237
-#echo "0x08000100:0" > ~/.CFUserTextEncoding
+  # Disable press-and-hold for keys in favor of key repeat
+  defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 
-# Reveal IP address, hostname, OS version, etc. when clicking the clock
-# in the login window
-sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo HostName
+  # Set a blazingly fast keyboard repeat rate
+  ;; see also https://apple.stackexchange.com/questions/10467/how-to-increase-keyboard-key-repeat-rate-on-os-x
+  defaults write NSGlobalDomain KeyRepeat -int 1
+  defaults write NSGlobalDomain InitialKeyRepeat -int 11
 
-# Disable Notification Center and remove the menu bar icon
-launchctl unload -w /System/Library/LaunchAgents/com.apple.notificationcenterui.plist 2> /dev/null
+  # Set language and text formats
+  # Note: if you’re in the US, replace `EUR` with `USD`, `Centimeters` with
+  # `Inches`, `en_GB` with `en_US`, and `true` with `false`.
+  defaults write NSGlobalDomain AppleLanguages -array "en" "nl"
+  defaults write NSGlobalDomain AppleLocale -string "en_US@currency=USD"
+  defaults write NSGlobalDomain AppleMeasurementUnits -string "Inches"
+  defaults write NSGlobalDomain AppleMetricUnits -bool false
 
-# Disable automatic capitalization as it’s annoying when typing code
-defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
+  # Show language menu in the top right corner of the boot screen
+  sudo defaults write /Library/Preferences/com.apple.loginwindow showInputMenu -bool true
 
-# Disable smart dashes as they’re annoying when typing code
-defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
+  # Set the timezone; see `sudo systemsetup -listtimezones` for other values
+  sudo systemsetup -settimezone "America/New_York" > /dev/null
 
-# Disable automatic period substitution as it’s annoying when typing code
-defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false
+  ###############################################################################
+  # Energy saving                                                               #
+  ###############################################################################
+  echo "### energy saving"
 
-# Disable smart quotes as they’re annoying when typing code
-defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
+  # Restart automatically on power loss
+  sudo pmset -a autorestart 1
 
-# Disable auto-correct
-defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
+  # Restart automatically if the computer freezes
+  sudo systemsetup -setrestartfreeze on
 
-# Set a custom wallpaper image. `DefaultDesktop.jpg` is already a symlink, and
-# all wallpapers are in `/Library/Desktop Pictures/`. The default is `Wave.jpg`.
-#rm -rf ~/Library/Application Support/Dock/desktoppicture.db
-#sudo rm -rf /System/Library/CoreServices/DefaultDesktop.jpg
-#sudo ln -s /path/to/your/image /System/Library/CoreServices/DefaultDesktop.jpg
+  # Sleep the display after 15 minutes
+  sudo pmset -a displaysleep 15
 
-###############################################################################
-# Trackpad, mouse, keyboard, Bluetooth accessories, and input                 #
-###############################################################################
+  ###############################################################################
+  # Screen                                                                      #
+  ###############################################################################
+  echo "### screen"
 
-# Trackpad: enable tap to click for this user and for the login screen
-defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
-defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
-defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+  # Require password immediately after sleep or screen saver begins
+  defaults write com.apple.screensaver askForPassword -int 1
+  defaults write com.apple.screensaver askForPasswordDelay -int 0
 
-# Trackpad: map bottom right corner to right-click
-defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadCornerSecondaryClick -int 2
-defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadRightClick -bool true
-defaults -currentHost write NSGlobalDomain com.apple.trackpad.trackpadCornerClickBehavior -int 1
-defaults -currentHost write NSGlobalDomain com.apple.trackpad.enableSecondaryClick -bool true
+  # Save screenshots to the Pictures/Screenshots
+  mkdir -p ${HOME}/Pictures/Screenshots
+  defaults write com.apple.screencapture location -string "${HOME}/Pictures/Screenshots"
 
-# Disable “natural” (Lion-style) scrolling
-defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
+  # Save screenshots in PNG format (other options: BMP, GIF, JPG, PDF, TIFF)
+  defaults write com.apple.screencapture type -string "png"
 
-# Increase sound quality for Bluetooth headphones/headsets
-defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int 40
+  ###############################################################################
+  # Finder                                                                      #
+  ###############################################################################
+  echo "### finder"
 
-# Enable full keyboard access for all controls
-# (e.g. enable Tab in modal dialogs)
-defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
+  # Finder: allow quitting via ⌘ + Q; doing so will also hide desktop icons
+  defaults write com.apple.finder QuitMenuItem -bool true
 
-# Use scroll gesture with the Ctrl (^) modifier key to zoom
-defaults write com.apple.universalaccess closeViewScrollWheelToggle -bool true
-defaults write com.apple.universalaccess HIDScrollZoomModifierMask -int 262144
-# Follow the keyboard focus while zoomed in
-defaults write com.apple.universalaccess closeViewZoomFollowsFocus -bool true
+  # Show icons for hard drives, servers, and removable media on the desktop
+  defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
+  defaults write com.apple.finder ShowHardDrivesOnDesktop -bool true
+  defaults write com.apple.finder ShowMountedServersOnDesktop -bool true
+  defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
 
-# Disable press-and-hold for keys in favor of key repeat
-defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+  # Finder: show all filename extensions
+  defaults write NSGlobalDomain AppleShowAllExtensions -bool true
 
-# Set a blazingly fast keyboard repeat rate
-defaults write NSGlobalDomain KeyRepeat -int 1
-defaults write NSGlobalDomain InitialKeyRepeat -int 10
+  # Finder: show status bar
+  defaults write com.apple.finder ShowStatusBar -bool true
 
-# Set language and text formats
-# Note: if you’re in the US, replace `EUR` with `USD`, `Centimeters` with
-# `Inches`, `en_GB` with `en_US`, and `true` with `false`.
-defaults write NSGlobalDomain AppleLanguages -array "en" "nl"
-defaults write NSGlobalDomain AppleLocale -string "en_GB@currency=EUR"
-defaults write NSGlobalDomain AppleMeasurementUnits -string "Centimeters"
-defaults write NSGlobalDomain AppleMetricUnits -bool true
+  # Finder: show path bar
+  defaults write com.apple.finder ShowPathbar -bool true
 
-# Show language menu in the top right corner of the boot screen
-sudo defaults write /Library/Preferences/com.apple.loginwindow showInputMenu -bool true
+  # Display full POSIX path as Finder window title
+  defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
 
-# Set the timezone; see `sudo systemsetup -listtimezones` for other values
-sudo systemsetup -settimezone "Europe/Brussels" > /dev/null
+  # Keep folders on top when sorting by name
+  defaults write com.apple.finder _FXSortFoldersFirst -bool true
+
+  # When performing a search, search the current folder by default
+  defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
+
+  # Disable the warning when changing a file extension
+  defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
+
+  # Enable spring loading for directories
+  defaults write NSGlobalDomain com.apple.springing.enabled -bool true
+
+  # Tweak the spring loading delay for directories
+  defaults write NSGlobalDomain com.apple.springing.delay -float .5
+
+  # Avoid creating .DS_Store files on network or USB volumes
+  defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+  defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
+
+  # Automatically open a new Finder window when a volume is mounted
+  defaults write com.apple.frameworks.diskimages auto-open-ro-root -bool true
+  defaults write com.apple.frameworks.diskimages auto-open-rw-root -bool true
+  defaults write com.apple.finder OpenWindowForNewRemovableDisk -bool true
+
+  # Use column view in all Finder windows by default
+  # Four-letter codes for the other view modes: `icnv`, `clmv`, `glyv`
+  defaults write com.apple.finder FXPreferredViewStyle -string "clmv"
+
+  # Disable the warning before emptying the Trash
+  defaults write com.apple.finder WarnOnEmptyTrash -bool false
+
+  # Enable AirDrop over Ethernet and on unsupported Macs running Lion
+  defaults write com.apple.NetworkBrowser BrowseAllInterfaces -bool true
+
+  # Show the ~/Library folder
+  chflags nohidden ~/Library && xattr -d com.apple.FinderInfo ~/Library
 
-# Stop iTunes from responding to the keyboard media keys
-#launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist 2> /dev/null
+  # Show the /Volumes folder
+  sudo chflags nohidden /Volumes
 
-###############################################################################
-# Energy saving                                                               #
-###############################################################################
+  # Expand the following File Info panes:
+  # “General”, “Open with”, and “Sharing & Permissions”
+  defaults write com.apple.finder FXInfoPanesExpanded -dict \
+      General -bool true \
+      OpenWith -bool true \
+      Privileges -bool true
 
-# Enable lid wakeup
-sudo pmset -a lidwake 1
+  ###############################################################################
+  # Dock, Dashboard, and hot corners                                            #
+  ###############################################################################
+  echo "### dock"
 
-# Restart automatically on power loss
-sudo pmset -a autorestart 1
+  # Set the icon size of Dock items to 36 pixels
+  defaults write com.apple.dock tilesize -int 36
+
+  # Minimize windows into their application’s icon
+  defaults write com.apple.dock minimize-to-application -bool true
+
+  # Show indicator lights for open applications in the Dock
+  defaults write com.apple.dock show-process-indicators -bool true
 
-# Restart automatically if the computer freezes
-sudo systemsetup -setrestartfreeze on
+  # Don’t animate opening applications from the Dock
+  defaults write com.apple.dock launchanim -bool false
 
-# Sleep the display after 15 minutes
-sudo pmset -a displaysleep 15
+  # Don’t automatically rearrange Spaces based on most recent use
+  defaults write com.apple.dock mru-spaces -bool false
 
-# Disable machine sleep while charging
-sudo pmset -c sleep 0
+  # Remove the auto-hiding Dock delay
+  defaults write com.apple.dock autohide-delay -float 0
+  # Remove the animation when hiding/showing the Dock
+  defaults write com.apple.dock autohide-time-modifier -float 0
 
-# Set machine sleep to 5 minutes on battery
-sudo pmset -b sleep 5
+  # Automatically hide and show the Dock
+  defaults write com.apple.dock autohide -bool true
 
-# Set standby delay to 24 hours (default is 1 hour)
-sudo pmset -a standbydelay 86400
+  # Make Dock icons of hidden applications translucent
+  defaults write com.apple.dock showhidden -bool true
 
-# Never go into computer sleep mode
-sudo systemsetup -setcomputersleep Off > /dev/null
+  # Don’t show recent applications in Dock
+  defaults write com.apple.dock show-recents -bool false
 
-# Hibernation mode
-# 0: Disable hibernation (speeds up entering sleep mode)
-# 3: Copy RAM to disk so the system state can still be restored in case of a
-#    power failure.
-sudo pmset -a hibernatemode 0
+  # Put dock on left side
+  defaults write com.apple.dock orientation left #my preference for main machine
 
-# Remove the sleep image file to save disk space
-sudo rm /private/var/vm/sleepimage
-# Create a zero-byte file instead…
-sudo touch /private/var/vm/sleepimage
-# …and make sure it can’t be rewritten
-sudo chflags uchg /private/var/vm/sleepimage
+  # Hot corners
+  # Possible values:
+  #  0: no-op
+  #  2: Mission Control
+  #  3: Show application windows
+  #  4: Desktop
+  #  5: Start screen saver
+  #  6: Disable screen saver
+  #  7: Dashboard
+  # 10: Put display to sleep
+  # 11: Launchpad
+  # 12: Notification Center
+  # 13: Lock Screen
+  # Top left screen corner → Mission Control
+  defaults write com.apple.dock wvous-tl-corner -int 10
+  defaults write com.apple.dock wvous-tl-modifier -int 0
+  # Top right screen corner → Desktop
+  defaults write com.apple.dock wvous-tr-corner -int 4
+  defaults write com.apple.dock wvous-tr-modifier -int 0
+  # Bottom left screen corner → Start screen saver
+  defaults write com.apple.dock wvous-bl-corner -int 5
+  defaults write com.apple.dock wvous-bl-modifier -int 0
 
-###############################################################################
-# Screen                                                                      #
-###############################################################################
+  ###############################################################################
+  # Safari & WebKit                                                             #
+  ###############################################################################
+  echo "### safari"
 
-# Require password immediately after sleep or screen saver begins
-defaults write com.apple.screensaver askForPassword -int 1
-defaults write com.apple.screensaver askForPasswordDelay -int 0
+  # Press Tab to highlight each item on a web page
+  defaults write com.apple.Safari WebKitTabToLinksPreferenceKey -bool true
+  defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2TabsToLinks -bool true
 
-# Save screenshots to the desktop
-defaults write com.apple.screencapture location -string "${HOME}/Desktop"
+  # Show the full URL in the address bar (note: this still hides the scheme)
+  defaults write com.apple.Safari ShowFullURLInSmartSearchField -bool true
 
-# Save screenshots in PNG format (other options: BMP, GIF, JPG, PDF, TIFF)
-defaults write com.apple.screencapture type -string "png"
+  # Prevent Safari from opening ‘safe’ files automatically after downloading
+  defaults write com.apple.Safari AutoOpenSafeDownloads -bool false
 
-# Disable shadow in screenshots
-defaults write com.apple.screencapture disable-shadow -bool true
+  # Allow hitting the Backspace key to go to the previous page in history
+  defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2BackspaceKeyNavigationEnabled -bool true
 
-# Enable subpixel font rendering on non-Apple LCDs
-# Reference: https://github.com/kevinSuttle/macOS-Defaults/issues/17#issuecomment-266633501
-defaults write NSGlobalDomain AppleFontSmoothing -int 1
+  # Hide Safari’s bookmarks bar by default
+  defaults write com.apple.Safari ShowFavoritesBar -bool false
 
-# Enable HiDPI display modes (requires restart)
-sudo defaults write /Library/Preferences/com.apple.windowserver DisplayResolutionEnabled -bool true
+  # Hide Safari’s sidebar in Top Sites
+  defaults write com.apple.Safari ShowSidebarInTopSites -bool false
 
-###############################################################################
-# Finder                                                                      #
-###############################################################################
+  # Enable Safari’s debug menu
+  defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
 
-# Finder: allow quitting via ⌘ + Q; doing so will also hide desktop icons
-defaults write com.apple.finder QuitMenuItem -bool true
+  # Make Safari’s search banners default to Contains instead of Starts With
+  defaults write com.apple.Safari FindOnPageMatchesWordStartsOnly -bool false
 
-# Finder: disable window animations and Get Info animations
-defaults write com.apple.finder DisableAllAnimations -bool true
+  # Enable the Develop menu and the Web Inspector in Safari
+  defaults write com.apple.Safari IncludeDevelopMenu -bool true
+  defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
+  defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled -bool true
 
-# Set Desktop as the default location for new Finder windows
-# For other paths, use `PfLo` and `file:///full/path/here/`
-defaults write com.apple.finder NewWindowTarget -string "PfDe"
-defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}/Desktop/"
+  # Add a context menu item for showing the Web Inspector in web views
+  defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
 
-# Show icons for hard drives, servers, and removable media on the desktop
-defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
-defaults write com.apple.finder ShowHardDrivesOnDesktop -bool true
-defaults write com.apple.finder ShowMountedServersOnDesktop -bool true
-defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
+  # Enable continuous spellchecking
+  defaults write com.apple.Safari WebContinuousSpellCheckingEnabled -bool true
+  # Disable auto-correct
+  defaults write com.apple.Safari WebAutomaticSpellingCorrectionEnabled -bool false
 
-# Finder: show hidden files by default
-#defaults write com.apple.finder AppleShowAllFiles -bool true
+  # Disable AutoFill
+  defaults write com.apple.Safari AutoFillFromAddressBook -bool false
+  defaults write com.apple.Safari AutoFillPasswords -bool false
+  defaults write com.apple.Safari AutoFillCreditCardData -bool false
+  defaults write com.apple.Safari AutoFillMiscellaneousForms -bool false
 
-# Finder: show all filename extensions
-defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+  # Warn about fraudulent websites
+  defaults write com.apple.Safari WarnAboutFraudulentWebsites -bool true
 
-# Finder: show status bar
-defaults write com.apple.finder ShowStatusBar -bool true
+  # Enable “Do Not Track”
+  defaults write com.apple.Safari SendDoNotTrackHTTPHeader -bool true
 
-# Finder: show path bar
-defaults write com.apple.finder ShowPathbar -bool true
+  # Update extensions automatically
+  defaults write com.apple.Safari InstallExtensionUpdatesAutomatically -bool true
 
-# Display full POSIX path as Finder window title
-defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
+  ###############################################################################
+  # Terminal & iTerm 2                                                          #
+  ###############################################################################
+  echo "### terminal"
 
-# Keep folders on top when sorting by name
-defaults write com.apple.finder _FXSortFoldersFirst -bool true
+  # Only use UTF-8 in Terminal.app
+  defaults write com.apple.terminal StringEncodings -array 4
 
-# When performing a search, search the current folder by default
-defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
+  # Enable Secure Keyboard Entry in Terminal.app
+  # See: https://security.stackexchange.com/a/47786/8918
+  defaults write com.apple.terminal SecureKeyboardEntry -bool true
 
-# Disable the warning when changing a file extension
-defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
+  # Disable the annoying line marks
+  defaults write com.apple.Terminal ShowLineMarks -int 0
 
-# Enable spring loading for directories
-defaults write NSGlobalDomain com.apple.springing.enabled -bool true
+  # Don’t display the annoying prompt when quitting iTerm
+  defaults write com.googlecode.iterm2 PromptOnQuit -bool false
 
-# Remove the spring loading delay for directories
-defaults write NSGlobalDomain com.apple.springing.delay -float 0
+  ###############################################################################
+  # Time Machine                                                                #
+  ###############################################################################
+  echo "### time machine"
 
-# Avoid creating .DS_Store files on network or USB volumes
-defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
-defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
+  # Prevent Time Machine from prompting to use new hard drives as backup volume
+  defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
 
-# Disable disk image verification
-defaults write com.apple.frameworks.diskimages skip-verify -bool true
-defaults write com.apple.frameworks.diskimages skip-verify-locked -bool true
-defaults write com.apple.frameworks.diskimages skip-verify-remote -bool true
+  ###############################################################################
+  # Activity Monitor                                                            #
+  ###############################################################################
+  echo "### activity monitor"
 
-# Automatically open a new Finder window when a volume is mounted
-defaults write com.apple.frameworks.diskimages auto-open-ro-root -bool true
-defaults write com.apple.frameworks.diskimages auto-open-rw-root -bool true
-defaults write com.apple.finder OpenWindowForNewRemovableDisk -bool true
+  # Show the main window when launching Activity Monitor
+  defaults write com.apple.ActivityMonitor OpenMainWindow -bool true
 
-# Show item info near icons on the desktop and in other icon views
-/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:showItemInfo true" ~/Library/Preferences/com.apple.finder.plist
-/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:showItemInfo true" ~/Library/Preferences/com.apple.finder.plist
-/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:showItemInfo true" ~/Library/Preferences/com.apple.finder.plist
+  # Visualize CPU usage in the Activity Monitor Dock icon
+  defaults write com.apple.ActivityMonitor IconType -int 5
 
-# Show item info to the right of the icons on the desktop
-/usr/libexec/PlistBuddy -c "Set DesktopViewSettings:IconViewSettings:labelOnBottom false" ~/Library/Preferences/com.apple.finder.plist
+  # Show all processes in Activity Monitor
+  defaults write com.apple.ActivityMonitor ShowCategory -int 0
 
-# Enable snap-to-grid for icons on the desktop and in other icon views
-/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
-/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
-/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
+  # Sort Activity Monitor results by CPU usage
+  defaults write com.apple.ActivityMonitor SortColumn -string "CPUUsage"
+  defaults write com.apple.ActivityMonitor SortDirection -int 0
 
-# Increase grid spacing for icons on the desktop and in other icon views
-/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:gridSpacing 100" ~/Library/Preferences/com.apple.finder.plist
-/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:gridSpacing 100" ~/Library/Preferences/com.apple.finder.plist
-/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:gridSpacing 100" ~/Library/Preferences/com.apple.finder.plist
+  ###############################################################################
+  # Address Book, Dashboard, iCal, TextEdit, and Disk Utility                   #
+  ###############################################################################
+  echo "### address book/cal"
 
-# Increase the size of icons on the desktop and in other icon views
-/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:iconSize 80" ~/Library/Preferences/com.apple.finder.plist
-/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:iconSize 80" ~/Library/Preferences/com.apple.finder.plist
-/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:iconSize 80" ~/Library/Preferences/com.apple.finder.plist
+  # Enable the debug menu in Address Book
+  defaults write com.apple.addressbook ABShowDebugMenu -bool true
 
-# Use list view in all Finder windows by default
-# Four-letter codes for the other view modes: `icnv`, `clmv`, `glyv`
-defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
+  # Enable Dashboard dev mode (allows keeping widgets on the desktop)
+  defaults write com.apple.dashboard devmode -bool true
 
-# Disable the warning before emptying the Trash
-defaults write com.apple.finder WarnOnEmptyTrash -bool false
+  # Enable the debug menu in iCal (pre-10.8)
+  defaults write com.apple.iCal IncludeDebugMenu -bool true
 
-# Enable AirDrop over Ethernet and on unsupported Macs running Lion
-defaults write com.apple.NetworkBrowser BrowseAllInterfaces -bool true
+  # Use plain text mode for new TextEdit documents
+  defaults write com.apple.TextEdit RichText -int 0
 
-# Show the ~/Library folder
-chflags nohidden ~/Library
+  # Open and save files as UTF-8 in TextEdit
+  defaults write com.apple.TextEdit PlainTextEncoding -int 4
+  defaults write com.apple.TextEdit PlainTextEncodingForWrite -int 4
 
-# Show the /Volumes folder
-sudo chflags nohidden /Volumes
+  # Enable the debug menu in Disk Utility
+  defaults write com.apple.DiskUtility DUDebugMenuEnabled -bool true
+  defaults write com.apple.DiskUtility advanced-image-options -bool true
 
-# Remove Dropbox’s green checkmark icons in Finder
-file=/Applications/Dropbox.app/Contents/Resources/emblem-dropbox-uptodate.icns
-[ -e "${file}" ] && mv -f "${file}" "${file}.bak"
+  ###############################################################################
+  # Mac App Store                                                               #
+  ###############################################################################
+  echo "### mac app store"
 
-# Expand the following File Info panes:
-# “General”, “Open with”, and “Sharing & Permissions”
-defaults write com.apple.finder FXInfoPanesExpanded -dict \
-	General -bool true \
-	OpenWith -bool true \
-	Privileges -bool true
+  # Enable the WebKit Developer Tools in the Mac App Store
+  defaults write com.apple.appstore WebKitDeveloperExtras -bool true
 
-###############################################################################
-# Dock, Dashboard, and hot corners                                            #
-###############################################################################
+  # Enable Debug Menu in the Mac App Store
+  defaults write com.apple.appstore ShowDebugMenu -bool true
 
-# Enable highlight hover effect for the grid view of a stack (Dock)
-defaults write com.apple.dock mouse-over-hilite-stack -bool true
+  # Enable the automatic update check
+  defaults write com.apple.SoftwareUpdate AutomaticCheckEnabled -bool true
 
-# Set the icon size of Dock items to 36 pixels
-defaults write com.apple.dock tilesize -int 36
+  # Install System data files & security updates
+  defaults write com.apple.SoftwareUpdate CriticalUpdateInstall -int 1
 
-# Change minimize/maximize window effect
-defaults write com.apple.dock mineffect -string "scale"
+  ###############################################################################
+  # Photos                                                                      #
+  ###############################################################################
+  echo "### photos"
 
-# Minimize windows into their application’s icon
-defaults write com.apple.dock minimize-to-application -bool true
+  # Prevent Photos from opening automatically when devices are plugged in
+  defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
 
-# Enable spring loading for all Dock items
-defaults write com.apple.dock enable-spring-load-actions-on-all-items -bool true
+  ###############################################################################
+  # Messages                                                                    #
+  ###############################################################################
+  echo "### messages"
 
-# Show indicator lights for open applications in the Dock
-defaults write com.apple.dock show-process-indicators -bool true
+  # Disable automatic emoji substitution (i.e. use plain text smileys)
+  defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticEmojiSubstitutionEnablediMessage" -bool false
 
-# Wipe all (default) app icons from the Dock
-# This is only really useful when setting up a new Mac, or if you don’t use
-# the Dock to launch apps.
-#defaults write com.apple.dock persistent-apps -array
+  # Disable smart quotes as it’s annoying for messages that contain code
+  defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticQuoteSubstitutionEnabled" -bool false
 
-# Show only open applications in the Dock
-#defaults write com.apple.dock static-only -bool true
+  # # Disable continuous spell checking
+  # defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "continuousSpellCheckingEnabled" -bool false
 
-# Don’t animate opening applications from the Dock
-defaults write com.apple.dock launchanim -bool false
+  ###############################################################################
+  # Spectacle.app                                                               #
+  ###############################################################################
+  echo "### spectacle"
 
-# Speed up Mission Control animations
-defaults write com.apple.dock expose-animation-duration -float 0.1
+  # Set up my preferred keyboard shortcuts
+  cp -r ~/Documents/mac-bootstrap/Shortcuts.json  ~/Library/Application\ Support/Spectacle/Shortcuts.json 2> /dev/null
 
-# Don’t group windows by application in Mission Control
-# (i.e. use the old Exposé behavior instead)
-defaults write com.apple.dock expose-group-by-app -bool false
+  ###############################################################################
+  # Move config files                                                           #
+  ###############################################################################
+  echo "### move config files"
 
-# Disable Dashboard
-defaults write com.apple.dashboard mcx-disabled -bool true
+    cp -r ~/Documents/mac-bootstrap/config  ~/.config 2> /dev/null
 
-# Don’t show Dashboard as a Space
-defaults write com.apple.dock dashboard-in-overlay -bool true
+  ###############################################################################
+  # Twitter.app                                                                 #
+  ###############################################################################
+  echo "### twitter"
 
-# Don’t automatically rearrange Spaces based on most recent use
-defaults write com.apple.dock mru-spaces -bool false
+  # Disable smart quotes as it’s annoying for code tweets
+  defaults write com.twitter.twitter-mac AutomaticQuoteSubstitutionEnabled -bool false
 
-# Remove the auto-hiding Dock delay
-defaults write com.apple.dock autohide-delay -float 0
-# Remove the animation when hiding/showing the Dock
-defaults write com.apple.dock autohide-time-modifier -float 0
+  # Show the app window when clicking the menu bar icon
+  defaults write com.twitter.twitter-mac MenuItemBehavior -int 1
 
-# Automatically hide and show the Dock
-defaults write com.apple.dock autohide -bool true
+  # Enable the hidden ‘Develop’ menu
+  defaults write com.twitter.twitter-mac ShowDevelopMenu -bool true
 
-# Make Dock icons of hidden applications translucent
-defaults write com.apple.dock showhidden -bool true
+  # Open links in the background
+  defaults write com.twitter.twitter-mac openLinksInBackground -bool true
 
-# Don’t show recent applications in Dock
-defaults write com.apple.dock show-recents -bool false
+  # Allow closing the ‘new tweet’ window by pressing `Esc`
+  defaults write com.twitter.twitter-mac ESCClosesComposeWindow -bool true
 
-# Disable the Launchpad gesture (pinch with thumb and three fingers)
-#defaults write com.apple.dock showLaunchpadGestureEnabled -int 0
+  # Show full names rather than Twitter handles
+  defaults write com.twitter.twitter-mac ShowFullNames -bool true
 
-# Reset Launchpad, but keep the desktop wallpaper intact
-find "${HOME}/Library/Application Support/Dock" -name "*-*.db" -maxdepth 1 -delete
+  # Hide the app in the background if it’s not the front-most window
+  defaults write com.twitter.twitter-mac HideInBackground -bool true
 
-# Add iOS & Watch Simulator to Launchpad
-sudo ln -sf "/Applications/Xcode.app/Contents/Developer/Applications/Simulator.app" "/Applications/Simulator.app"
-sudo ln -sf "/Applications/Xcode.app/Contents/Developer/Applications/Simulator (Watch).app" "/Applications/Simulator (Watch).app"
+  ###############################################################################
+  # Tweetbot.app                                                                #
+  ###############################################################################
+  echo "### tweetbot"
 
-# Add a spacer to the left side of the Dock (where the applications are)
-#defaults write com.apple.dock persistent-apps -array-add '{tile-data={}; tile-type="spacer-tile";}'
-# Add a spacer to the right side of the Dock (where the Trash is)
-#defaults write com.apple.dock persistent-others -array-add '{tile-data={}; tile-type="spacer-tile";}'
+  # Bypass the annoyingly slow t.co URL shortener
+  defaults write com.tapbots.TweetbotMac OpenURLsDirectly -bool true
 
-# Hot corners
-# Possible values:
-#  0: no-op
-#  2: Mission Control
-#  3: Show application windows
-#  4: Desktop
-#  5: Start screen saver
-#  6: Disable screen saver
-#  7: Dashboard
-# 10: Put display to sleep
-# 11: Launchpad
-# 12: Notification Center
-# 13: Lock Screen
-# Top left screen corner → Mission Control
-defaults write com.apple.dock wvous-tl-corner -int 2
-defaults write com.apple.dock wvous-tl-modifier -int 0
-# Top right screen corner → Desktop
-defaults write com.apple.dock wvous-tr-corner -int 4
-defaults write com.apple.dock wvous-tr-modifier -int 0
-# Bottom left screen corner → Start screen saver
-defaults write com.apple.dock wvous-bl-corner -int 5
-defaults write com.apple.dock wvous-bl-modifier -int 0
 
-###############################################################################
-# Safari & WebKit                                                             #
-###############################################################################
+  ###############################################################################
+  # Kill affected applications                                                  #
+  ###############################################################################
+  echo "### cleanup"
 
-# Privacy: don’t send search queries to Apple
-defaults write com.apple.Safari UniversalSearchEnabled -bool false
-defaults write com.apple.Safari SuppressSearchSuggestions -bool true
+  for app in "Activity Monitor" \
+      "Address Book" \
+      "Calendar" \
+      "cfprefsd" \
+      "Contacts" \
+      "Dock" \
+      "Finder" \
+      "Messages" \
+      "Photos" \
+      "Safari" \
+      "Spectacle" \
+      "SystemUIServer" \
+      "Terminal" \
+      "Tweetbot" \
+      "Twitter" \
+      "iCal"; do
+      killall "${app}" &> /dev/null
+  done
+  echo "Done. Note that some of these changes require a logout/restart to take effect."
+#+end_src
+** MacOS Settings Config (Sierra & Newer) :noexport:
 
-# Press Tab to highlight each item on a web page
-defaults write com.apple.Safari WebKitTabToLinksPreferenceKey -bool true
-defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2TabsToLinks -bool true
+#+begin_src conf
+  #!/usr/bin/env bash
 
-# Show the full URL in the address bar (note: this still hides the scheme)
-defaults write com.apple.Safari ShowFullURLInSmartSearchField -bool true
+  # ~/.macos — https://mths.be/macos
+  # https://github.com/mathiasbynens/dotfiles/blob/master/.macos
 
-# Set Safari’s home page to `about:blank` for faster loading
-defaults write com.apple.Safari HomePage -string "about:blank"
+  # Close any open System Preferences panes, to prevent them from overriding
+  # settings we’re about to change
+  osascript -e 'tell application "System Preferences" to quit'
 
-# Prevent Safari from opening ‘safe’ files automatically after downloading
-defaults write com.apple.Safari AutoOpenSafeDownloads -bool false
+  # Ask for the administrator password upfront
+  echo "Password please"
+  sudo -v
 
-# Allow hitting the Backspace key to go to the previous page in history
-defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2BackspaceKeyNavigationEnabled -bool true
+  # Keep-alive: update existing `sudo` time stamp until `.macos` has finished
+  while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
-# Hide Safari’s bookmarks bar by default
-defaults write com.apple.Safari ShowFavoritesBar -bool false
+  ###############################################################################
+  # General UI/UX                                                               #
+  ###############################################################################
 
-# Hide Safari’s sidebar in Top Sites
-defaults write com.apple.Safari ShowSidebarInTopSites -bool false
+  # Set computer name (as done via System Preferences → Sharing)
+  #sudo scutil --set ComputerName "0x6D746873"
+  #sudo scutil --set HostName "0x6D746873"
+  #sudo scutil --set LocalHostName "0x6D746873"
+  #sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "0x6D746873"
 
-# Disable Safari’s thumbnail cache for History and Top Sites
-defaults write com.apple.Safari DebugSnapshotsUpdatePolicy -int 2
+  # Disable the sound effects on boot
+  sudo nvram SystemAudioVolume=" "
 
-# Enable Safari’s debug menu
-defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
+  # Disable transparency in the menu bar and elsewhere on Yosemite
+  defaults write com.apple.universalaccess reduceTransparency -bool true
 
-# Make Safari’s search banners default to Contains instead of Starts With
-defaults write com.apple.Safari FindOnPageMatchesWordStartsOnly -bool false
-
-# Remove useless icons from Safari’s bookmarks bar
-defaults write com.apple.Safari ProxiesInBookmarksBar "()"
-
-# Enable the Develop menu and the Web Inspector in Safari
-defaults write com.apple.Safari IncludeDevelopMenu -bool true
-defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
-defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled -bool true
-
-# Add a context menu item for showing the Web Inspector in web views
-defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
-
-# Enable continuous spellchecking
-defaults write com.apple.Safari WebContinuousSpellCheckingEnabled -bool true
-# Disable auto-correct
-defaults write com.apple.Safari WebAutomaticSpellingCorrectionEnabled -bool false
-
-# Disable AutoFill
-defaults write com.apple.Safari AutoFillFromAddressBook -bool false
-defaults write com.apple.Safari AutoFillPasswords -bool false
-defaults write com.apple.Safari AutoFillCreditCardData -bool false
-defaults write com.apple.Safari AutoFillMiscellaneousForms -bool false
-
-# Warn about fraudulent websites
-defaults write com.apple.Safari WarnAboutFraudulentWebsites -bool true
-
-# Disable plug-ins
-defaults write com.apple.Safari WebKitPluginsEnabled -bool false
-defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2PluginsEnabled -bool false
-
-# Disable Java
-defaults write com.apple.Safari WebKitJavaEnabled -bool false
-defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaEnabled -bool false
-defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaEnabledForLocalFiles -bool false
-
-# Block pop-up windows
-defaults write com.apple.Safari WebKitJavaScriptCanOpenWindowsAutomatically -bool false
-defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaScriptCanOpenWindowsAutomatically -bool false
-
-# Disable auto-playing video
-#defaults write com.apple.Safari WebKitMediaPlaybackAllowsInline -bool false
-#defaults write com.apple.SafariTechnologyPreview WebKitMediaPlaybackAllowsInline -bool false
-#defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2AllowsInlineMediaPlayback -bool false
-#defaults write com.apple.SafariTechnologyPreview com.apple.Safari.ContentPageGroupIdentifier.WebKit2AllowsInlineMediaPlayback -bool false
-
-# Enable “Do Not Track”
-defaults write com.apple.Safari SendDoNotTrackHTTPHeader -bool true
-
-# Update extensions automatically
-defaults write com.apple.Safari InstallExtensionUpdatesAutomatically -bool true
-
-###############################################################################
-# Mail                                                                        #
-###############################################################################
-
-# Disable send and reply animations in Mail.app
-defaults write com.apple.mail DisableReplyAnimations -bool true
-defaults write com.apple.mail DisableSendAnimations -bool true
-
-# Copy email addresses as `foo@example.com` instead of `Foo Bar <foo@example.com>` in Mail.app
-defaults write com.apple.mail AddressesIncludeNameOnPasteboard -bool false
-
-# Add the keyboard shortcut ⌘ + Enter to send an email in Mail.app
-defaults write com.apple.mail NSUserKeyEquivalents -dict-add "Send" "@\U21a9"
-
-# Display emails in threaded mode, sorted by date (oldest at the top)
-defaults write com.apple.mail DraftsViewerAttributes -dict-add "DisplayInThreadedMode" -string "yes"
-defaults write com.apple.mail DraftsViewerAttributes -dict-add "SortedDescending" -string "yes"
-defaults write com.apple.mail DraftsViewerAttributes -dict-add "SortOrder" -string "received-date"
-
-# Disable inline attachments (just show the icons)
-defaults write com.apple.mail DisableInlineAttachmentViewing -bool true
-
-# Disable automatic spell checking
-defaults write com.apple.mail SpellCheckingBehavior -string "NoSpellCheckingEnabled"
-
-###############################################################################
-# Spotlight                                                                   #
-###############################################################################
-
-# Hide Spotlight tray-icon (and subsequent helper)
-#sudo chmod 600 /System/Library/CoreServices/Search.bundle/Contents/MacOS/Search
-# Disable Spotlight indexing for any volume that gets mounted and has not yet
-# been indexed before.
-# Use `sudo mdutil -i off "/Volumes/foo"` to stop indexing any volume.
-sudo defaults write /.Spotlight-V100/VolumeConfiguration Exclusions -array "/Volumes"
-# Change indexing order and disable some search results
-# Yosemite-specific search results (remove them if you are using macOS 10.9 or older):
-# 	MENU_DEFINITION
-# 	MENU_CONVERSION
-# 	MENU_EXPRESSION
-# 	MENU_SPOTLIGHT_SUGGESTIONS (send search queries to Apple)
-# 	MENU_WEBSEARCH             (send search queries to Apple)
-# 	MENU_OTHER
-defaults write com.apple.spotlight orderedItems -array \
-	'{"enabled" = 1;"name" = "APPLICATIONS";}' \
-	'{"enabled" = 1;"name" = "SYSTEM_PREFS";}' \
-	'{"enabled" = 1;"name" = "DIRECTORIES";}' \
-	'{"enabled" = 1;"name" = "PDF";}' \
-	'{"enabled" = 1;"name" = "FONTS";}' \
-	'{"enabled" = 0;"name" = "DOCUMENTS";}' \
-	'{"enabled" = 0;"name" = "MESSAGES";}' \
-	'{"enabled" = 0;"name" = "CONTACT";}' \
-	'{"enabled" = 0;"name" = "EVENT_TODO";}' \
-	'{"enabled" = 0;"name" = "IMAGES";}' \
-	'{"enabled" = 0;"name" = "BOOKMARKS";}' \
-	'{"enabled" = 0;"name" = "MUSIC";}' \
-	'{"enabled" = 0;"name" = "MOVIES";}' \
-	'{"enabled" = 0;"name" = "PRESENTATIONS";}' \
-	'{"enabled" = 0;"name" = "SPREADSHEETS";}' \
-	'{"enabled" = 0;"name" = "SOURCE";}' \
-	'{"enabled" = 0;"name" = "MENU_DEFINITION";}' \
-	'{"enabled" = 0;"name" = "MENU_OTHER";}' \
-	'{"enabled" = 0;"name" = "MENU_CONVERSION";}' \
-	'{"enabled" = 0;"name" = "MENU_EXPRESSION";}' \
-	'{"enabled" = 0;"name" = "MENU_WEBSEARCH";}' \
-	'{"enabled" = 0;"name" = "MENU_SPOTLIGHT_SUGGESTIONS";}'
-# Load new settings before rebuilding the index
-killall mds > /dev/null 2>&1
-# Make sure indexing is enabled for the main volume
-sudo mdutil -i on / > /dev/null
-# Rebuild the index from scratch
-sudo mdutil -E / > /dev/null
-
-###############################################################################
-# Terminal & iTerm 2                                                          #
-###############################################################################
-
-# Only use UTF-8 in Terminal.app
-defaults write com.apple.terminal StringEncodings -array 4
-
-# Use a modified version of the Solarized Dark theme by default in Terminal.app
-osascript <<EOD
-
-tell application "Terminal"
-
-	local allOpenedWindows
-	local initialOpenedWindows
-	local windowID
-	set themeName to "Solarized Dark xterm-256color"
-
-	(* Store the IDs of all the open terminal windows. *)
-	set initialOpenedWindows to id of every window
-
-	(* Open the custom theme so that it gets added to the list
-	   of available terminal themes (note: this will open two
-	   additional terminal windows). *)
-	do shell script "open '$HOME/init/" & themeName & ".terminal'"
-
-	(* Wait a little bit to ensure that the custom theme is added. *)
-	delay 1
-
-	(* Set the custom theme as the default terminal theme. *)
-	set default settings to settings set themeName
-
-	(* Get the IDs of all the currently opened terminal windows. *)
-	set allOpenedWindows to id of every window
-
-	repeat with windowID in allOpenedWindows
-
-		(* Close the additional windows that were opened in order
-		   to add the custom theme to the list of terminal themes. *)
-		if initialOpenedWindows does not contain windowID then
-			close (every window whose id is windowID)
-
-		(* Change the theme for the initial opened terminal windows
-		   to remove the need to close them in order for the custom
-		   theme to be applied. *)
-		else
-			set current settings of tabs of (every window whose id is windowID) to settings set themeName
-		end if
+  # Set highlight color to red
+  defaults write NSGlobalDomain AppleHighlightColor -string "1 0.388235294 0.278431373" 
 
-	end repeat
+  # Set sidebar icon size to medium
+  defaults write NSGlobalDomain NSTableViewDefaultSizeMode -int 2
 
-end tell
+  # Show scrollbars on scroll
+  defaults write NSGlobalDomain AppleShowScrollBars -string "WhenScrolling"
+  # Possible values: `WhenScrolling`, `Automatic` and `Always`
 
-EOD
+  # Disable the over-the-top focus ring animation
+  defaults write NSGlobalDomain NSUseAnimatedFocusRing -bool false
 
-# Enable “focus follows mouse” for Terminal.app and all X11 apps
-# i.e. hover over a window and start typing in it without clicking first
-#defaults write com.apple.terminal FocusFollowsMouse -bool true
-#defaults write org.x.X11 wm_ffm -bool true
+  # Disable smooth scrolling
+  # (Uncomment if you’re on an older Mac that messes up the animation)
+  #defaults write NSGlobalDomain NSScrollAnimationEnabled -bool false
 
-# Enable Secure Keyboard Entry in Terminal.app
-# See: https://security.stackexchange.com/a/47786/8918
-defaults write com.apple.terminal SecureKeyboardEntry -bool true
+  # Increase window resize speed for Cocoa applications
+  defaults write NSGlobalDomain NSWindowResizeTime -float 0.001
 
-# Disable the annoying line marks
-defaults write com.apple.Terminal ShowLineMarks -int 0
+  # Expand save panel by default
+  defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
+  defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
 
-# Install the Solarized Dark theme for iTerm
-open "${HOME}/init/Solarized Dark.itermcolors"
+  # Expand print panel by default
+  defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
+  defaults write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true
 
-# Don’t display the annoying prompt when quitting iTerm
-defaults write com.googlecode.iterm2 PromptOnQuit -bool false
+  # Save to disk (not to iCloud) by default
+  defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
 
-###############################################################################
-# Time Machine                                                                #
-###############################################################################
+  # Automatically quit printer app once the print jobs complete
+  defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true
 
-# Prevent Time Machine from prompting to use new hard drives as backup volume
-defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
+  # Disable the “Are you sure you want to open this application?” dialog
+  defaults write com.apple.LaunchServices LSQuarantine -bool false
 
-# Disable local Time Machine backups
-hash tmutil &> /dev/null && sudo tmutil disablelocal
+  # Remove duplicates in the “Open With” menu (also see `lscleanup` alias)
+  /System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user
 
-###############################################################################
-# Activity Monitor                                                            #
-###############################################################################
+  # Display ASCII control characters using caret notation in standard text views
+  # Try e.g. `cd /tmp; unidecode "\x{0000}" > cc.txt; open -e cc.txt`
+  # defaults write NSGlobalDomain NSTextShowsControlCharacters -bool true
 
-# Show the main window when launching Activity Monitor
-defaults write com.apple.ActivityMonitor OpenMainWindow -bool true
+  # Disable Resume system-wide
+  # defaults write com.apple.systempreferences NSQuitAlwaysKeepsWindows -bool false
 
-# Visualize CPU usage in the Activity Monitor Dock icon
-defaults write com.apple.ActivityMonitor IconType -int 5
+  # Disable automatic termination of inactive apps
+  defaults write NSGlobalDomain NSDisableAutomaticTermination -bool true
 
-# Show all processes in Activity Monitor
-defaults write com.apple.ActivityMonitor ShowCategory -int 0
+  # Disable the crash reporter
+  #defaults write com.apple.CrashReporter DialogType -string "none"
 
-# Sort Activity Monitor results by CPU usage
-defaults write com.apple.ActivityMonitor SortColumn -string "CPUUsage"
-defaults write com.apple.ActivityMonitor SortDirection -int 0
+  # Set Help Viewer windows to non-floating mode
+  defaults write com.apple.helpviewer DevMode -bool true
 
-###############################################################################
-# Address Book, Dashboard, iCal, TextEdit, and Disk Utility                   #
-###############################################################################
+  # Fix for the ancient UTF-8 bug in QuickLook (https://mths.be/bbo)
+  # Commented out, as this is known to cause problems in various Adobe apps :(
+  # See https://github.com/mathiasbynens/dotfiles/issues/237
+  #echo "0x08000100:0" > ~/.CFUserTextEncoding
 
-# Enable the debug menu in Address Book
-defaults write com.apple.addressbook ABShowDebugMenu -bool true
+  # Reveal IP address, hostname, OS version, etc. when clicking the clock
+  # in the login window
+  # sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo HostName
 
-# Enable Dashboard dev mode (allows keeping widgets on the desktop)
-defaults write com.apple.dashboard devmode -bool true
+  # Disable Notification Center and remove the menu bar icon
+  # launchctl unload -w /System/Library/LaunchAgents/com.apple.notificationcenterui.plist 2> /dev/null
 
-# Enable the debug menu in iCal (pre-10.8)
-defaults write com.apple.iCal IncludeDebugMenu -bool true
+  # Disable automatic capitalization as it’s annoying when typing code
+  defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
 
-# Use plain text mode for new TextEdit documents
-defaults write com.apple.TextEdit RichText -int 0
-# Open and save files as UTF-8 in TextEdit
-defaults write com.apple.TextEdit PlainTextEncoding -int 4
-defaults write com.apple.TextEdit PlainTextEncodingForWrite -int 4
+  # Disable smart dashes as they’re annoying when typing code
+  defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
 
-# Enable the debug menu in Disk Utility
-defaults write com.apple.DiskUtility DUDebugMenuEnabled -bool true
-defaults write com.apple.DiskUtility advanced-image-options -bool true
+  # Disable automatic period substitution as it’s annoying when typing code
+  defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false
 
-# Auto-play videos when opened with QuickTime Player
-defaults write com.apple.QuickTimePlayerX MGPlayMovieOnOpen -bool true
+  # Disable smart quotes as they’re annoying when typing code
+  defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
 
-###############################################################################
-# Mac App Store                                                               #
-###############################################################################
+  # Disable auto-correct
+  # defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 
-# Enable the WebKit Developer Tools in the Mac App Store
-defaults write com.apple.appstore WebKitDeveloperExtras -bool true
+  # Set a custom wallpaper image. `DefaultDesktop.jpg` is already a symlink, and
+  # all wallpapers are in `/Library/Desktop Pictures/`. The default is `Wave.jpg`.
+  #rm -rf ~/Library/Application Support/Dock/desktoppicture.db
+  #sudo rm -rf /System/Library/CoreServices/DefaultDesktop.jpg
+  #sudo ln -s /path/to/your/image /System/Library/CoreServices/DefaultDesktop.jpg
 
-# Enable Debug Menu in the Mac App Store
-defaults write com.apple.appstore ShowDebugMenu -bool true
+  ###############################################################################
+  # Trackpad, mouse, keyboard, Bluetooth accessories, and input                 #
+  ###############################################################################
 
-# Enable the automatic update check
-defaults write com.apple.SoftwareUpdate AutomaticCheckEnabled -bool true
+  # Trackpad: enable tap to click for this user and for the login screen
+  defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+  defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+  defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 
-# Check for software updates daily, not just once per week
-defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
+  # Trackpad: map bottom right corner to right-click
+  defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadCornerSecondaryClick -int 2
+  defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadRightClick -bool true
+  defaults -currentHost write NSGlobalDomain com.apple.trackpad.trackpadCornerClickBehavior -int 1
+  defaults -currentHost write NSGlobalDomain com.apple.trackpad.enableSecondaryClick -bool true
 
-# Download newly available updates in background
-defaults write com.apple.SoftwareUpdate AutomaticDownload -int 1
+  # Enable “natural” (Lion-style) scrolling
+  defaults write NSGlobalDomain com.apple.swipescrolldirection -bool true
 
-# Install System data files & security updates
-defaults write com.apple.SoftwareUpdate CriticalUpdateInstall -int 1
+  # Increase sound quality for Bluetooth headphones/headsets
+  defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int 40
 
-# Automatically download apps purchased on other Macs
-defaults write com.apple.SoftwareUpdate ConfigDataInstall -int 1
+  # Enable full keyboard access for all controls
+  # (e.g. enable Tab in modal dialogs)
+  defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
 
-# Turn on app auto-update
-defaults write com.apple.commerce AutoUpdate -bool true
+  # Use scroll gesture with the Ctrl (^) modifier key to zoom
+  defaults write com.apple.universalaccess closeViewScrollWheelToggle -bool true
+  defaults write com.apple.universalaccess HIDScrollZoomModifierMask -int 262144
+  # Follow the keyboard focus while zoomed in
+  defaults write com.apple.universalaccess closeViewZoomFollowsFocus -bool true
 
-# Allow the App Store to reboot machine on macOS updates
-defaults write com.apple.commerce AutoUpdateRestartRequired -bool true
+  # Disable press-and-hold for keys in favor of key repeat
+  defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 
-###############################################################################
-# Photos                                                                      #
-###############################################################################
+  # Set a blazingly fast keyboard repeat rate
+  defaults write NSGlobalDomain KeyRepeat -int 1
+  defaults write NSGlobalDomain InitialKeyRepeat -int 10
 
-# Prevent Photos from opening automatically when devices are plugged in
-defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
+  # Set language and text formats
+  # Note: if you’re in the US, replace `EUR` with `USD`, `Centimeters` with
+  # `Inches`, `en_GB` with `en_US`, and `true` with `false`.
+  defaults write NSGlobalDomain AppleLanguages -array "en" "nl"
+  defaults write NSGlobalDomain AppleLocale -string "en_US@currency=USD"
+  defaults write NSGlobalDomain AppleMeasurementUnits -string "Inches"
+  defaults write NSGlobalDomain AppleMetricUnits -bool false
 
-###############################################################################
-# Messages                                                                    #
-###############################################################################
+  # Show language menu in the top right corner of the boot screen
+  # sudo defaults write /Library/Preferences/com.apple.loginwindow showInputMenu -bool true
 
-# Disable automatic emoji substitution (i.e. use plain text smileys)
-defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticEmojiSubstitutionEnablediMessage" -bool false
+  # Set the timezone; see `sudo systemsetup -listtimezones` for other values
+  sudo systemsetup -settimezone "America/New_York" > /dev/null
 
-# Disable smart quotes as it’s annoying for messages that contain code
-defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticQuoteSubstitutionEnabled" -bool false
+  # Stop iTunes from responding to the keyboard media keys
+  #launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist 2> /dev/null
 
-# Disable continuous spell checking
-defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "continuousSpellCheckingEnabled" -bool false
+  ###############################################################################
+  # Energy saving                                                               #
+  ###############################################################################
 
-###############################################################################
-# Google Chrome & Google Chrome Canary                                        #
-###############################################################################
+  # Enable lid wakeup
+  sudo pmset -a lidwake 1
 
-# Disable the all too sensitive backswipe on trackpads
-defaults write com.google.Chrome AppleEnableSwipeNavigateWithScrolls -bool false
-defaults write com.google.Chrome.canary AppleEnableSwipeNavigateWithScrolls -bool false
+  # Restart automatically on power loss
+  sudo pmset -a autorestart 1
 
-# Disable the all too sensitive backswipe on Magic Mouse
-defaults write com.google.Chrome AppleEnableMouseSwipeNavigateWithScrolls -bool false
-defaults write com.google.Chrome.canary AppleEnableMouseSwipeNavigateWithScrolls -bool false
+  # Restart automatically if the computer freezes
+  sudo systemsetup -setrestartfreeze on
 
-# Use the system-native print preview dialog
-defaults write com.google.Chrome DisablePrintPreview -bool true
-defaults write com.google.Chrome.canary DisablePrintPreview -bool true
+  # Sleep the display after 15 minutes
+  sudo pmset -a displaysleep 15
 
-# Expand the print dialog by default
-defaults write com.google.Chrome PMPrintingExpandedStateForPrint2 -bool true
-defaults write com.google.Chrome.canary PMPrintingExpandedStateForPrint2 -bool true
+  # Disable machine sleep while charging
+  sudo pmset -c sleep 0
 
-###############################################################################
-# GPGMail 2                                                                   #
-###############################################################################
+  # Set machine sleep to 5 minutes on battery
+  sudo pmset -b sleep 5
 
-# Disable signing emails by default
-defaults write ~/Library/Preferences/org.gpgtools.gpgmail SignNewEmailsByDefault -bool false
+  # Set standby delay to 24 hours (default is 1 hour)
+  sudo pmset -a standbydelay 86400
 
-###############################################################################
-# Opera & Opera Developer                                                     #
-###############################################################################
+  # Never go into computer sleep mode
+  sudo systemsetup -setcomputersleep Off > /dev/null
 
-# Expand the print dialog by default
-defaults write com.operasoftware.Opera PMPrintingExpandedStateForPrint2 -boolean true
-defaults write com.operasoftware.OperaDeveloper PMPrintingExpandedStateForPrint2 -boolean true
+  # Hibernation mode
+  # 0: Disable hibernation (speeds up entering sleep mode)
+  # 3: Copy RAM to disk so the system state can still be restored in case of a
+  #    power failure.
+  sudo pmset -a hibernatemode 0
 
-###############################################################################
-# SizeUp.app                                                                  #
-###############################################################################
+  # Remove the sleep image file to save disk space
+  sudo rm /private/var/vm/sleepimage
+  # Create a zero-byte file instead…
+  sudo touch /private/var/vm/sleepimage
+  # …and make sure it can’t be rewritten
+  sudo chflags uchg /private/var/vm/sleepimage
 
-# Start SizeUp at login
-defaults write com.irradiatedsoftware.SizeUp StartAtLogin -bool true
+  ###############################################################################
+  # Screen                                                                      #
+  ###############################################################################
 
-# Don’t show the preferences window on next start
-defaults write com.irradiatedsoftware.SizeUp ShowPrefsOnNextStart -bool false
+  # Require password immediately after sleep or screen saver begins
+  defaults write com.apple.screensaver askForPassword -int 1
+  defaults write com.apple.screensaver askForPasswordDelay -int 0
 
-###############################################################################
-# Sublime Text                                                                #
-###############################################################################
+  # Save screenshots to the Pictures directory 
+  defaults write com.apple.screencapture location -string "${HOME}/Pictures/screenshots"
 
-# Install Sublime Text settings
-cp -r init/Preferences.sublime-settings ~/Library/Application\ Support/Sublime\ Text*/Packages/User/Preferences.sublime-settings 2> /dev/null
+  # Save screenshots in PNG format (other options: BMP, GIF, JPG, PDF, TIFF)
+  defaults write com.apple.screencapture type -string "png"
 
-###############################################################################
-# Spectacle.app                                                               #
-###############################################################################
-
-# Set up my preferred keyboard shortcuts
-cp -r init/spectacle.json ~/Library/Application\ Support/Spectacle/Shortcuts.json 2> /dev/null
-
-###############################################################################
-# Transmission.app                                                            #
-###############################################################################
-
-# Use `~/Documents/Torrents` to store incomplete downloads
-defaults write org.m0k.transmission UseIncompleteDownloadFolder -bool true
-defaults write org.m0k.transmission IncompleteDownloadFolder -string "${HOME}/Documents/Torrents"
-
-# Use `~/Downloads` to store completed downloads
-defaults write org.m0k.transmission DownloadLocationConstant -bool true
-
-# Don’t prompt for confirmation before downloading
-defaults write org.m0k.transmission DownloadAsk -bool false
-defaults write org.m0k.transmission MagnetOpenAsk -bool false
-
-# Don’t prompt for confirmation before removing non-downloading active transfers
-defaults write org.m0k.transmission CheckRemoveDownloading -bool true
-
-# Trash original torrent files
-defaults write org.m0k.transmission DeleteOriginalTorrent -bool true
-
-# Hide the donate message
-defaults write org.m0k.transmission WarningDonate -bool false
-# Hide the legal disclaimer
-defaults write org.m0k.transmission WarningLegal -bool false
-
-# IP block list.
-# Source: https://giuliomac.wordpress.com/2014/02/19/best-blocklist-for-transmission/
-defaults write org.m0k.transmission BlocklistNew -bool true
-defaults write org.m0k.transmission BlocklistURL -string "http://john.bitsurge.net/public/biglist.p2p.gz"
-defaults write org.m0k.transmission BlocklistAutoUpdate -bool true
-
-# Randomize port on launch
-defaults write org.m0k.transmission RandomPort -bool true
-
-###############################################################################
-# Twitter.app                                                                 #
-###############################################################################
-
-# Disable smart quotes as it’s annoying for code tweets
-defaults write com.twitter.twitter-mac AutomaticQuoteSubstitutionEnabled -bool false
-
-# Show the app window when clicking the menu bar icon
-defaults write com.twitter.twitter-mac MenuItemBehavior -int 1
-
-# Enable the hidden ‘Develop’ menu
-defaults write com.twitter.twitter-mac ShowDevelopMenu -bool true
-
-# Open links in the background
-defaults write com.twitter.twitter-mac openLinksInBackground -bool true
-
-# Allow closing the ‘new tweet’ window by pressing `Esc`
-defaults write com.twitter.twitter-mac ESCClosesComposeWindow -bool true
-
-# Show full names rather than Twitter handles
-defaults write com.twitter.twitter-mac ShowFullNames -bool true
-
-# Hide the app in the background if it’s not the front-most window
-defaults write com.twitter.twitter-mac HideInBackground -bool true
-
-###############################################################################
-# Tweetbot.app                                                                #
-###############################################################################
-
-# Bypass the annoyingly slow t.co URL shortener
-defaults write com.tapbots.TweetbotMac OpenURLsDirectly -bool true
-
-###############################################################################
-# Kill affected applications                                                  #
-###############################################################################
-
-for app in "Activity Monitor" \
-	"Address Book" \
-	"Calendar" \
-	"cfprefsd" \
-	"Contacts" \
-	"Dock" \
-	"Finder" \
-	"Google Chrome Canary" \
-	"Google Chrome" \
-	"Mail" \
-	"Messages" \
-	"Opera" \
-	"Photos" \
-	"Safari" \
-	"SizeUp" \
-	"Spectacle" \
-	"SystemUIServer" \
-	"Terminal" \
-	"Transmission" \
-	"Tweetbot" \
-	"Twitter" \
-	"iCal"; do
-	killall "${app}" &> /dev/null
-done
-echo "Done. Note that some of these changes require a logout/restart to take effect."
+  # Disable shadow in screenshots
+  defaults write com.apple.screencapture disable-shadow -bool true
+
+  # Enable subpixel font rendering on non-Apple LCDs
+  # Reference: https://github.com/kevinSuttle/macOS-Defaults/issues/17#issuecomment-266633501
+  defaults write NSGlobalDomain AppleFontSmoothing -int 1
+
+  # Enable HiDPI display modes (requires restart)
+  sudo defaults write /Library/Preferences/com.apple.windowserver DisplayResolutionEnabled -bool true
+
+  ###############################################################################
+  # Finder                                                                      #
+  ###############################################################################
+
+  # Finder: allow quitting via ⌘ + Q; doing so will also hide desktop icons
+  defaults write com.apple.finder QuitMenuItem -bool true
+
+  # Finder: disable window animations and Get Info animations
+  defaults write com.apple.finder DisableAllAnimations -bool true
+
+  # Set Desktop as the default location for new Finder windows
+  # For other paths, use `PfLo` and `file:///full/path/here/`
+  defaults write com.apple.finder NewWindowTarget -string "PfLo"
+  defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}/Dropbox/Work/!Process/"
+
+  # Show icons for hard drives, servers, and removable media on the desktop
+  defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
+  defaults write com.apple.finder ShowHardDrivesOnDesktop -bool true
+  defaults write com.apple.finder ShowMountedServersOnDesktop -bool true
+  defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
+
+  # Finder: show hidden files by default
+  #defaults write com.apple.finder AppleShowAllFiles -bool true
+
+  # Finder: show all filename extensions
+  defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+
+  # Finder: show status bar
+  defaults write com.apple.finder ShowStatusBar -bool true
+
+  # Finder: show path bar
+  defaults write com.apple.finder ShowPathbar -bool true
+
+  # Display full POSIX path as Finder window title
+  defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
+
+  # Keep folders on top when sorting by name
+  defaults write com.apple.finder _FXSortFoldersFirst -bool true
+
+  # When performing a search, search the current folder by default
+  defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
+
+  # Disable the warning when changing a file extension
+  defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
+
+  # Enable spring loading for directories
+  defaults write NSGlobalDomain com.apple.springing.enabled -bool true
+
+  # Remove the spring loading delay for directories
+  defaults write NSGlobalDomain com.apple.springing.delay -float 0
+
+  # Avoid creating .DS_Store files on network or USB volumes
+  defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+  defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
+
+  # Disable disk image verification
+  defaults write com.apple.frameworks.diskimages skip-verify -bool true
+  defaults write com.apple.frameworks.diskimages skip-verify-locked -bool true
+  defaults write com.apple.frameworks.diskimages skip-verify-remote -bool true
+
+  # Automatically open a new Finder window when a volume is mounted
+  defaults write com.apple.frameworks.diskimages auto-open-ro-root -bool true
+  defaults write com.apple.frameworks.diskimages auto-open-rw-root -bool true
+  defaults write com.apple.finder OpenWindowForNewRemovableDisk -bool true
+
+  # Show item info near icons on the desktop and in other icon views
+  /usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:showItemInfo true" ~/Library/Preferences/com.apple.finder.plist
+  /usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:showItemInfo true" ~/Library/Preferences/com.apple.finder.plist
+  /usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:showItemInfo true" ~/Library/Preferences/com.apple.finder.plist
+
+  # Show item info to the right of the icons on the desktop
+  /usr/libexec/PlistBuddy -c "Set DesktopViewSettings:IconViewSettings:labelOnBottom false" ~/Library/Preferences/com.apple.finder.plist
+
+  # Enable snap-to-grid for icons on the desktop and in other icon views
+  /usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
+  /usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
+  /usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
+
+  # Increase grid spacing for icons on the desktop and in other icon views
+  /usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:gridSpacing 100" ~/Library/Preferences/com.apple.finder.plist
+  /usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:gridSpacing 100" ~/Library/Preferences/com.apple.finder.plist
+  /usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:gridSpacing 100" ~/Library/Preferences/com.apple.finder.plist
+
+  # Increase the size of icons on the desktop and in other icon views
+  /usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:iconSize 80" ~/Library/Preferences/com.apple.finder.plist
+  /usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:iconSize 80" ~/Library/Preferences/com.apple.finder.plist
+  /usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:iconSize 80" ~/Library/Preferences/com.apple.finder.plist
+
+  # Use column view in all Finder windows by default
+  # Four-letter codes for the other view modes: `icnv`, `clmv`, `glyv`
+  defaults write com.apple.finder FXPreferredViewStyle -string "clmv"
+
+  # Disable the warning before emptying the Trash
+  defaults write com.apple.finder WarnOnEmptyTrash -bool false
+
+  # Enable AirDrop over Ethernet and on unsupported Macs running Lion
+  defaults write com.apple.NetworkBrowser BrowseAllInterfaces -bool true
+
+  # Show the ~/Library folder
+  chflags nohidden ~/Library
+
+  # Show the /Volumes folder
+  sudo chflags nohidden /Volumes
+
+  # Remove Dropbox’s green checkmark icons in Finder
+  # file=/Applications/Dropbox.app/Contents/Resources/emblem-dropbox-uptodate.icns
+  # [ -e "${file}" ] && mv -f "${file}" "${file}.bak"
+
+  # Expand the following File Info panes:
+  # “General”, “Open with”, and “Sharing & Permissions”
+  defaults write com.apple.finder FXInfoPanesExpanded -dict \
+      General -bool true \
+      OpenWith -bool true \
+      Privileges -bool true
+
+  ###############################################################################
+  # Dock, Dashboard, and hot corners                                            #
+  ###############################################################################
+
+  # Enable highlight hover effect for the grid view of a stack (Dock)
+  defaults write com.apple.dock mouse-over-hilite-stack -bool true
+
+  # Set the icon size of Dock items to 36 pixels
+  # defaults write com.apple.dock tilesize -int 36
+
+  # Change minimize/maximize window effect
+  defaults write com.apple.dock mineffect -string "scale"
+
+  # Minimize windows into their application’s icon
+  defaults write com.apple.dock minimize-to-application -bool true
+
+  # Enable spring loading for all Dock items
+  defaults write com.apple.dock enable-spring-load-actions-on-all-items -bool true
+
+  # Show indicator lights for open applications in the Dock
+  defaults write com.apple.dock show-process-indicators -bool true
+
+  # Wipe all (default) app icons from the Dock
+  # This is only really useful when setting up a new Mac, or if you don’t use
+  # the Dock to launch apps.
+  defaults write com.apple.dock persistent-apps -array
+
+  # Show only open applications in the Dock
+  defaults write com.apple.dock static-only -bool true
+
+  # Don’t animate opening applications from the Dock
+  defaults write com.apple.dock launchanim -bool false
+
+  # Speed up Mission Control animations
+  defaults write com.apple.dock expose-animation-duration -float 0.1
+
+  # Don’t group windows by application in Mission Control
+  # (i.e. use the old Exposé behavior instead)
+  defaults write com.apple.dock expose-group-by-app -bool false
+
+  # Disable Dashboard
+  # defaults write com.apple.dashboard mcx-disabled -bool true
+
+  # Don’t show Dashboard as a Space
+  # defaults write com.apple.dock dashboard-in-overlay -bool true
+
+  # Don’t automatically rearrange Spaces based on most recent use
+  defaults write com.apple.dock mru-spaces -bool false
+
+  # Remove the auto-hiding Dock delay
+  defaults write com.apple.dock autohide-delay -float 0
+  # Remove the animation when hiding/showing the Dock
+  defaults write com.apple.dock autohide-time-modifier -float 0
+
+  # Automatically hide and show the Dock
+  defaults write com.apple.dock autohide -bool true
+
+  # Make Dock icons of hidden applications translucent
+  defaults write com.apple.dock showhidden -bool true
+
+  # Don’t show recent applications in Dock
+  defaults write com.apple.dock show-recents -bool false
+
+  # Disable the Launchpad gesture (pinch with thumb and three fingers)
+  defaults write com.apple.dock showLaunchpadGestureEnabled -int 0
+
+  # Reset Launchpad, but keep the desktop wallpaper intact
+  find "${HOME}/Library/Application Support/Dock" -name "*-*.db" -maxdepth 1 -delete
+
+  # Add iOS & Watch Simulator to Launchpad
+  sudo ln -sf "/Applications/Xcode.app/Contents/Developer/Applications/Simulator.app" "/Applications/Simulator.app"
+  sudo ln -sf "/Applications/Xcode.app/Contents/Developer/Applications/Simulator (Watch).app" "/Applications/Simulator (Watch).app"
+
+  # Add a spacer to the left side of the Dock (where the applications are)
+  defaults write com.apple.dock persistent-apps -array-add '{tile-data={}; tile-type="spacer-tile";}'
+  # Add a spacer to the right side of the Dock (where the Trash is)
+  defaults write com.apple.dock persistent-others -array-add '{tile-data={}; tile-type="spacer-tile";}'
+
+  # Hot corners
+  # Possible values:
+  #  0: no-op
+  #  2: Mission Control
+  #  3: Show application windows
+  #  4: Desktop
+  #  5: Start screen saver
+  #  6: Disable screen saver
+  #  7: Dashboard
+  # 10: Put display to sleep
+  # 11: Launchpad
+  # 12: Notification Center
+  # 13: Lock Screen
+  # Top left screen corner → Sleep
+  defaults write com.apple.dock wvous-tl-corner -int 10
+  defaults write com.apple.dock wvous-tl-modifier -int 0
+  # Top right screen corner → Desktop
+  defaults write com.apple.dock wvous-tr-corner -int 4
+  defaults write com.apple.dock wvous-tr-modifier -int 0
+  # Bottom left screen corner → Start screen saver
+  defaults write com.apple.dock wvous-bl-corner -int 5
+  defaults write com.apple.dock wvous-bl-modifier -int 0
+  # Bottom right screen corner -> application windows
+  defaults write com.apple.dock wvous-br-corner -int 3
+  defaults write com.apple.dock wvous-br-modifier -int 0
+
+  ###############################################################################
+  # Safari & WebKit                                                             #
+  ###############################################################################
+
+  # Privacy: don’t send search queries to Apple
+  defaults write com.apple.Safari UniversalSearchEnabled -bool false
+  defaults write com.apple.Safari SuppressSearchSuggestions -bool true
+
+  # Press Tab to highlight each item on a web page
+  defaults write com.apple.Safari WebKitTabToLinksPreferenceKey -bool true
+  defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2TabsToLinks -bool true
+
+  # Show the full URL in the address bar (note: this still hides the scheme)
+  defaults write com.apple.Safari ShowFullURLInSmartSearchField -bool true
+
+  # Set Safari’s home page to `about:blank` for faster loading
+  # defaults write com.apple.Safari HomePage -string "about:blank"
+
+  # Prevent Safari from opening ‘safe’ files automatically after downloading
+  defaults write com.apple.Safari AutoOpenSafeDownloads -bool false
+
+  # Allow hitting the Backspace key to go to the previous page in history
+  defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2BackspaceKeyNavigationEnabled -bool true
+
+  # Hide Safari’s bookmarks bar by default
+  defaults write com.apple.Safari ShowFavoritesBar -bool false
+
+  # Hide Safari’s sidebar in Top Sites
+  defaults write com.apple.Safari ShowSidebarInTopSites -bool false
+
+  # Disable Safari’s thumbnail cache for History and Top Sites
+  # defaults write com.apple.Safari DebugSnapshotsUpdatePolicy -int 2
+
+  # Enable Safari’s debug menu
+  defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
+
+  # Make Safari’s search banners default to Contains instead of Starts With
+  defaults write com.apple.Safari FindOnPageMatchesWordStartsOnly -bool false
+
+  # Remove useless icons from Safari’s bookmarks bar
+  defaults write com.apple.Safari ProxiesInBookmarksBar "()"
+
+  # Enable the Develop menu and the Web Inspector in Safari
+  defaults write com.apple.Safari IncludeDevelopMenu -bool true
+  defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
+  defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled -bool true
+
+  # Add a context menu item for showing the Web Inspector in web views
+  defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
+
+  # Enable continuous spellchecking
+  defaults write com.apple.Safari WebContinuousSpellCheckingEnabled -bool true
+  # Disable auto-correct
+  defaults write com.apple.Safari WebAutomaticSpellingCorrectionEnabled -bool false
+
+  # Disable AutoFill
+  defaults write com.apple.Safari AutoFillFromAddressBook -bool false
+  defaults write com.apple.Safari AutoFillPasswords -bool false
+  defaults write com.apple.Safari AutoFillCreditCardData -bool false
+  defaults write com.apple.Safari AutoFillMiscellaneousForms -bool false
+
+  # Warn about fraudulent websites
+  defaults write com.apple.Safari WarnAboutFraudulentWebsites -bool true
+
+  # Disable plug-ins
+  # defaults write com.apple.Safari WebKitPluginsEnabled -bool false
+  # defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2PluginsEnabled -bool false
+
+  # Disable Java
+  defaults write com.apple.Safari WebKitJavaEnabled -bool false
+  defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaEnabled -bool false
+  defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaEnabledForLocalFiles -bool false
+
+  # Block pop-up windows
+  # defaults write com.apple.Safari WebKitJavaScriptCanOpenWindowsAutomatically -bool false
+  # defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2JavaScriptCanOpenWindowsAutomatically -bool false
+
+  # Disable auto-playing video
+  defaults write com.apple.Safari WebKitMediaPlaybackAllowsInline -bool false
+  defaults write com.apple.SafariTechnologyPreview WebKitMediaPlaybackAllowsInline -bool false
+  defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2AllowsInlineMediaPlayback -bool false
+  defaults write com.apple.SafariTechnologyPreview com.apple.Safari.ContentPageGroupIdentifier.WebKit2AllowsInlineMediaPlayback -bool false
+
+  # Enable “Do Not Track”
+  defaults write com.apple.Safari SendDoNotTrackHTTPHeader -bool true
+
+  # Update extensions automatically
+  defaults write com.apple.Safari InstallExtensionUpdatesAutomatically -bool true
+
+  ###############################################################################
+  # Mail                                                                        #
+  ###############################################################################
+
+  # Disable send and reply animations in Mail.app
+  defaults write com.apple.mail DisableReplyAnimations -bool true
+  defaults write com.apple.mail DisableSendAnimations -bool true
+
+  # Copy email addresses as `foo@example.com` instead of `Foo Bar <foo@example.com>` in Mail.app
+  defaults write com.apple.mail AddressesIncludeNameOnPasteboard -bool false
+
+  # Add the keyboard shortcut ⌘ + Enter to send an email in Mail.app
+  defaults write com.apple.mail NSUserKeyEquivalents -dict-add "Send" "@\U21a9"
+
+  # Display emails in threaded mode, sorted by date (oldest at the top)
+  defaults write com.apple.mail DraftsViewerAttributes -dict-add "DisplayInThreadedMode" -string "yes"
+  defaults write com.apple.mail DraftsViewerAttributes -dict-add "SortedDescending" -string "yes"
+  defaults write com.apple.mail DraftsViewerAttributes -dict-add "SortOrder" -string "received-date"
+
+  # Disable inline attachments (just show the icons)
+  defaults write com.apple.mail DisableInlineAttachmentViewing -bool true
+
+  # Disable automatic spell checking
+  # defaults write com.apple.mail SpellCheckingBehavior -string "NoSpellCheckingEnabled"
+
+  ###############################################################################
+  # Spotlight                                                                   #
+  ###############################################################################
+
+  # Hide Spotlight tray-icon (and subsequent helper)
+  #sudo chmod 600 /System/Library/CoreServices/Search.bundle/Contents/MacOS/Search
+  # Disable Spotlight indexing for any volume that gets mounted and has not yet
+  # been indexed before.
+  # Use `sudo mdutil -i off "/Volumes/foo"` to stop indexing any volume.
+  sudo defaults write /.Spotlight-V100/VolumeConfiguration Exclusions -array "/Volumes"
+  # Change indexing order and disable some search results
+  # Yosemite-specific search results (remove them if you are using macOS 10.9 or older):
+  # 	MENU_DEFINITION
+  # 	MENU_CONVERSION
+  # 	MENU_EXPRESSION
+  # 	MENU_SPOTLIGHT_SUGGESTIONS (send search queries to Apple)
+  # 	MENU_WEBSEARCH             (send search queries to Apple)
+  # 	MENU_OTHER
+  defaults write com.apple.spotlight orderedItems -array \
+      '{"enabled" = 1;"name" = "APPLICATIONS";}' \
+      '{"enabled" = 1;"name" = "SYSTEM_PREFS";}' \
+      '{"enabled" = 1;"name" = "DIRECTORIES";}' \
+      '{"enabled" = 1;"name" = "PDF";}' \
+      '{"enabled" = 1;"name" = "FONTS";}' \
+      '{"enabled" = 0;"name" = "DOCUMENTS";}' \
+      '{"enabled" = 0;"name" = "MESSAGES";}' \
+      '{"enabled" = 0;"name" = "CONTACT";}' \
+      '{"enabled" = 0;"name" = "EVENT_TODO";}' \
+      '{"enabled" = 0;"name" = "IMAGES";}' \
+      '{"enabled" = 0;"name" = "BOOKMARKS";}' \
+      '{"enabled" = 0;"name" = "MUSIC";}' \
+      '{"enabled" = 0;"name" = "MOVIES";}' \
+      '{"enabled" = 0;"name" = "PRESENTATIONS";}' \
+      '{"enabled" = 0;"name" = "SPREADSHEETS";}' \
+      '{"enabled" = 0;"name" = "SOURCE";}' \
+      '{"enabled" = 0;"name" = "MENU_DEFINITION";}' \
+      '{"enabled" = 0;"name" = "MENU_OTHER";}' \
+      '{"enabled" = 0;"name" = "MENU_CONVERSION";}' \
+      '{"enabled" = 0;"name" = "MENU_EXPRESSION";}' \
+      '{"enabled" = 0;"name" = "MENU_WEBSEARCH";}' \
+      '{"enabled" = 0;"name" = "MENU_SPOTLIGHT_SUGGESTIONS";}'
+  # Load new settings before rebuilding the index
+  killall mds > /dev/null 2>&1
+  # Make sure indexing is enabled for the main volume
+  sudo mdutil -i on / > /dev/null
+  # Rebuild the index from scratch
+  sudo mdutil -E / > /dev/null
+
+  ###############################################################################
+  # Terminal & iTerm 2                                                          #
+  ###############################################################################
+
+  # Only use UTF-8 in Terminal.app
+  defaults write com.apple.terminal StringEncodings -array 4
+
+  # Use a modified version of the Solarized Dark theme by default in Terminal.app
+  osascript <<EOD
+
+  tell application "Terminal"
+
+      local allOpenedWindows
+      local initialOpenedWindows
+      local windowID
+      set themeName to "Solarized Dark xterm-256color"
+
+      (* Store the IDs of all the open terminal windows. *)
+      set initialOpenedWindows to id of every window
+
+      (* Open the custom theme so that it gets added to the list
+         of available terminal themes (note: this will open two
+         additional terminal windows). *)
+      do shell script "open '$HOME/init/" & themeName & ".terminal'"
+
+      (* Wait a little bit to ensure that the custom theme is added. *)
+      delay 1
+
+      (* Set the custom theme as the default terminal theme. *)
+      set default settings to settings set themeName
+
+      (* Get the IDs of all the currently opened terminal windows. *)
+      set allOpenedWindows to id of every window
+
+      repeat with windowID in allOpenedWindows
+
+          (* Close the additional windows that were opened in order
+             to add the custom theme to the list of terminal themes. *)
+          if initialOpenedWindows does not contain windowID then
+              close (every window whose id is windowID)
+
+          (* Change the theme for the initial opened terminal windows
+             to remove the need to close them in order for the custom
+             theme to be applied. *)
+          else
+              set current settings of tabs of (every window whose id is windowID) to settings set themeName
+          end if
+
+      end repeat
+
+  end tell
+
+  EOD
+
+  # Enable “focus follows mouse” for Terminal.app and all X11 apps
+  # i.e. hover over a window and start typing in it without clicking first
+  defaults write com.apple.terminal FocusFollowsMouse -bool true
+  defaults write org.x.X11 wm_ffm -bool true
+
+  # Enable Secure Keyboard Entry in Terminal.app
+  # See: https://security.stackexchange.com/a/47786/8918
+  defaults write com.apple.terminal SecureKeyboardEntry -bool true
+
+  # Disable the annoying line marks
+  defaults write com.apple.Terminal ShowLineMarks -int 0
+
+  # Install the Solarized Dark theme for iTerm
+  open "${HOME}/init/Solarized Dark.itermcolors"
+
+  # Don’t display the annoying prompt when quitting iTerm
+  defaults write com.googlecode.iterm2 PromptOnQuit -bool false
+
+  ###############################################################################
+  # Time Machine                                                                #
+  ###############################################################################
+
+  # Prevent Time Machine from prompting to use new hard drives as backup volume
+  defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
+
+  # Disable local Time Machine backups
+  hash tmutil &> /dev/null && sudo tmutil disablelocal
+
+  ###############################################################################
+  # Activity Monitor                                                            #
+  ###############################################################################
+
+  # Show the main window when launching Activity Monitor
+  defaults write com.apple.ActivityMonitor OpenMainWindow -bool true
+
+  # Visualize CPU usage in the Activity Monitor Dock icon
+  defaults write com.apple.ActivityMonitor IconType -int 5
+
+  # Show all processes in Activity Monitor
+  defaults write com.apple.ActivityMonitor ShowCategory -int 0
+
+  # Sort Activity Monitor results by CPU usage
+  defaults write com.apple.ActivityMonitor SortColumn -string "CPUUsage"
+  defaults write com.apple.ActivityMonitor SortDirection -int 0
+
+  ###############################################################################
+  # Address Book, Dashboard, iCal, TextEdit, and Disk Utility                   #
+  ###############################################################################
+
+  # Enable the debug menu in Address Book
+  defaults write com.apple.addressbook ABShowDebugMenu -bool true
+
+  # Enable Dashboard dev mode (allows keeping widgets on the desktop)
+  defaults write com.apple.dashboard devmode -bool true
+
+  # Enable the debug menu in iCal (pre-10.8)
+  defaults write com.apple.iCal IncludeDebugMenu -bool true
+
+  # Use plain text mode for new TextEdit documents
+  defaults write com.apple.TextEdit RichText -int 0
+  # Open and save files as UTF-8 in TextEdit
+  defaults write com.apple.TextEdit PlainTextEncoding -int 4
+  defaults write com.apple.TextEdit PlainTextEncodingForWrite -int 4
+
+  # Enable the debug menu in Disk Utility
+  defaults write com.apple.DiskUtility DUDebugMenuEnabled -bool true
+  defaults write com.apple.DiskUtility advanced-image-options -bool true
+
+  # Auto-play videos when opened with QuickTime Player
+  defaults write com.apple.QuickTimePlayerX MGPlayMovieOnOpen -bool true
+
+  ###############################################################################
+  # Mac App Store                                                               #
+  ###############################################################################
+
+  # Enable the WebKit Developer Tools in the Mac App Store
+  defaults write com.apple.appstore WebKitDeveloperExtras -bool true
+
+  # Enable Debug Menu in the Mac App Store
+  defaults write com.apple.appstore ShowDebugMenu -bool true
+
+  # Enable the automatic update check
+  defaults write com.apple.SoftwareUpdate AutomaticCheckEnabled -bool true
+
+  # Check for software updates daily, not just once per week
+  defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
+
+  # Download newly available updates in background
+  defaults write com.apple.SoftwareUpdate AutomaticDownload -int 1
+
+  # Install System data files & security updates
+  defaults write com.apple.SoftwareUpdate CriticalUpdateInstall -int 1
+
+  # Automatically download apps purchased on other Macs
+  defaults write com.apple.SoftwareUpdate ConfigDataInstall -int 1
+
+  # Turn on app auto-update
+  defaults write com.apple.commerce AutoUpdate -bool true
+
+  # Allow the App Store to reboot machine on macOS updates
+  # defaults write com.apple.commerce AutoUpdateRestartRequired -bool true
+
+  ###############################################################################
+  # Photos                                                                      #
+  ###############################################################################
+
+  # Prevent Photos from opening automatically when devices are plugged in
+  defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
+
+  ###############################################################################
+  # Messages                                                                    #
+  ###############################################################################
+
+  # Disable automatic emoji substitution (i.e. use plain text smileys)
+  defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticEmojiSubstitutionEnablediMessage" -bool false
+
+  # Disable smart quotes as it’s annoying for messages that contain code
+  defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticQuoteSubstitutionEnabled" -bool false
+
+  # Disable continuous spell checking
+  defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "continuousSpellCheckingEnabled" -bool false
+
+  ###############################################################################
+  # GPGMail 2                                                                   #
+  ###############################################################################
+
+  # Disable signing emails by default
+  defaults write ~/Library/Preferences/org.gpgtools.gpgmail SignNewEmailsByDefault -bool false
+
+  ###############################################################################
+  # Spectacle.app                                                               #
+  ###############################################################################
+
+  # Set up my preferred keyboard shortcuts
+  cp -r /Users/roambot/Documents/mac-bootstrap/spectacle-shortcuts.json ~/Library/Application\ Support/Spectacle/Shortcuts.json 2> /dev/null
+
+  ################################################################################
+  # Hazel.app                                                               #
+  ###############################################################################
+
+  # Set up Hazel scripts
+    # cp -r /Users/roambot/Documents/mac-bootstrap/hazel-rules/ ~/Library/Application\ Support/Spectacle/Shortcuts.json 2> /dev/null
+
+  ###############################################################################
+  # Twitter.app                                                                 #
+  ###############################################################################
+
+  # Disable smart quotes as it’s annoying for code tweets
+  defaults write com.twitter.twitter-mac AutomaticQuoteSubstitutionEnabled -bool false
+
+  # Show the app window when clicking the menu bar icon
+  defaults write com.twitter.twitter-mac MenuItemBehavior -int 1
+
+  # Enable the hidden ‘Develop’ menu
+  defaults write com.twitter.twitter-mac ShowDevelopMenu -bool true
+
+  # Open links in the background
+  defaults write com.twitter.twitter-mac openLinksInBackground -bool true
+
+  # Allow closing the ‘new tweet’ window by pressing `Esc`
+  defaults write com.twitter.twitter-mac ESCClosesComposeWindow -bool true
+
+  # Show full names rather than Twitter handles
+  defaults write com.twitter.twitter-mac ShowFullNames -bool true
+
+  # Hide the app in the background if it’s not the front-most window
+  defaults write com.twitter.twitter-mac HideInBackground -bool true
+
+  ###############################################################################
+  # Tweetbot.app                                                                #
+  ###############################################################################
+
+  # Bypass the annoyingly slow t.co URL shortener
+  defaults write com.tapbots.TweetbotMac OpenURLsDirectly -bool true
+
+  ###############################################################################
+  # Kill affected applications                                                  #
+  ###############################################################################
+
+  for app in "Activity Monitor" \
+      "Address Book" \
+      "Calendar" \
+      "cfprefsd" \
+      "Contacts" \
+      "Dock" \
+      "Finder" \
+      "Mail" \
+      "Messages" \
+      "Opera" \
+      "Photos" \
+      "Safari" \
+      "Spectacle" \
+      "SystemUIServer" \
+      "Terminal" \
+      "Tweetbot" \
+      "Twitter" \
+      "iCal"; do
+      killall "${app}" &> /dev/null
+  done
+  echo "Done. Note that some of these changes require a logout/restart to take effect."
 #+end_src
 * SpaceVim
 :PROPERTIES:
-:header-args: :tangle ~/.vimrc
+:header-args: :tangle no
 :END:
-Here is a config that mimics [[http://spacemacs.org/][spacemacs]] in a nice lightweight manner, but for
-vim. It's [[https://github.com/ctjhoa/spacevim][spacevim]]! 
-
+ Here is a config that mimics [[http://spacemacs.org/][spacemacs]] in a nice lightweight manner, but for
+ vim. It's [[https://github.com/ctjhoa/spacevim][spacevim]]! Note that I just use the default spacevim config now. 
 ** Bootstrap
-Download the config and a bootstrap =vimrc= with
+Use the [[https://spacevim.org/quick-start-guide/][spacevim quick-start guide.]] Download the config and a bootstrap =vimrc=
+with
 #+BEGIN_SRC sh :tangle no
-curl -sSfL https://raw.githubusercontent.com/ctjhoa/spacevim/master/vimrc.sample -o ~/.vimrc && vim
+curl -sLf https://spacevim.org/install.sh | bash
 #+END_SRC
 
 ** Base Config
@@ -1658,7 +2413,7 @@ emacs -eval "(woman \"$1\")"
 #+END_SRC
 
 And setup of Emacs-anywhere
-#+BEGIN_SRC conf :tangle ~/.bash_profile 
+#+begin_src conf :tangle ~/.bash_profile 
 export launchctl limit maxfiles 65536 200000
   # export EA_EDITOR='/usr/bin/emacsclient -a "" -c'
   # export EA_WINDOW_TITLE='Emacs Anywhere'
@@ -1668,11 +2423,11 @@ export launchctl limit maxfiles 65536 200000
   # export EA_HEIGHT="15"
   # export EA_EDITOR='/usr/bin/emacsclient -n -c -e "((name . \"Emacs-Nowhere\") (left . 300) (top . 400) (width . 90) (height . 15))"'
 
-#+END_SRC
+#+end_src
 
 * Zsh
 :PROPERTIES:
-:header-args: :tangle ~/.zshrc
+:header-args: :tangle ~/.zshrc 
 :END:
 
 Zsh is my primary shell. My settings aren't very sophisticated but they work
@@ -1680,40 +2435,70 @@ for me.
 
 ** Basic Settings
 #+BEGIN_SRC conf 
-  # Set architecture flags
-  export ARCHFLAGS="-arch x86_64"
+# Set architecture flags
+export ARCHFLAGS="-arch arm64"
 
-  # Ensure user-installed binaries take precedence
-  export PATH=/usr/local/opt/texinfo/bin:/usr/local/opt/coreutils/libexec/gnubin:/usr/local/opt/python/libexec/bin:/usr/local/bin:/usr/local/sbin:$HOME/bin:$HOME/.local/bin:/usr/bin:/usr/sbin:/sbin:/bin:/opt/X11/bin:/Library/TeX/texbin:$HOME/.fzf/bin:$HOME/.cabal/bin:$HOME/.local/bin:$PATH
-  export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+# Set XDG config path
+export XDG_CONFIG_HOME=$HOME/.config
 
-  #set GOPATH
-  export GOROOT=/usr/local/opt/go/libexec
-  export GOPATH=$HOME/.go
-  export GOBIN=$HOME/bin
-  export PATH=$PATH:$GOROOT/bin:$GOPATH/bin:$GOBIN/bin
+# Set GPG 
+export GPG_TTY=$(tty)
 
-  # set editor
-  export VISUAL="/usr/local/bin/emacsclient"
-  # export VISUAL="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient"
-  export EDITOR="$VISUAL"
-  export ALTERNATE_EDITOR="vim"
+# Set Java
+# export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+# export CPPFLAGS="-I/opt/homebrew/opt/openjdk/include"
 
-  # set shell
-  export SHELL=/usr/local/bin/zsh
-  # locale
-  export LANG=en_US.UTF-8
-  export LC_ALL=en_US.UTF-8
+#set GOPATH
+export GOROOT=/usr/local/opt/go/libexec
+export GOPATH=$HOME/.go
+export GOBIN=$HOME/bin
 
-  # speed up start time
-  skip_global_compinit=1
-  # Pyenv
-  # eval "$(pyenv init -)"
-  
-  # For libffi compiling
-  export LDFLAGS="-L/usr/local/opt/libffi/lib"
-  export PKG_CONFIG_PATH="/usr/local/opt/libffi/lib/pkgconfig"
-  
+# # set cyrus-sasl (for email)
+# export PATH="/opt/homebrew/opt/cyrus-sasl/sbin:$PATH"
+# export LDFLAGS="-L/opt/homebrew/opt/cyrus-sasl/lib"
+# export CPPFLAGS="-I/opt/homebrew/opt/cyrus-sasl/include"
+# export PKG_CONFIG_PATH="/opt/homebrew/opt/cyrus-sasl/lib/pkgconfig"
+
+# set editor
+export EMACS_SERVER_SOCKET=${TMPDIR:-/tmp}/emacs$(id -u)/server
+export VISUAL="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -s $EMACS_SERVER_SOCKET"
+export ALTERNATE_EDITOR="/opt/homebrew/bin/vim"
+# export VISUAL="/opt/homebrew/bin/emacsclient"
+# export VISUAL="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient"
+# export EDITOR="$VISUAL"
+
+# set shell
+export SHELL=/opt/homebrew/bin/zsh
+# locale
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
+# set completion
+zstyle ':completion:*' completer _complete _ignored _approximate
+zstyle ':completion:*' matcher-list '' '' '' 'r:|[._-]=** r:|=**'
+zstyle :compinstall filename '/Users/roambot/.compinstall'
+zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
+
+autoload -Uz compinit
+compinit
+autoload -Uz bashcompinit
+bashcompinit
+
+# speed up start time
+# skip_global_compinit=1
+# Pyenv
+# eval "$(pyenv init -)"
+
+# For compiling
+# export LDFLAGS="-L/usr/local/opt/libffi/lib"
+export LDFLAGS="-L/opt/homebrew/opt/zlib/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/zlib/include"
+export PKG_CONFIG_PATH="/opt/homebrew/opt/zlib/lib/pkgconfig"
+
+# Ensure user-installed binaries take precedence
+export PATH=/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/opt/texinfo/bin:/usr/local/opt/coreutils/libexec/gnubin:/opt/homebrew/opt/libtool/libexec/gnubin:/usr/local/opt/python/libexec/bin:/usr/local/bin:/usr/local/sbin:$HOME/bin:$HOME/.local/bin:/usr/bin:/usr/sbin:/sbin:/bin:/opt/X11/bin:/Library/TeX/texbin:$HOME/.fzf/bin:$HOME/.cabal/bin:$HOME/.local/bin:/Applications/Emacs.app/Contents/MacOS:/Applications/Emacs.app/Contents/MacOS/bin:$GOROOT/bin:$GOPATH/bin:$GOBIN/bin
+
+export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 #+END_SRC
 
 ** Beets
@@ -1726,12 +2511,13 @@ for me.
 
 #+BEGIN_SRC conf
   # per https://github.com/sorin-ionescu/prezto/issues/1416#issuecomment-320328622
-  export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
-  export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
+  export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
+  # export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
+  # export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
   export PROJECT_HOME=~/Dropbox/Work/projects
   export WORKON_HOME=~/bin/virtualenvs
   # virtualenvwrapper config
-  source /usr/local/bin/virtualenvwrapper.sh
+  # source /usr/local/bin/virtualenvwrapper.sh
 #+END_SRC
 
 ** Plugins
@@ -1739,15 +2525,15 @@ I use [[%5B%5Bhttps://github.com/zplug/zplug%5D%5Bzplug/zplug: A next-generation
 
 #+BEGIN_SRC conf
   # install zplug if it doensn't exist
-  [ ! -d /usr/local/opt/zplug ] && {
+  [ ! -d /opt/homebrew/opt/zplug ] && {
         brew install zplug
-        source /usr/local/opt/zplug/init.zsh && zplug update --self
+        source /opt/homebrew/opt/zplug/init.zsh && zplug update --self
   }
 
   # Basic setttings
-  export ZPLUG_HOME=/usr/local/opt/zplug
-  source $ZPLUG_HOME/init.zsh 
-
+  export ZPLUG_HOME=/opt/homebrew/opt/zplug
+  source $ZPLUG_HOME/init.zsh
+  
   # Let zplug manage zplug
   zplug "zplug/zplug", hook-build:"zplug --self-manage"
 
@@ -1761,14 +2547,17 @@ I use [[%5B%5Bhttps://github.com/zplug/zplug%5D%5Bzplug/zplug: A next-generation
 
   # General ###################################
   zplug "plugins/git", from:oh-my-zsh  # git commands
-  zplug "zsh-users/zsh-autosuggestions"  # useful autosuggestions
+  zplug "plugins/fzf", from:oh-my-zsh # enable fzf
+  # zplug "Aloxaf/fzf-tab", from:github, defer:0 # fzf completion
+  # zplug "lincheney/fzf-tab-completion", from:github # fzf completion
+  ## Settings for fzf-tab-completion
+  # bindkey '^I' fzf_completion
+  # zplug "zsh-users/zsh-autosuggestions"  # useful autosuggestions
   typeset -g ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=10' # fix colors for emacs
   zplug "zsh-users/zsh-history-substring-search" # like what it says
   zplug "modules/directory", from:prezto  # better directory commands
+  zplug "softmoth/zsh-vim-mode", from:github #zsh vim
   zplug "modules/completion", from:prezto # better completion
-  # define RPS1 in order to avoid the annoying vim status
-  # export RPS1=" "
-  # zplug "plugins/vi-mode", from:oh-my-zsh 
 
   # zsh-syntax-highlighting must be loaded
   # after executing compinit command and sourcing other plugins
@@ -1868,148 +2657,210 @@ See https://denysdovhan.com/spaceship-prompt/docs/Options.html#options for expla
       # zgen oh-my-zsh themes/xiong-chiamiov-plus # Good two-line theme
 #+END_SRC
 
+#+begin_src conf
+  if [ -n "$INSIDE_EMACS" ]; then
+     
+     fi
+#+end_src
+
 ** FIXME Emacs Directory Tracking
 Directory tracking allows things like =find-file= to work when =cd=-ing around. Note that
 this doesn't presently work for vterm.  
 
 #+BEGIN_SRC conf
-  if [ $TERM  = eterm-color ]; then
-      # function to set the dired and host for ansiterm
-      set_eterm_dir() {
-          print -P "\033AnSiTu %n"
-          print -P "\033AnSiTh" "$(hostname -f)"
-          print -P "\033AnSiTc %d"
-      }
+  # function vterm_printf(){
+  #     if [ -n "$TMUX" ]; then
+  #         # tell tmux to pass the escape sequences through
+  #         # (Source: http://permalink.gmane.org/gmane.comp.terminal-emulators.tmux.user/1324)
+  #         printf "\ePtmux;\e\e]%s\007\e\\" "$1"
+  #     elif [ "${TERM%%-*}" = "screen" ]; then
+  #         # GNU screen (screen, screen-256color, screen-256color-bce)
+  #         printf "\eP\e]%s\007\e\\" "$1"
+  #     else
+  #         printf "\e]%s\e\\" "$1"
+  #     fi
+  # }
 
-      # call prmptcmd whenever prompt is redrawn
-      precmd_functions=($precmd_functions set_eterm_dir)
-  fi
+  # vterm_prompt_end() {
+  #     vterm_printf "51;A$(whoami)@$(hostname):$(pwd)";
+  # }
+  # setopt PROMPT_SUBST
+  # PROMPT=$PROMPT'%{$(vterm_prompt_end)%}'
 
-  # for vterm
-  case $TERM in
-    xterm*)
-      precmd () {print -Pn "\e]0;%n@%m: %~\a"}
-      ;;
-  esac
+
+
+      # if [ $TERM  = eterm-color ]; then
+      #     # function to set the dired and host for ansiterm
+      #     set_eterm_dir() {
+      #         print -P "\033AnSiTu %n"
+      #         print -P "\033AnSiTh" "$(hostname -f)"
+      #         print -P "\033AnSiTc %d"
+      #     }
+
+      #     # call prmptcmd whenever prompt is redrawn
+      #     precmd_functions=($precmd_functions set_eterm_dir)
+      # fi
+
+      # # for vterm
+      # case $TERM in
+      #   xterm*)
+      #     precmd () {print -Pn "\e]0;%n@%m: %~\a"}
+      #     ;;
+      # esac
 
 #+END_SRC
 ** Aliases
 #+BEGIN_SRC conf
-  ### ALIASES ################################
+    ### ALIASES ################################
 
-    # General bindings
-    alias zu='zgen selfupdate && zgen update'
-    alias bu='brew update && brew outdated && brew upgrade && brew cleanup && brew doctor'
-    alias bd='brew desc' 
-    alias bi='brew info'
-    alias bs='brew search'
-    alias bc='brew cask' 
-    alias bcs='brew cask search'
-    alias bci='brew cask install'
-    alias ex='exit'
-    alias tm='tmux'
-    alias ll='ls --color -lAFh -a'
-    alias lc="colorls -lA --sd"
-    alias ls='ls --color -a'
-    alias ld="ls -lht | grep '^d'"
-    alias nf='neofetch'
-    alias gl="git log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all"
+      # General bindings
+      alias zu='zgen selfupdate && zgen update'
+      alias bu='brew update && brew outdated && brew upgrade && brew cleanup && brew doctor'
+      alias bd='brew desc' 
+      alias bi='brew info'
+      alias bs='brew search'
+      alias bc='brew cask' 
+      alias bcs='brew cask search'
+      alias bci='brew cask install'
+      alias ex='exit'
+      alias tm='tmux'
+      # better ls using exa
+      alias ls='exa --group-directories-first --icons --color=always'
+      alias ll='exa -a -l --group-directories-first --git --icons --color=always'
+      alias lsa='exa -a --group-directories-first --icons --color=always'
+      # list only directories
+      alias lsd='exa -D -a -l --git --icons --color=always'
 
-    # List directory on cd
-    function chpwd() {
-      ls
-    }
+      # alias ll='ls --color -lAFh -a'
+      # alias lc="colorls -lA --sd"
+      # alias ls='ls --color -a'
+      # alias ld="ls -lht | grep '^d'"
+      alias nf='neofetch'
+      alias gl="git log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all"
 
-    # source
-    alias so='source'
+      # List directory on cd using exa
+      function chpwd() {
+        exa --group-directories-first --icons --color=always 
+      }
 
-    # Vim
-    alias v='/usr/local/bin/vim'
-    # alias vim='emacs'
+      # source
+      alias so='source'
 
-    ### EMACS #####
-    alias ec='/usr/local/bin/emacsclient'
-    alias ect='/usr/local/bin/emacsclient -nw'
-    alias et='emacs -nw' 
+      # Vim
+      alias v='/usr/local/bin/vim'
+      # alias vim='emacs'
 
-    alias magit='emacsclient -n -e "(progn (magit-status) (delete-other-windows))"'
-    alias emacs="/Applications/Emacs.app/Contents/MacOS/emacs"
+      # Slides 
+      alias ppt='pympress'
 
-    # alias emacsclient="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient"
-    # alias ec="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient"
-    # alias ect="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -nw"
-    # alias et="/Applications/Emacs.app/Contents/MacOS/emacs -nw"
 
-    # Alias open file with application
-    alias o='open -a'
+  # ======================================================
+  # Emacs Aliases
+  # ======================================================
 
-    # Alias for Plex
-    alias pms="/Applications/Plex\ Media\ Server.app/Contents/MacOS/Plex\ Media\ Scanner"
+      # alias ec='/opt/homebrew/bin/emacsclient'
+      # alias ect='/opt/homebrew/bin/emacsclient -nw'
 
-    # Weather
-    alias weather='ansiweather'
-    alias forecast='ansiweather -f 5'
+      alias bemacs="cd ~/bin/build-emacs && time ./build-emacs.sh"
+      # alias emacsclient="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -s $EMACS_SERVER_SOCKET" 
+      # alias emacsclient="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient" 
+      # alias emacs="/Applications/Emacs.app/Contents/MacOS/emacs"
+      alias et='emacs -nw' 
+      alias ec='emacsclient'
 
-    # cd to the path of the front Finder window
-    cdf() {
-    target=`osascript -e 'tell application "Finder" to if (count of Finder windows) > 0 then get POSIX path of (target of front Finder window as text)'`
-    if [ "$target" != "" ]; then
-    cd "$target"; target=""; pwd
-    else
-    echo 'No Finder window found' >&2
-    fi
-    }
+      # alias emacsclient="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient"
+      # alias ec="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient"
+      # alias ect="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -nw"
+      # alias et="/Applications/Emacs.app/Contents/MacOS/emacs -nw"
+      # alias magit='emacsclient -a "" -n -e "(progn (magit-status))"'
+      alias magit='emacsclient -a emacs -e "(magit-status \"$(git rev-parse --show-toplevel)\")"; if [[ -f `which osascript` ]]; then osascript -e "tell application \"Emacs\" to activate"; fi'
 
-    # does the reverse of above
-    alias f='open -a Finder ./'
+      alias mgit='emacsclient -a "" -n -e "(progn (magit-status))"'
+  alias dired='emacsclient -a "" -n -e "(progn (dired-jump-other-window))"'
 
-    # Dropbox uploader ("McDrop")
-    alias du='~/bin/Dropbox-Uploader/dropbox_uploader.sh'
+  # ======================================================
+  # Other
+  # ======================================================  
+  
+  # Alias open file with application
+  alias o='open -a'
 
-    # fuzzy completion in zsh
-    [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-    
-    # alias for magit on commandline
-    alias magit='emacs -nw -q --load ~/.magit/init.el'
+  # Alias for Plex
+  alias pms="/Applications/Plex\ Media\ Server.app/Contents/MacOS/Plex\ Media\ Scanner"
+
+  # Weather
+  # alias weather='ansiweather'
+  # alias forecast='ansiweather -f 5'
+
+  # cd to the path of the front Finder window
+  cdf() {
+  target=`osascript -e 'tell application "Finder" to if (count of Finder windows) > 0 then get POSIX path of (target of front Finder window as text)'`
+  if [ "$target" != "" ]; then
+  cd "$target"; target=""; pwd
+  else
+  echo 'No Finder window found' >&2
+  fi
+  }
+
+  # does the reverse of above
+  alias f='open -a Finder ./'
+
+  # Dropbox uploader ("McDrop")
+  alias du='~/bin/Dropbox-Uploader/dropbox_uploader.sh'
+
+  # fuzzy completion in zsh
+  [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+  # alias for magit on commandline
+  alias magit='emacs -nw -q --load ~/.magit/init.el'
+
+  # alias for hugo versions
+  alias oldhugo='~/bin/hugo-47.1'
+
+  # shortcuts
+  alias food='cd ~/Dropbox/Work/projects/foodarchivist && mgit'
+
+  # Latex Alias
+  alias fix-tex='texliveonfly'
+  alias sti='sudo tlmgr install'
+
+  # Alias for ssh into music server
+  alias air='ssh -t airserver@macbook-air "cd ~/Dropbox && exec zsh -l"'
+
 #+END_SRC
-** Colorls
-#+BEGIN_SRC conf
-source $(dirname $(gem which colorls))/tab_complete.sh
-#+END_SRC
-** FZF (Fuzzy finder)
-#+begin_src conf
+** DISABLED FZF (Fuzzy finder)
+#+begin_src conf :tangle no
   # fzf completion trigger
   # FZF_COMPLETION_TRIGGER='ff'
   FZF_COMPLETION_TRIGGER=''
   bindkey '^T' fzf-completion
-  bindkey '^I' $fzf_default_completion
+  # bindkey '^I' $fzf_default_completion
   # automatically select if 1 candidate 
   FZF_CTRL_T_OPTS="--select-1 --exit-0"
 #+end_src
 ** Options
 #+BEGIN_SRC conf
-  ### OPTIONS ###
-  setopt nolistbeep
-  setopt histignoredups
-  setopt autolist
-  set -o promptsubst
-  # pip should only run if there is a virtualenv currently activated
-  # export PIP_REQUIRE_VIRTUALENV=true
-  # cache pip-installed packages to avoid re-downloading
-   # export PIP_DOWNLOAD_CACHE=$HOME/.pip/cache
+### OPTIONS ###
+setopt nolistbeep
+setopt histignoredups
+setopt autolist
+set -o promptsubst
+# pip should only run if there is a virtualenv currently activated
+# export PIP_REQUIRE_VIRTUALENV=true
+# cache pip-installed packages to avoid re-downloading
+ # export PIP_DOWNLOAD_CACHE=$HOME/.pip/cache
 
-   # syspip () {
-   #     PIP_REQUIRE_VIRTUALENV="" pip "$@"
-   # }
+ # syspip () {
+ #     PIP_REQUIRE_VIRTUALENV="" pip "$@"
+ # }
 
-  # for the fuck
-   eval "$(thefuck --alias fuck)"
-   
-  # Disable marking untracked files
-  # under VCS as dirty. This makes repository status check for large repositories
-  # much, much faster.
-  DISABLE_UNTRACKED_FILES_DIRTY="true"
-
+# for the fuck
+ eval "$(thefuck --alias fuck)"
+ 
+# Disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+DISABLE_UNTRACKED_FILES_DIRTY="true"
 #+END_SRC
 * Git
 ** Gitconfig
@@ -2033,6 +2884,13 @@ source $(dirname $(gem which colorls))/tab_complete.sh
 [push]
 	default = simple
 #+END_SRC
+*** Color
+Use colors for git listings/diffs 
+#+begin_src conf 
+[color]
+	ui = always
+#+end_src
+
 *** Alias
 #+BEGIN_SRC conf 
 [alias]
@@ -2244,7 +3102,7 @@ run '~/.tmux/plugins/tpm/tpm'
 #+END_SRC
 * Miscellaneous
 ** Ansiweather
-#+BEGIN_SRC conf :tangle ~/.ansiweatherrc
+#+BEGIN_SRC conf :tangle no 
 api_key:d0dfeea1f7a83406288ec55700b36f3d 
 location:Providence,RI
 fetch_cmd:ftp -V -o -
@@ -2253,3 +3111,217 @@ geo_api_proto:http
 units:imperial
 daylight:true
 #+END_SRC
+* FZF
+https://github.com/junegunn/fzf/wiki/Configuring-shell-key-bindings#changing-the-layout
+
+#+begin_src conf 
+# Setting rg as the default source for fzf
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
+
+# To apply the command to CTRL-T as well
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+  # Key bindings
+  # ------------
+  # source "/usr/local/opt/fzf/shell/key-bindings.zsh"
+
+  # Preview content 
+  # Using highlight (http://www.andre-simon.de/doku/highlight/en/highlight.html)
+  # export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
+
+  # select only candidate 
+  # export FZF_CTRL_T_OPTS="--select-1 --exit-0"
+#+end_src
+
+* Prose Linting (Vale)
+:PROPERTIES:
+:header-args: :tangle ~/.vale.ini
+:END:
+
+Vale settings go in a file named either `.vale.ini` or `_vale.ini` in the $HOME dir.
+
+#+begin_src conf
+StylesPath = /Users/roambot/bin/styles
+MinAlertLevel = warning # suggestion, warning or error
+
+# Only Markdown and .txt files; change to whatever you're using.
+[*.{md,txt,org}]
+# List of styles to load.
+BasedOnStyles = Vale, proselint
+#+end_src
+* Email
+** Mbsync
+:PROPERTIES:
+:header-args: :tangle ~/.mbsyncrc
+:END:
+
+#+begin_src conf
+# Personal Account
+IMAPAccount fastmail
+Host imap.fastmail.com
+Port 993
+User mclear@fastmail.com
+PassCmd "security find-generic-password -s mbsync-fastmail-pass -w"
+AuthMechs LOGIN
+SSLType IMAPS
+SSLVersions TLSv1.2
+
+IMAPStore fastmail-remote
+Account fastmail
+
+MaildirStore fastmail-local
+Path ~/.maildir/Fastmail/
+Inbox ~/.maildir/Fastmail/Inbox
+SubFolders Verbatim
+
+Channel fastmail
+Far :fastmail-remote:
+Near :fastmail-local:
+Patterns INBOX *
+Expunge Both 
+CopyArrivalDate yes
+Sync All
+Create Both
+SyncState *
+MaxMessages 0 #unlimited
+
+# Work Account
+IMAPAccount unl
+User cmclear2@unl.edu                 
+# # Use Davmail 
+Host localhost     
+Port 1143
+PassCmd "security find-generic-password -s mbsync-unl-pass -w"
+AuthMechs LOGIN
+SSLType NONE
+SSLVersions TLSv1.2
+# Increase timeout to avoid o365 IMAP hiccups          
+Timeout 120
+PipelineDepth 1
+
+# # Using oauth2 
+# Host outlook.office365.com # smtp.office365.com
+# PassCmd oauth2ms
+# AuthMechs XOAUTH2     
+# SSLType IMAPS              
+# SSLVersions TLSv1.2
+
+# # Alternative password token 
+# PassCmd "~/bin/mutt_oauth2.py cmclear2@unl.edu.tokens"
+
+
+IMAPStore unl-remote
+Account unl
+
+MaildirStore unl-local
+Path ~/.maildir/UNL/
+Inbox ~/.maildir/UNL/INBOX
+SubFolders Verbatim
+
+Channel unl
+Far :unl-remote:
+Near :unl-local:
+Patterns INBOX *
+Create Both
+CopyArrivalDate yes
+Sync All
+Expunge Both
+SyncState *
+MaxMessages 0 #unlimited
+#+end_src
+
+  # IMAPAccount UNL
+  
+  # User mclear@unl.edu
+  # PassCmd "security find-generic-password -s mbsync-unl-password -w"
+  # SSLType IMAPS
+  # SSLVersions TLSv1.2
+  # AuthMechs PLAIN
+
+
+  # IMAPStore unl-remote
+  # Account unl
+
+  # MaildirStore unl-local
+  # Path ~/Mail/UNL/
+  # Inbox ~/Mail/UNL/Inbox/
+  # Trash ~/Mail/UNLTrash/
+
+  # Channel unl
+  # Master :unl-remote:
+  # Slave :unl-local:
+  # # Include everything
+  # Patterns *
+  # Expunge None
+  # CopyArrivalDate yes
+  # # Automatically create/delete missing mailboxes, locally 
+  # Create Slave
+  # Expunge Slave
+  # Sync All
+  # # Save the synchronization state files in the relevant directory
+  # SyncState *
+
+
+
+  
+** Msmtp 
+:PROPERTIES:
+:header-args: :tangle ~/.msmtprc
+:END:
+
+Set this from inside mu4e in package instead?
+
+#+begin_src conf
+# Set default values for all the accounts.
+defaults
+logfile ~/.maildir/msmtp.log
+tls_trust_file ~/.maildir/certificates/root-certificates.pem
+
+# ======================================================================
+
+account fastmail
+auth on
+host smtp.fastmail.com 
+port 465
+protocol smtp
+from mclear@fastmail.com
+user mclear@fastmail.com 
+passwordeval security find-generic-password -s mbsync-fastmail-pass -w 
+tls on
+tls_starttls off
+
+# ======================================================================
+
+account unl
+auth on
+# host           smtp.office365.com
+port           587
+# auth           xoauth2
+
+host localhost
+# port 1025
+protocol smtp
+from cmclear2@unl.edu
+user cmclear2@unl.edu
+passwordeval security find-generic-password -s mbsync-unl-pass -w
+# passwordeval  "python3 ~/bin/mutt_oauth2.py cmclear2@unl.edu.tokens"
+tls on
+tls_starttls off
+
+# ======================================================================
+
+account default : fastmail  
+#+end_src
+  
+** Davmail :noexport:
+:PROPERTIES:
+:END:
+
+#+begin_src conf
+  # davmail.folderSizeLimit=50
+  davmail.clientSoTimeout=0
+  davmail.enableKeepAlive=true
+  davmail.url=https://outlook.office365.com/EWS/Exchange.asmx
+  davmail.enableEws=true
+#+end_src
+

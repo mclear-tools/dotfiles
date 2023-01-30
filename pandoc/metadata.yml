@@ -3,18 +3,22 @@ author: 'Colin McLear'
 affiliation: 'University of Nebraska–Lincoln'
 authoremail: 'mclear@unl.edu'
 bibliography: '/Users/Roambot/Dropbox/Work/bibfile.bib'
-csl: '/Users/roambot/.pandoc/styles/chicago-author-date.csl'
+# citeproc: t
+# csl: '/Users/roambot/.pandoc/styles/chicago-author-date.csl'
 geometry: 'letterpaper,centering,margin=1.5in'
 link-citations: t
 colorlinks: t
 numbersections: t
 secnumdepth: 4
 smart: t
-# reference-section-title: 'References & Further Reading'
+reference-section-title: 'References & Further Reading'
 ### LaTeX specific
 # add latex section head
 introduction: t
 graphics: t
 linestretch: '1.15'
 mainfont: Optima
+# pandoc-latex-color:
+#   - classes: [important]
+#     color: red
 ---

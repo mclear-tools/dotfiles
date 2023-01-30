@@ -1,4 +1,4 @@
-# [[file:~/dotfiles/dotfiles.org::*MacOS%20Settings%20Config][MacOS Settings Config:1]]
+# [[file:~/dotfiles/dotfiles.org::*MacOS Settings Config][MacOS Settings Config:1]]
 # OSX for Hackers (Mavericks/Yosemite)
 #
 # Source: https://gist.github.com/brandonb927/3195465
