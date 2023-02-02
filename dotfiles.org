@@ -125,7 +125,7 @@ export WORKON_HOME=~/bin/virtualenvs
 #+END_SRC
 
 *** Plugins
-I use [[%5B%5Bhttps://github.com/zplug/zplug%5D%5Bzplug/zplug: A next-generation plugin manager for zsh%5D%5D][zplug]] for all plugins. 
+I use [[https://github.com/zplug][zplug]] for all plugins. 
 
 #+BEGIN_SRC conf
 # install zplug if it doensn't exist
