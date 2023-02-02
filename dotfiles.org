@@ -40,7 +40,7 @@ export SHELL=/opt/homebrew/bin/zsh
 
 # User Path 
 # Ensure user-installed binaries take precedence
-export PATH=/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/opt/texinfo/bin:/usr/local/opt/coreutils/libexec/gnubin:/opt/homebrew/opt/libtool/libexec/gnubin:/usr/local/opt/python/libexec/bin:/usr/local/bin:/usr/local/sbin:$HOME/bin:$HOME/.local/bin:/usr/bin:/usr/sbin:/sbin:/bin:/opt/X11/bin:/Library/TeX/texbin:$HOME/.fzf/bin:$HOME/.cabal/bin:$HOME/.local/bin:/Applications/Emacs.app/Contents/MacOS:/Applications/Emacs.app/Contents/MacOS/bin:$GOROOT/bin:$GOPATH/bin:$GOBIN/bin
+export PATH=/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/opt/texinfo/bin:/usr/local/opt/coreutils/libexec/gnubin:/opt/homebrew/opt/libtool/libexec/gnubin:/usr/local/opt/python/libexec/bin:/usr/local/bin:/usr/local/sbin:$HOME/bin:$HOME/.local/bin:/usr/bin:/usr/sbin:/sbin:/bin:/opt/X11/bin:/Library/TeX/texbin:$HOME/.fzf/bin:$HOME/.cabal/bin:$HOME/.local/bin:/Applications/Emacs.app/Contents/MacOS:/Applications/Emacs.app/Contents/MacOS/bin
 
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"       
 #+end_src
@@ -67,19 +67,14 @@ Settings are below.
 # Set Homebrew 
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
+# Set GPG 
+export GPG_TTY=$(tty)
+
 # Set Editor
 export EMACS_SERVER_SOCKET=${TMPDIR:-/tmp}/emacs$(id -u)/server
 export VISUAL="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -s $EMACS_SERVER_SOCKET"
 export ALTERNATE_EDITOR="/opt/homebrew/bin/vim"
-
-# Set GPG 
-export GPG_TTY=$(tty)
-
-#Set GOPATH
-export GOROOT=/usr/local/opt/go/libexec
-export GOPATH=$HOME/.go
-export GOBIN=$HOME/bin
-
+       
 # Locale
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
