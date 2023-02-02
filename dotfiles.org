@@ -493,6 +493,19 @@ bindkey '^T' fzf-completion
 FZF_CTRL_T_OPTS="--select-1 --exit-0"
 #+end_src
 * Git
+** Gitattributes
+:PROPERTIES:
+:header-args: :tangle ~/.gitattributes
+:END:
+
+#+begin_src conf 
+*.lisp diff=common-lisp
+*.el diff=elisp
+*.org diff=org     
+#+end_src
+
+
+
 ** Gitconfig
 :PROPERTIES:
 :header-args: :tangle ~/.gitconfig
@@ -509,6 +522,25 @@ email = mclear@fastmail.com
 [credential]
 helper = osxkeychain
 #+END_SRC
+*** Core
+#+begin_src conf
+[core]
+    attributesfile = ~/.gitattributes
+#+end_src
+
+*** Diffs
+See https://emacs.ch/@bram85/109789123142436571 and https://www.n16f.net/blog/improving-git-diffs-for-lisp/. 
+#+begin_src conf
+[diff "common-lisp"]
+    xfuncname="^\\((def\\S+\\s+\\S+)"
+    
+[diff "elisp"]
+    xfuncname="^\\((((def\\S+)|use-package)\\s+\\S+)"
+
+    [diff "org"]
+        xfuncname="^\\*+ +(.*)$"        
+#+end_src
+
 *** Push
 #+BEGIN_SRC conf
 [push]
