@@ -87,6 +87,9 @@ export PKG_CONFIG_PATH="/opt/homebrew/opt/zlib/lib/pkgconfig"
 
 ## Path to Beets
 export BEETSDIR=~/Dropbox/Apps/Beets/
+
+## Set User Texmfhome
+export TEXMFHOME="~/Library/texmf/tex/latex"          
 #+end_src
 
 ** Zshrc
